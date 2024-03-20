@@ -1,14 +1,15 @@
 # LAB-ORM-2-PLANTEER
 
 ## Using what you learned, Create a new website called "Planteer" , this website has 6 main pages:
-- Home page
-- All Plants page
-- Plant Detail Page
-- Plant Search Page
-- Add new plant page
-- Update plant page
-- Contact Us page (Bonus)
-- Contact Us Messages page (Bonus)
+- Home page 
+- All Plants page : `plants/all/`
+- Plant Detail Page : `plants/<plant_id>/detail/`
+- Plant Search Page (by `name`) : `plants/search/`
+- Add new plant page : `plants/new/`
+- Update plant page : `plants/<plant_id>/update/`,  Delete Plant : `plants/<plant_id>/delete/` . 
+- Contact Us page : `contact/` **(Bonus)**
+- Contact Us Messages page : `contact/messages/` **(Bonus)**
+- Add search by `category`, and `is_edible` in the Plant Search Page **(Bonus)**
 
 
 
