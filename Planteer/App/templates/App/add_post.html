@@ -1,0 +1,14 @@
+{% extends 'App/base.html'%}
+{%block content%}
+<form action="{% url 'App:add_post_view'%}" method="post"  enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="text" class="text" name="Name" >
+    <input type="text" class="text" name="about">
+    <input type="text" class="text" name="used_for">
+    <h5>Choose Image:</h5>
+                <input name="image"  type="file"  accept="image/*" class="form-control" required />
+
+                <input type="submit" class="btn btn-primary" value="add" />
+
+</form>
+{%endblock%}
