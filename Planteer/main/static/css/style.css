@@ -1,0 +1,65 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    font-family: "Numans", sans-serif;
+    font-size: 20px;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+.web-name{
+    font-size: 30px;
+}
+.cat {
+    background-color: rgba(0, 0, 0, 0.5);
+    color:white;
+    align-self: flex-start;
+}
+/*End For All*/
+
+.main-bg-row{
+    background-image: url('/static/images/bg-plant.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    height: 22rem;
+    margin-top: 5rem;
+}
+.plant-card{
+    transition: transform 0.2s ease-in-out;
+}
+.plant-card:hover{
+    transform: scale(1.1);
+}
+/* end for the index */
+.form-container{
+    background-image: url('/static/images/bg-form.jpg');
+    background-size: cover;
+    background-position: center;
+}
+.about-plant{
+    white-space: pre-line;
+}
+
+/*----------*/
+.All {
+    background-color: rgb(39, 38, 39);  
+}
+
+.Tree {
+    background-color: rgb(39, 38, 39);
+}
+
+.Fruit {
+    background-color: rgb(39, 38, 39);
+}
+
+.Vegetables {
+    background-color: rgb(39, 38, 39);
+}
+/*end for all plants*/
+.user-email{
+    text-decoration:underline;
+    color: blue;
+}

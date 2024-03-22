@@ -1,0 +1,42 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block title %}contact us{% endblock title %}
+
+{% block content %}
+    <main class="m-5">
+        <div class="row">
+            <div class="col-md-6 mt-5 d-flex flex-column gap-2">
+                <h2>Contact Us</h2>
+                <form class="d-flex flex-column justify-content-evenly gap-5" action="{% url 'main:contact_us_view' %}" method="post">
+                    {% csrf_token %}
+
+                    <div class="d-flex justify content-evenly gap-2">
+                        <div>
+                            <label for="firs-name">First Name</label>
+                            <input class="form-control" type="text" id="firs-name" name="first_name" placeholder="Jane" required minlength="2">
+                        </div>
+                        <div>
+                            <label for="last-name">Last Name</label>
+                            <input class="form-control" type="text" id="last-name" name="last_name" placeholder="Smitherton" required minlength="3">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="email-address">Email Adress</label>
+                        <input class="form-control" type="email" id="email-address" name="email" placeholder="email@domain.com" required minlength="10">
+                    </div>
+
+                    <div>
+                        <label for="message">Your Message</label>
+                        <textarea class="form-control" name="message" id="message" placeholder="Enter your question or message" required minlength="10"></textarea>
+                    </div>
+                    
+                    <input type="submit" class="btn btn-outline-success" value="Send">
+                </form>
+            </div>
+            <div class="col-md-6 mt-5 align-items-center">
+                <img class="w-100 rounded-4" src="{% static 'images/flower.jpg' %}" alt="img flower">
+            </div>
+        </div>
+    </main>
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends "main/base.html" %}
+
+{% block title %}All Messages{% endblock title %}
+
+{% block content %}
+<main class="mt-5">
+    <div class="row">
+        {% for m in messages %}
+        <div class="col-6 p-2">
+            <span class="material-symbols-outlined">person</span>
+            <div class="d-flex">
+                <h6>{{m.first_name}}</h6>
+                <h6>{{m.last_name}}</h6>
+            </div>
+            <a class="user-email" href="">{{m.email}}</a>
+            <p>{{m.message}}</p>
+        </div>  
+        {% endfor %}
+    </div>
+</main>
+{% endblock content %}

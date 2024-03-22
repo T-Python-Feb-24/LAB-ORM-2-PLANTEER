@@ -1,0 +1,44 @@
+{% extends "main/base.html" %}
+{% block title %}Update Plant{% endblock title %}
+
+{% block content %}
+    <div class="row p-3 m-5 form-container">
+        <h2>Update Your Plant Here:</h2>
+        <div class="col">
+            <form action="{% url 'main:update_plant_view' plant.id %}" method="post" enctype="multipart/form-data" class="d-flex flex-column align-items-center gap-4">
+                {% csrf_token %}
+                <input class="form-control w-50" name="name" type="text" required minlength="4" value="{{plant.name}}">
+                <textarea class="form-control w-50" name="about" required minlength="20">
+                    {{plant.about}}
+                </textarea>
+                <textarea class="form-control w-50" name="used_for" required minlength="10">
+                    {{plant.used_for}}
+                </textarea>
+
+                <h5>Category:</h5>
+                <select name="category" class="form-select w-50" required>
+                    {% for val, cat in categories %}
+                        <option value="{{val}}" {% if plant.category == val %} selected {% endif %}>{{cat}}</option>
+                    {% endfor %}
+                </select>
+
+                <h5>Current Image:</h5>
+                {% if plant.image %}
+                    <img src="{{plant.image.url}}" alt="Current Image" class="w-50">
+                {% else %}
+                    <p>No image uploaded</p>
+                {% endif %}
+
+                <h5>Upload a new image:</h5>
+                <input class="form-control w-50" name="image" type="file" accept="image/*">
+
+                <div class="form-check form-switch">
+                    <input name="is_edible" value="True" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" {% if plant.is_edible %} checked {% endif %}>
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Is edible</label>
+                </div>
+
+                <input type="submit" class="btn btn-primary" value="Update Plant">
+            </form>
+        </div>
+    </div>
+{% endblock content %}
