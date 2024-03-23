@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+
+{% block title %} message {% endblock %}
+
+
+{% block content %}
+
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>Latest Message</h2>
+        <a class="text-dark text-decoration-none" href="{% url 'main:contact_view' %}">Send message</a>
+    </div>
+    <div class="row g-5">
+
+        {% for contact in Contacts %}
+            <div class="col-4">
+                <div class="d-flex flex-column gap-2 border border-1 shadow p-3 rounded-4 h-100">
+                    
+                    <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{con.first_name}} ">{{contact.first_name}}</h6>
+                    <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{con.last_name}} ">{{contact.last_name}}</h6>
+                    <h4>{{contact.email}}</h4>
+                    <h2>{{contact.message}}</h2>
+                    
+                </div>
+            </div>
+            
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

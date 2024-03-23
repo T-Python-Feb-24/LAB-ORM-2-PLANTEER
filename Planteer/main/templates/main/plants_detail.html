@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+{% block title %} detail {% endblock %}
+{% block content %}
+    <div class="row">
+        
+        <div class="col">
+            <div class="d-flex flex-column gap-2 mt-5">
+                <img src="{{ plant.image.url }}"  class="w-100 rounded-4"/>
+                <h1>{{ plant.name  }}</h1>
+                <h3 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{plant.category}}">{{ plant.category }}</h6>
+                <p>{{ plant.about }}</p>
+                <h3>{{plant.used_for}}</h3>
+                <h4>{{plant.is_edible}}</h4>
+                <div class="d-flex justify-content-between">
+                   
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'main:update_plants_view' plant.id %}" class="btn btn-primary">update</a>
+                        <a href="{% url 'main:delete_plants_view' plant.id %}" class="btn btn-danger">Delete</a>
+                    </div>
+                    
+                </div>
+                
+              
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}
