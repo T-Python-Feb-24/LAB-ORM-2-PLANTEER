@@ -45,11 +45,15 @@ def plant_detail_view(request:HttpRequest, plant_id):
 
 def update_plant_view(request:HttpRequest, plant_id):
 
-    #getting a plant to upadte it
-    plant = Plant.objects.get(pk=plant_id)
+    try:
+        # Attempt to get the plant
+        plant = Plant.objects.get(pk=plant_id)
+    except Plant.DoesNotExist:
+        return render(request, "main/not_exist.html")
 
     if request.method == 'POST':
         try:
+            # Update the plant's attributes
             plant.name = request.POST['name']
             plant.about = request.POST['about']
             plant.used_for = request.POST['used_for']
@@ -58,6 +62,7 @@ def update_plant_view(request:HttpRequest, plant_id):
             plant.save()
             return redirect("main:plant_detail_view", plant_id=plant.id)
         except Exception as e:
+            # Handle other exceptions
             print(e)
 
     return render(request, "main/update_plant.html", {"plant" : plant, "categories": Plant.categories.choices})
@@ -66,6 +71,8 @@ def delete_plant_view(request:HttpRequest, plant_id):
     try:
         plant = Plant.objects.get(pk=plant_id)
         plant.delete()
+    except Plant.DoesNotExist:
+        return render(request, "main/not_exist.html")
     except Exception as e:
         print(e)
 
