@@ -1,0 +1,58 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="row">
+        
+        <div class="col md-6">
+        <div class="d-flex flex-column gap-2">
+        <img src="{{ plant.image.url }}"  class="w-100 rounded-4"/>
+        <div class="d-flex justify-left">
+            <a href="{% url 'main:update_page' plant.id %}" class="btn btn-primary">update</a>
+            <a href="{% url 'main:delete_view' plant.id %}" class="btn btn-danger">Delete</a>
+        </div>
+        </div>
+        </div>
+    
+
+
+
+    <div class="col md-6">
+    <div class="d-flex flex-column gap-2">
+    <h1>{{ plant.name }}</h1>
+    <h5 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{plant.category}}">{{ plant.category }}</h5>
+    <p> {{ plant.about }}</p>
+    <h5> Is edible :{% if plant.is_edible == False %} No {% else %} Yes {% endif %}</h5>
+
+    <h5>Used For:</h5>
+    <p> {{ plant.used_for}}</p>
+    
+     
+    </div>
+    </div>
+</div>
+
+<br>
+<hr>
+<br>
+ <h1>Read More</h1>
+
+    <div class="row mt-2 g-5">
+         {% for plant in plants %}
+        <div class="col-4">
+            <div class="d-flex flex-column gap-2 border border-1 p-3 mt-3 shadow rounded-4 h-100">
+                <img src="{{ plant.image.url }}"  class="w-100  h-80 object-fit-cover rounded-4"/>
+                <h2><a href="{% url 'main:detail_page' plant.id  %}" class="text-decoration-none">{{plant.name}}</a></h2>
+                <p>{{ plant.category }}</p>
+                <p> {{ plant.created_at }}</p>
+            </div> 
+        </div>    
+     
+       {% endfor %}
+       
+
+    </div>
+
+                
+                
+            
+{% endblock %}

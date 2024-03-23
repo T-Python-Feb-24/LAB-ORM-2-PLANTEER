@@ -1,0 +1,28 @@
+{% extends 'main/base.html' %}
+
+{% block title %} users messages {% endblock %}
+
+{% block content %}
+     <div class="row mt-2 g-5">
+
+        {% for c in con %}
+        <div class="col-4">
+            <div class="d-flex flex-column gap-2 border border-1 p-3 mt-3 shadow rounded-4 h-100">
+                <img src="{{ c.image.url }}"  class="w-50  h-80 object-fit-cover rounded-4"/>
+                <h1>{{c.f_name}} {{c.l_name}}</h1>
+                <h2>{{ c.email }}</h2>
+                <p> {{ c.message }}</p>
+            </div> 
+        </div>    
+     
+       {% endfor %}
+
+    </div>
+
+
+
+
+
+
+
+{% endblock %}

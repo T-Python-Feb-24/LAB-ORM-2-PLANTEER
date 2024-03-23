@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="row">
+     <div class="col md-6">
+     <div class="d-flex flex-column gap-2">
+      <img src="/static/images/flower1.webp" class="w-100 rounded-4" />
+
+
+ </div>
+ </div>
+
+
+
+     <div class="col md-6">
+     <h1>Contact us </h1>
+     <hr>
+     <br>
+     <form action="{% url 'main:contact_page' %}" method=" POST " enctype="multipart/form-data" class="d-flex flex-column gap-2">
+            {% csrf_token %}
+            <label for="text">Enter your first name:</label>
+            <input type="text" name="f_name" placeholder="ex:Ahamd" class="form-control" required/>
+            <br>
+            <label for="text">Enter your last name:</label>
+            <input type="text" name="l_name" placeholder="ex:Alfayz" class="form-control" required/>
+            <br>
+            <label for="email">Enter your email:</label>
+            <input type="email" id="email" name="email" placeholder="ex:ahmad@gmail.com" class="form-control" required/>
+            <br>
+            <label for="text">Your message:</label>
+             <textarea name="used_for" placeholder="Enter your message.." class="form-control " required></textarea>
+             <input type="submit" value="submit"  class="btn btn-primary"/>
+
+            </form>
+
+
+
+</div>
+</div>
+
+{% endblock %}

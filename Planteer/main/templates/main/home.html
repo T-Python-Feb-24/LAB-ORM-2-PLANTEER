@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container mt-5 mb-5 ">
+    <div class="row g-4">
+        <div class="col">
+            <div class="d-flex align-items-baseline gap-2 mt-5 mb-3">
+                <h1 class="w">Welcome to Planteer</h1>
+            </div>
+            
+            <img src="/static/images/flower1.webp" class="w-100 hero rounded-4" />
+        </div>
+    </div>
+
+    <hr />
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>Latest Posts</h2>
+        <a class="btn btn-primary" href="{% url 'main:add_page' %}">Add Plant</a>
+    </div>
+    <div class="row">
+        {% for plant in plants %}
+        <div class="col-4">
+            <div class="d-flex flex-column gap-2 border border-1 p-3 mt-3 shadow rounded-4 h-100">
+                <img src="{{ plant.image.url }}"  class="w-100  h-80 object-fit-cover rounded-4"/>
+                <h2><a href="{% url 'main:detail_page' plant.id  %}" class="text-decoration-none">{{plant.name}}</a></h2>
+                <p>{{ plant.category }}</p>
+                <p> {{ plant.created_at }}</p>
+            </div> 
+        </div>    
+     
+       {% endfor %}
+       
+    </div>
+</div>   
+{% endblock %}
