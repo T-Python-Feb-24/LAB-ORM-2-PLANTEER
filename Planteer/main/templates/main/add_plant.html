@@ -1,0 +1,43 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="row">
+        <h1>Add new post</h1>
+        <div class="col">
+
+            <form action="{% url 'main:add_plant' %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                {% csrf_token %}
+
+                <input name="name" type="text" placeholder="Name" class="form-control" required minlength="5" />
+                <textarea name="about" placeholder="About" class="form-control" required ></textarea>
+                <textarea name="used_for" placeholder="Used For" class="form-control" required ></textarea>
+
+                <div class="m-0">
+                    <h5>Is Edible:</h5>
+                    <input type="radio" name="is_edible" id="Yes" value="True">
+                    <label for="Yes" class="form-check-label">Yes</label>
+                    <input type="radio" name="is_edible" id="No" value="False">
+                    <label for="No" class="form-check-label">No</label>
+                </div>
+
+                <h5>Category:</h5>
+                <select name="category" class="form-select" aria-label="Default select example">
+                    {% for val, cat in category %}
+                        <option value={{val}}>{{cat}}</option>
+                    {% endfor %}
+                </select>
+
+                <h5>Choose Image:</h5>
+                <input name="image"  type="file"  accept="image/*" class="form-control"/>
+
+                <input type="submit" class="btn btn-dark" value="Add Post" style="background: linear-gradient(#080822, #050516, #02020b);"/>
+            </form>
+ 
+
+                
+
+        </div>
+
+
+    </div>
+{% endblock %}
