@@ -8,14 +8,14 @@
 <div class="row g-4 mt-5">
 
     <div class="d-flex justify-content-between align-items-center">
-        <h2>{% if 'cat' in request.GET %} {{request.GET.cat}} {% else %} All {% endif %}Posts ({{ plants.count }}) </h2>
+        <h2>{% if 'cat' in request.GET %} {{request.GET.cat}} {% else %} All {% endif %}Plants({{ plants.count }}) </h2>
     </div>
 </div>
     <div class="row">
         <div class="col">
             <div class="d-flex gap-2">
                 <a href="{% url 'main:all_plants' %}" class="p-2 ps-3 pe-3  cat  text-decoration-none">All</a>
-                {% for val, key in categories %}
+                {% for val, key in category %}
                     <a href="?cat={{val}}" class="p-2 ps-3 pe-3 rounded-pill cat {% if request.GET.cat == val %} {{ val }} {% endif %} text-decoration-none">{{val}}</a>
                 {% endfor %}
             </div>
