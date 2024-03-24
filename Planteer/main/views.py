@@ -50,7 +50,7 @@ def plant_detail(request:HttpRequest, plant_id):
         try:
             #getting a  post detail
             plant = Plant.objects.get(pk=plant_id)
-            related = Plant.objects.all()
+            related = Plant.objects.filter(category =  plant.category).exclude(pk=plant_id)[:4]
         except Plant.DoesNotExist:
             return render(request, "404.html")
         except Exception as e:
