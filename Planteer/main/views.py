@@ -6,8 +6,10 @@ from.models import Plant
 #home page : 
 def home_page(request :HttpRequest):
     
-    #عدليها
-    plants = Plant.objects.all().order_by("-created_at")[0:3]
+# a QuerySet equates to a SELECT statement in sql, You get a QuerySet by using your model’s Manager. Each model has at least one Manager, and it’s called "objects" by default. 
+# Basic lookups keyword arguments take the form field__lookuptype=value. 
+
+    plants = Plant.objects.order_by('?').all()[:3]
     
     return render(request,"main/home_page.html",{"plants":plants})
 
@@ -26,8 +28,10 @@ def plant_detail(request :HttpRequest , plant_id):
 
 # Plant Search Page (by name), Bonus -> Add search by category, and is_edible in the Plant Search Page 
 
-def search_page():
-    return render
+def search_page(request :HttpRequest):
+    
+        
+    return render(request,"main/search.html")
 
 
 # Add new plant page:

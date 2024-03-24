@@ -3,7 +3,7 @@ from .models import Plant
 
 # Register your models here.
 class PlantAdmin(admin.ModelAdmin):
-    list_display = ("name","about","used_for","created_at")
+    list_display = ("name","created_at","is_edible")
 
     list_filter =("created_at",)
 

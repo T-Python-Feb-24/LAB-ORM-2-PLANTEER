@@ -1,0 +1,24 @@
+{% extends "main/base.html" %}
+
+{% block title %}Search{% endblock  %}
+
+{% block content %}
+
+<form action="{% url "main:search_page" %}" method="GET" >
+<div class="row">
+    <div class="col-6 mt-4">
+        <h2>Serach For Plants!</h2>
+        <div class="d-flex flex-row gap-2">
+            <input type="text" name="search" placeholder="Search" class="w-100 mt-2" input="{{request.GET.search}}">
+            <input type="submit" class="btn btn-primary" value="Search">
+        </div>
+    </div>
+</div>
+
+
+
+
+
+</form>
+
+{% endblock  %}
