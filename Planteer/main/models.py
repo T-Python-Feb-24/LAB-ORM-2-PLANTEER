@@ -23,3 +23,12 @@ class Contact(models.Model):
     message=models.TextField()
     created_at=models.DateTimeField(auto_now_add=True)
     image=models.ImageField(upload_to="images/", default="images/user.png")
+
+
+
+
+class Comment(models.Model):
+    plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
+    name=models.CharField(max_length = 64)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)

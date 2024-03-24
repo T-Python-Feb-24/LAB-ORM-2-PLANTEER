@@ -32,4 +32,25 @@
        
     </div>
 </div>   
+
+
+<br> <br>
+<hr>  
+<h2>Comments:</h2>
+
+    <div class="row">
+
+     <div class="col d-flex flex-column gap-2">    
+      {% for comment in comments %}
+        <div class="d-flex flex-column gap-2 border border-1 p-3 rounded-3">
+        <h4>{{ comment.name }}</h4>
+        <p>{{ comment.content }}</p>
+        <p>{{ comment.created_at }}</p>
+        </div>
+        {% endfor %}
+
+     </div> 
+     </div>   
+
+
 {% endblock %}

@@ -51,8 +51,40 @@
        
 
     </div>
+<br> <br>
+<hr>  
+<h2>Comments:</h2>
 
-                
-                
+    <div class="row">
+
+     <div class="col d-flex flex-column gap-2">    
+      {% for comment in comments %}
+        <div class="d-flex flex-column gap-2 border border-1 p-3 rounded-3">
+        <h4>{{ comment.name }}</h4>
+        <p>{{ comment.content }}</p>
+        <p>{{ comment.created_at }}</p>
+        </div>
+        {% endfor %}
+
+     </div> 
+     </div>            
+
+
+
+
+<div class="row mt-4">
+<div class="col">
+
+ <form action="{% url 'main:comments_view' plant.id %}" method="post" class="d-flex flex-column gap-2">
+    {% csrf_token %}
+    <input type="text" name="name"  placeholder="ex:Ahamd"  class="form-control"/>
+    <textarea name="content"  placeholder="text your comment here"  class="form-control" required></textarea>
+
+    <input type="submit" value="Add Comment" class="btn btn-primary"/>
+    </form>
+
+        
+    </div>
+    </div>
             
 {% endblock %}

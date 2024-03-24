@@ -9,7 +9,7 @@
         <div class="d-flex flex-column gap-2">
             
             <h1>Search</h1>
-            <form action="{% url 'main:search_page' %}"  method="get" class="d-flex gap-2">
+            <form action="{% url 'main:search_page' %}"  method="get" class="d-flex gap-2" name='search'>
                 <input type="search" class="form-control" name="search" value="{{request.GET.search}}"/>
                 <input type="submit" value="search" class="btn btn-primary" />
             </form> 

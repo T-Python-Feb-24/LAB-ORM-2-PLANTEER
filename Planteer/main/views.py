@@ -1,14 +1,13 @@
 from django.shortcuts import render ,redirect
 from django.http import HttpRequest, HttpResponse
-from .models import Plant
+from .models import Plant , Contact , Comment
 # Create your views here.
 def home(request: HttpRequest):
     plants = Plant.objects.filter(is_edible=False)[0:3]
+    comments=Comment.objects.order_by("-created_at")[0:5]
 
-    context = {
-        "plants" : plants
-    }
-    return render(request,"main/home.html" , context)
+   
+    return render(request,"main/home.html" ,{"plants" : plants,"comments":comments})
 
 
 def all_plants(request: HttpRequest):
@@ -29,7 +28,7 @@ def add(request: HttpRequest):
             is_edible=request.POST.get("is_edible" , False),
             used_for=request.POST["used_for"],
             category=request.POST["category"],
-            image=request.FILES.get("image", Plant.image.field.default)
+            image=request.FILES.get("image")
             )
 
             new_plant.save()
@@ -43,14 +42,15 @@ def add(request: HttpRequest):
 def detail(request: HttpRequest ,plant_id):
     try:
         plant=Plant.objects.get(pk=plant_id)
-        plants=Plant.objects.filter(is_edible=False)[0:3]
+        plants=Plant.objects.filter(category=plant.category)[0:3]
+        comments=Comment.objects.filter(plant=plant)
         
     except Plant.DoesNotExist:
         return redirect('main:home')
     except Exception as e:
             print(e)
 
-    return render(request,"main/plants_detail.html" , {"plant" : plant ,"plants" : plants } )
+    return render(request,"main/plants_detail.html" , {"plant" : plant ,"plants" : plants , "comments":comments } )
 
 
 
@@ -97,5 +97,35 @@ def search(request: HttpRequest):
         plants=Plant.objects.filter(name__contains=request.GET["search"])
     return render(request,"main/search.html" , {"plants" : plants} )
 
+def info(request: HttpRequest):
+ if request.method=="POST":
+        try:
+            info=Contact(
+            f_name=request.POST["f_name"],
+            l_name=request.POST["l_name"],
+            email=request.POST["email"],
+            message=request.POST["message"],
+            )
+            info.save()
+            return redirect('main:home')
+        except Exception as e :
+            print(e)
+ return render(request,"main/contact.html")
 
 
+def user_message(request: HttpRequest):
+    con=Contact.objects.all()
+
+    return render(request,"main/message.html", {"con" : con})
+
+
+def comment(request: HttpRequest , plant_id):
+    if request.method == "POST":
+        plant_ob=Plant.objects.get(pk=plant_id)
+        comments=Comment(plant=plant_ob,
+        name=request.POST["name"],
+        content=request.POST["content"],
+        )
+        comments.save()
+
+    return redirect("main:detail_page" , plant_id=plant_ob.id)
