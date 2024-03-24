@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
+from main.views import home
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -11,4 +12,5 @@ urlpatterns = [
     path('plant/<int:pk>/delete/', views.plant_delete, name='plant_delete'),
     path('all-plants/', views.all_plants, name='all_plants'),
     path('contact_us/', views.contact_us, name='contact_us'),
+    path("comments/add/<int:plant_id>/", views.add_comment, name="add_comment")
 ]

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Plant
+from .models import Plant ,Comment
 from django.http import HttpRequest, HttpResponse
 from django.utils import timezone  
 from django.http import Http404
@@ -11,7 +11,9 @@ def home(request):
 
     paginator = Paginator(plants, 3)
     page_number = request.GET.get('page')
-
+    
+    latest_comments = Comment.objects.all().order_by('-created_at')[:4]
+    
     try:
         paginated_plants = paginator.page(page_number)
     except PageNotAnInteger:
@@ -21,8 +23,10 @@ def home(request):
 
     context = {
         'plants': paginated_plants,
+        'latest_comments': latest_comments, # Include latest comments
     }
     return render(request, 'main/home.html', context)
+
 
 def add_plant(request):
 
@@ -56,10 +60,11 @@ def add_plant(request):
 def plant_detail(request, pk):
     try:
         plant = get_object_or_404(Plant, pk=pk)
+        comments = Comment.objects.filter(plant=plant)
     except Plant.DoesNotExist:
         raise Http404("Plant does not exist")
     
-    return render(request, 'main/plant_detail.html', {'plant': plant})
+    return render(request, 'main/plant_detail.html', {'plant': plant, "comments": comments})
 
 def plant_update(request: HttpRequest, pk):
     plant = get_object_or_404(Plant, pk=pk)
@@ -130,3 +135,16 @@ def all_plants(request):
 def contact_us(request):
 
     return render( request, 'main/contact_us.html')
+
+def add_comment(request, plant_id):
+    if request.method == "POST":
+        try:
+            plant_object = get_object_or_404(Plant, pk=plant_id)
+            full_name = request.POST.get('full_name')
+            content = request.POST.get('content')
+            new_comment = Comment.objects.create(plant=plant_object, full_name=full_name, content=content)
+            return redirect('plant_detail', pk=plant_id)
+        except KeyError:
+            pass
+    
+    return redirect('plant_detail', pk=plant_id)

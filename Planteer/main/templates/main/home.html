@@ -20,6 +20,24 @@
     </div>
 </div>
 
+<!-- Latest Comments Section -->
+<div class="container mt-5">
+    <h2>Latest Comments</h2>
+    <div class="row">
+        {% for comment in latest_comments %}
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ comment.full_name }}</h5>
+                    <p class="card-text">{{ comment.content }}</p>
+                    <p class="card-text"><small class="text-muted">Posted on {{ comment.created_at }}</small></p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
 
 
 <div class="container">

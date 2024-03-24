@@ -155,8 +155,16 @@ body {
     height: 350px; 
     width: 200px;
 }
+.img-thumbnail{
+    height: 500px; 
+    width: 750px;
+    align-items: center;
+}
 .card{
     height: 600px;
+}
+.comm{
+    padding-left: 40px;
 }
 /*--------------------------------------------------------------*/
 .custom-card {
