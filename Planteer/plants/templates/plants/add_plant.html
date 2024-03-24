@@ -1,0 +1,82 @@
+{% extends 'plants/base.html' %}
+{% load static %}
+{% block title %} Add New Plant {% endblock %}
+
+{% block content %}
+<section>
+    <div class="container mt-5 px-5">
+       
+        <div class="row g-5">
+            <div class="col">
+                <h2>Add new plant</h2>
+                <form action="{% url 'plants:add_plant_view' %}" method="POST" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                    {% csrf_token %}
+
+                    <div class="row my-3">
+                        <div class="col-md-4 mb-4">
+                            <img src="{% static 'images/add2.jpg' %} " class=" w-100 h-100 object-fit-cover rounded-4" alt="plant">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row my-3">
+                                <div class="col-6">
+                                    <label for="firstName" class="form-label">Plant name</label>
+                                    <input name="name" type="text" id="firstName" placeholder="Name" class="form-control" minlength="5" required/>
+        
+                                </div>
+                                <div class="col-6">
+                                    <label for="category" class="form-label">Category</label>
+                                    <select name="category" class="form-select" id="category" required>
+                                        {% for val, cat in categories %}
+                                            <option value="{{val}}">{{cat}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row my-3">
+                                <div class="col-12">
+                                    <label for="about" class="form-label">Brief about the plant</label>
+                                    <textarea name="about" id="about"  class="form-control" minlength="20" required></textarea>
+                                </div>
+                            </div>
+        
+                            <div class="row my-3">
+                                <div class="col-12">
+                                    <label for="used" class="form-label">Used for</label>
+                                    <textarea name="used_for" id="used" class="form-control" minlength="20" required></textarea>
+                                </div>
+                            </div>
+                            <div class="row my-3">
+                                <div class="col-6">
+                                    <label for="native" class="form-label">Native to</label>
+                                    <input name="native_to" id="native" type="text" placeholder="Native to" class="form-control" minlength="5" required/>
+                                </div>
+                                <div class="col-6">
+                                    <label for="flexSwitchCheckDefault" class="form-label">is edible</label>
+                                    <div class="form-check form-switch">
+                                        <input name="is_edible" value="True" class="form-check-input pt-3 pb-2 px-4" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row my-3">
+                                <div class="col-12">
+                                    <label for="image" class="form-label">Upload Image:</label>
+                                    <input name="image" id="image" type="file"  accept="Image/*" class="form-control" required />
+                                </div>
+                            </div>
+                            <div class="row my-3">
+                                <div class="col-12 ">
+                                    <input type="submit" class="btn btn-success w-100 " value="Add Plant" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'plants/base.html' %}
+
+{% block title %} Search Plant {% endblock %}
+
+{% block content %}
+<section>
+    <div class="container mt-5">
+        <div class="row g-4">
+            
+        </div>
+
+        
+    </div>
+</section>
+
+
+<section>
+    <div class="container mt-5">
+        <div class="row g-4">
+            <div class="d-flex flex-column gap-2">
+                <h2>Search Plant</h2>
+                <form action="{% url 'plants:plant_search_view' %}" method="GET" class="d-flex gap-2">
+                    <input type="search" class="form-control rounded-pill p-2" placeholder="Search" name="search" value="{{request.GET.search}}"/>
+                    <button class="btn btn-outline-success rounded-pill " type="submit">Search</button>
+                </form>
+            </div>
+            <h2>Search results for {{ request.GET.search }} ({{ plants.count }}) </h2>
+        </div>
+        <div class="row mt-2 g-5">
+            {% if plants.count == 0 %}
+                <h2>No results for your search '{{request.GET.search}}' </h2>
+            {% endif %}    
+        </div>
+        <div class="row">
+            <div class="col-12 ">
+                <div class="bg-white rounded p-2">
+                    <ul class="nav navv nav-tabs ">
+                        <li class="nav-item ">
+                            <a class="nav-link active nav-category" data-bs-toggle="tab" href="#all">All Plants</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-category" data-bs-toggle="tab" href="fruits">Fruits</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-category" data-bs-toggle="tab" href="#aromatic">Aromatic Herbs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-category" data-bs-toggle="tab" href="#flowers">Flowers</a>
+                        </li>
+                    </ul>
+                    <div class="row">
+                        <div class="col-12 ">
+                            <div class="tab-content p-4 ">
+                                <div id="all" class="tab-pane fade in active show">
+                                    <div class="row g-4 mt-2">  
+                                        {% for plant in plants %}
+                                            <div class="col-12 col-md-4">
+                                                <div class="card rounded-4">
+                                                    <div class="card_image">
+                                                    <span class="note rounded-pill {{plant.category}}">{{ plant.category }}</span>
+                                                    <img src="{{ plant.image.url }}" alt="plant image" />
+                                                    <span class="card_price rounded-pill {{plant.is_edible}}">{% if plant.is_edible == True %} Edible {% else %} Not Edible {% endif %}</span>
+                                                    </div>
+                                                    <div class="card_content mt-3">
+                                                        <h2 class="card_title">{{plant.name}}</h2>
+                                                        <p class="card_text">{{ plant.about }}</p>
+                                                        <p><a href="{% url 'plants:plant_detail_view' plant.id  %}" class="text-decoration-none know-more">Know more...</a></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div id="fruits" class="tab-pane fade ">
+                                    <div class="row">
+                                      
+                                    </div>
+                                </div>
+                                <div id="aromatic" class="tab-pane fade ">
+                                    <div class="row">
+                                    </div>
+                                </div>
+                                <div id="flowers" class="tab-pane fade ">
+                                    <div class="row">
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
