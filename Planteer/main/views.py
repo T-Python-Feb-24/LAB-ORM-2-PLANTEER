@@ -125,7 +125,7 @@ def contact(request:HttpRequest):
             except Exception as e:
                 print(e)
             
-            return redirect('main:message')
+            # return redirect('main:message')
         return render(request, 'main/contact.html')
 
 def messages(request:HttpRequest):

@@ -61,7 +61,8 @@
             </ul>
 
           </div>
-          <div>
+          <div class="d-flex flex-row gap-3">
+            <a href="{% url 'main:contact' %}"><img src="{% static 'images/contact-mail.png' %}" alt="contact icon" width="30px" height="30px"></a>
             <a class="btn btn-dark" href="{% url 'main:add_plant' %}" style="color: aliceblue; background: linear-gradient(#080822, #050516, #02020b);">Add Plant</a>
           </div>
         </div>
