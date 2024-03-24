@@ -39,9 +39,9 @@
             <div class="col-4">
                 <div class="HS d-flex flex-column gap-1 border border-1 shadow p-3 rounded-4 h-100">
                     <img src="{{ rel.image.url }}"  class="w-100 rounded-4"/>
+                    <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{rel.category}}">{{ rel.category }}</h6>
                     <h3><a href="{% url 'main:plant_detail' rel.id %}" class="text-decoration-none" style="color: rgba(0, 0, 0, 0.582);">{{rel.name}}</a></h3>
                     <!-- <h6>{{rel.about}}</h6> -->
-                    <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{rel.category}}">{{ rel.category }}</h6>
                 </div>
             </div>
             {% endfor %}
@@ -54,7 +54,7 @@
         <div class="col d-flex flex-column gap-2">
 
             {% for comment in comments %}
-            <div class="d-flex flex-column gap-1 border border-1 shadow p-3 rounded-4 h-100">
+            <div class="d-flex flex-column border border-1 shadow p-3 rounded-4 h-100" style="width: 300px;">
                 <div class="d-flex flex-row gap-2">
                     <span class="material-symbols-rounded ">account_circle</span>
                     <h3>{{ comment.full_name }}</h3>
