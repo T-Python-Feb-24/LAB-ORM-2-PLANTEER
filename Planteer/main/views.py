@@ -1,14 +1,16 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 
-from .models import Plant, Contact
+from .models import Plant, Contact, Comment
 # Create your views here.
 
 def home(request:HttpRequest):
     
     plants = Plant.objects.all().order_by('-created_at')[0:3]
 
-    return render(request,'main/home.html', {'plants' : plants})
+    comments = Comment.objects.all().order_by('-created_at')[0:5]
+
+    return render(request,'main/home.html', {'plants' : plants, "comments": comments})
 
 def add_plant(request:HttpRequest):
     if request.method == 'POST':
@@ -51,13 +53,16 @@ def plant_detail(request:HttpRequest, plant_id):
             #getting a  post detail
             plant = Plant.objects.get(pk=plant_id)
             related = Plant.objects.filter(category =  plant.category).exclude(pk=plant_id)[:4]
+
+            comments = Comment.objects.filter(post=plant) #this is to get the comments on the above post using filter
+
         except Plant.DoesNotExist:
             return render(request, "404.html")
         except Exception as e:
             print(e)
         
 
-        return render(request, "main/plant_detail.html", {"plant" : plant, "related": related})
+        return render(request, "main/plant_detail.html", {"plant" : plant, "related": related, "comments": comments})
 
 def update_plant(request:HttpRequest, plant_id):
         try:
@@ -132,3 +137,22 @@ def messages(request:HttpRequest):
     message = Contact.objects.all()[0:3]
 
     return render(request,'main/messages.html', {'message' : message})
+
+def add_comment(request:HttpRequest, plant_id):
+    # try:
+    #     comment_id = Comment.objects.get(pk=plant_id)
+    # except Comment.DoesNotExist:
+    #     comment_id = None
+
+    if request.method == "POST":
+        #add new comment
+
+            comment = Plant.objects.get(pk=plant_id)
+            new_comment = Comment(
+            post=comment,
+            full_name=request.POST["full_name"],
+            content=request.POST["content"]
+            )
+            new_comment.save()
+
+    return redirect("main:plant_detail", plant_id=comment.id)

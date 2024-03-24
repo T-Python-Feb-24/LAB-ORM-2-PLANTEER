@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Plant, Contact
+from .models import Plant, Contact, Comment
 
 # Register your models here.
 class PublisherAdmin(admin.ModelAdmin):
@@ -13,3 +13,4 @@ class PublisherCon(admin.ModelAdmin):
 
 admin.site.register(Plant, PublisherAdmin)
 admin.site.register(Contact, PublisherCon)
+admin.site.register(Comment)

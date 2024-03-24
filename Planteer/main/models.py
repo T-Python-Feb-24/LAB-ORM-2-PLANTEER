@@ -24,3 +24,13 @@ class Contact(models.Model):
     email = models.EmailField()
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+class Comment(models.Model):
+
+    post = models.ForeignKey(Plant, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=200)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.full_name

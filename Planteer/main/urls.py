@@ -13,4 +13,5 @@ urlpatterns = [
     path('plants/search/', views.search, name='search'),
     path('plants/contact_us/', views.contact, name='contact'),
     path('plants/contact_us/messages', views.messages, name='message'),
+    path("comments/<plant_id>/add/", views.add_comment, name="add_comment"),
 ]
