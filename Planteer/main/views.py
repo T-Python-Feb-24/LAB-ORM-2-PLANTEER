@@ -29,9 +29,12 @@ def plant_detail(request :HttpRequest , plant_id):
 # Plant Search Page (by name), Bonus -> Add search by category, and is_edible in the Plant Search Page 
 
 def search_page(request :HttpRequest):
+    plants=[]
     
-        
-    return render(request,"main/search.html")
+    if "search" in request.GET:
+        plants = Plant.objects.filter(name__icontains=request.GET["search"])
+
+    return render(request,"main/search.html",{"plants":plants})
 
 
 # Add new plant page:

@@ -16,9 +16,20 @@
 </div>
 
 
+    <h2>Search results for {{ request.GET.search }} ({{ plants.count }}) </h2>
 
-
-
+    <div class="row">
+        {% for plant in plants %}
+        
+        <div class="col-4">
+            <div class="d-flex flex-column gap-1 border border-1 shadow p-3 rounded-4 h-100">
+                <img src="{{ plant.image.url }}"/>
+                <h6>{{ plant.category }}</h6>
+                <h3><a href="{% url 'main:plant_detail' plant.id %}">{{plant.name}}</a></h3>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </form>
 
 {% endblock  %}
