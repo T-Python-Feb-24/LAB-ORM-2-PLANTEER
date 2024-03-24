@@ -44,16 +44,13 @@ def plant_detail_view(request: HttpRequest, plant_id):
 def update_plant_view(request: HttpRequest, plant_id):
     try:
         plant = Plant.objects.get(pk=plant_id)
-        if request.method == "post":
-            plant.name = request.POST.get("name"),
-            plant.about = request.POST.get("about"),
-            plant.used_for = request.POST.get("used_for"),
-            plant.image = request.FILES.get("image"),
-            plant.category = request.POST.get("category"),
-            plant.is_edible = request.POST.get("is_edible", False),
-            plant.created_at = request.POST.get("created_at")
-            if request.FILES.get("image") != None:
-                plant.image = request.FILES.get("image")
+        if request.method == "POST":
+            plant.name = request.POST.get("name")
+            plant.about = request.POST.get("about")
+            plant.used_for = request.POST.get("used_for")
+            plant.image = request.FILES.get("image", plant.image)
+            plant.category = request.POST.get("category")
+            plant.is_edible = request.POST.get("is_edible", False)
             plant.save()
             return redirect("main:plant_detail_view", plant_id)
 

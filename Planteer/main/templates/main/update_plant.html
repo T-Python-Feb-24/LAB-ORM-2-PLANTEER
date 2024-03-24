@@ -48,7 +48,8 @@ Update Plant
         <!-- Submit button -->
         <div class="d-flex w-100 gap-4">
             <button id="submit" data-mdb-ripple-init type="submit" class="btn btn-primary w-50">Update</button>
-            <a href="{% url 'main:delete_plant_view' plant.id %}" class="btn btn-danger w-50">Delete</a>
+            <button class="btn btn-danger w-50" onclick="myconfirm()">Delete</button>
+            <a href="{% url 'main:delete_plant_view' plant.id %}" hidden class="btn btn-danger w-50">Delete</a>
         </div>
     </form>
 </div>
