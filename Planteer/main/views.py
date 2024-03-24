@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
-from .models import Plants,Contact
+from .models import Plants,Contact,Comment
 from datetime import date, timedelta
 import math
 
@@ -8,8 +8,10 @@ import math
 # Create your views here.
 
 def home_view(request:HttpRequest):
-    plants = Plants.objects.all()
-    return render(request, "main/home.html", {"plants" : plants })
+    plants = Plants.objects.order_by('-created_at')[:6]
+    comments=Comment.objects.order_by('-created_at')[:5]
+    
+    return render(request, "main/home.html", {"plants" : plants,"comments":comments })
 
 def add_plants_view(request:HttpRequest):
      
@@ -44,17 +46,32 @@ def all_plants_view(request:HttpRequest):
 
 def detail_view(request:HttpRequest ,plant_id):
     try:
-        #getting a  post detail
+        
         plant = Plants.objects.get(pk=plant_id)
+        comments=Comment.objects.filter(plant=plant)
+        related = Plants.objects.filter(category=plant.category).exclude(id=plant_id)[:3]
     except Plants.DoesNotExist:
         return render(request)
     except Exception as e:
         print(e)
 
 
-    return render(request, "main/plants_detail.html", {"plant" : plant})
+    return render(request, "main/plants_detail.html", {"plant" : plant ,"comments":comments ,"related":related})
 
+def add_comment_view(request:HttpRequest, plant_id):
 
+    if request.method == "POST":
+        #add new comment
+        plant_object = Plants.objects.get(pk=plant_id)
+        new_comment = Comment(
+            plant=plant_object,
+            full_name=request.POST["full_name"],
+            message=request.POST["message"]
+              )
+        new_comment.save()
+
+    
+    return redirect("main:detail_view", plant_id=plant_object.id)
 
 def update_plants_view(request:HttpRequest, plant_id):
 
@@ -88,8 +105,9 @@ def delete_plants_view(request:HttpRequest, plant_id):
 
 # هنا بارت التواصل والرسائل
 def contact_view(request:HttpRequest):
-   
+
    if request.method == 'POST':
+        
         try:
             new_con = Contact(
                 first_name=request.POST["first_name"], 
@@ -97,17 +115,19 @@ def contact_view(request:HttpRequest):
                 email=request.POST["email"], 
                 message= request.POST["message"]
             )
+            
             new_con.save()
             return redirect("main:message_view")
         except Exception as e:
                     print(e)
+        
 
    return render(request, "main/contact.html")
 
     
 def message_view(request:HttpRequest):
-    Contacts = Contact.objects.all()
-    return render(request, "main/message.html", {"Contacts" : Contacts })
+    contacts = Contact.objects.all()
+    return render(request, "main/message.html", {"contacts" : contacts })
 
 
 def search_view(request:HttpRequest):

@@ -5,7 +5,7 @@
 <div class="row">
    
     <div class="col-md-6">
-        <form action="{% url 'main:message_view' %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+        <form action="{% url 'main:contact_view' %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
             {% csrf_token %}
             <div class="row">
                 <h2>Contact Us</h2>
@@ -32,6 +32,8 @@
     </div>
     <div class="col-md-6">
         <img src="{% static 'images/ser.jpg' %}" alt="Contact Image" class="img-fluid rounded-5" />
-    </div>
+    
+    <a class="text-dark text-decoration-none p-5" href="{% url 'main:message_view' %}">show message -></a>
+</div>
 </div>
 {% endblock %}

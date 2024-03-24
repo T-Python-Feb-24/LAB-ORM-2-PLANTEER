@@ -12,6 +12,9 @@ urlpatterns  = [
     path("plant/<plant_id>/delete/", views.delete_plants_view, name="delete_plants_view"),
     path("contact/", views.contact_view, name="contact_view"),
     path("contact/messages/", views.message_view, name="message_view"),
-    path("plants/search/", views.search_view, name="search_view")
+    path("plants/search/", views.search_view, name="search_view"),
+    path("comments/add/<plant_id>/", views.add_comment_view, name="add_comment_view")
+
+    
    
 ]

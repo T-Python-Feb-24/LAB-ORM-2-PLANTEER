@@ -19,3 +19,14 @@ class Contact(models.Model):
    email=models.EmailField()
    message=models.TextField()
    created_at=models.DateTimeField(auto_now_add=True)
+
+
+class Comment(models.Model):
+
+    plant = models.ForeignKey(Plants, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=2084)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+   
+       

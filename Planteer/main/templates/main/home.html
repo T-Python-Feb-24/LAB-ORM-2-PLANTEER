@@ -23,10 +23,10 @@
 
 <div class="row g-5">
 {% for plant in plants %}
-      <div class="col-4">
+      <div class="col-4 ">
           <div class="d-flex flex-column gap-2 border border-1 shadow p-2 rounded-3 h-100">
               <img src="{{ plant.image.url }}"  class="w-100 h-50 rounded-4"/>
-              <h3><a href="{% url 'main:detail_view' plant.id  %}" class="text-decoration-none text-white ">{{ plant.name }}</a></h3>
+              <h3><a href="{% url 'main:detail_view' plant.id  %}" class="text-decoration-none text-dark ">{{ plant.name }}</a></h3>
               <p>{{plant.is_edible}}</p>
               <h6 class="cat align-items-center {{ plant.category }}">{{ plant.category }}</h6>
           </div>
@@ -35,5 +35,18 @@
   
   
 </div>
+<hr>
+<div class="row">
+  <div class="col d-flex flex-column gap-2">
+      <h4>comments:</h4>
+      {% for comment in comments %}
+          <div class="d-flex flex-column gap-2 border border-1 p-3 rounded-3">
+              <h4>{{ comment.full_name }}</h4>
+              <p>{{ comment.message }}</p>
+          </div>
+      {% endfor %}
+
+  </div>
+
 
 {% endblock%}
