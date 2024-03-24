@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="row d-flex  ">
+        
+        <h1 class="ms-5 mt-5 mb-3">Name: {{ plant.name  }}</h1>
+        <div class="col-lg-6 d-flex   ">
+            <div class=" ms-5 d-flex">
+                <div>
+                    <img class="mb-1 border border-3 border-dark img-thumbnail" src="{{plant.image.url}}" alt="plant image">
+                </div>
+                <div class="ms-3">
+                    <h5>About:</h5>
+                    <p>{{ plant.about }}</p>
+                    <h5>Uesd for:</h5>
+
+                    <p>{{ plant.used_for }}</p>
+                </div>
+                
+            </div>
+        </div>
+        <div class="ms-5 mt-2">
+        <h6>Created at: {{plant.created_at}}</h6>
+        <h6>categore: {{ plant.categore }}</h6>
+        <div class="d-flex gap-2 mt-3 mb-3 ">
+            <a href="{% url 'main:update_plant_view' plant.id %}" class="btn bg-success text-white">update</a>
+            <a href="{% url 'main:delete_plant_view' plant.id %}" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+       
+
+
+    </div>
+    
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'main/base.html' %}
+
+
+
+{% block content %}
+<div class="container">
+<div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-img">
+    <div class="col-lg-6 px-0 text-white">
+      <h1 class="display-4 fst-italic">Planteer</h1>
+      <p class="lead my-3" style="font-size:40px;">plant database for plants Lovers.</p>
+
+    </div>
+    <br>
+    <div>
+      <form class="form-inline w-100  " action="/plants/search" method="GET">
+        {% csrf_token %}
+        <div class="form-group">
+          <input type="text" class="form-control" name="query" placeholder="Search">
+        </div>
+        <div class="d-flex justify-content-center align-items-center column-gap-3"> 
+        <select name="category" class="rounded-3 form-control mt-2 w-auto text-center ">
+          <option value="">All Categories</option>
+          <option value="General" {% if request.GET.category == 'General' %}selected{% endif %}>General</option>
+          <option value="Flowering" {% if request.GET.category == 'Flowering' %}selected{% endif %}>Flowering</option>
+          <option value="Conifers" {% if request.GET.category == 'Conifers' %}selected{% endif %}>Conifers</option>
+          <option value="Mosses" {% if request.GET.category == 'Mosses' %}selected{% endif %}>Mosses</option>
+          <option value="Carnivorous" {% if request.GET.category == 'Carnivorous' %}selected{% endif %}>Carnivorous</option>
+        </select>
+        <label class="text-white">
+          <input type="checkbox" name="is_edible" value="1" class="form-check-input "{% if request.GET.is_edible %}checked{% endif %}>
+    
+          Is Edible
+        </label>
+        </div>
+        <div class="d-flex justify-content-center">
+        <button type="submit" class="btn bg-success text-white mt-3">Search</button>
+        </div>
+      </form>
+    </div>
+</div>
+</div>
+<div class="d-flex flex-wrap justify-content-center column-gap-3 ">
+  {% for plant in plants %}
+  
+  <div class="d-flex flex-column gap-2 border border-1 shadow p-3 justify-content-center rounded-4 w-25-1    rounded-4    ">
+      <div class="align-items-center  " >
+          <img class=" rounded-4 align-items-center img-thumbnail" src="{{ plant.image.url }}" />
+      </div>
+      <h2><a href="{% url 'main:plants_details' plant.id  %}" class="text-decoration-none text-black">{{plant.name}}</a></h2>
+      <h6 class="cat pt-1 pb-1  pe-3 rounded-pill {{plants.category}} ">{{ plant.categore }}</h6>
+      <h6>Created at: {{ plant.created_at }}</h6>
+      
+  </div>
+  
+  
+  
+  
+  {% endfor %}
+</div>
+<br>
+<div class="d-flex justify-content-center mb-3">
+  <a class="btn bg-success text-white" href="{% url 'main:all_plants' %}">View All</a>
+</div>
+{% endblock %}
