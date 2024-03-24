@@ -14,14 +14,25 @@
                     <form action="{% url 'main:contact' %}" method="post" class="d-flex flex-column gap-2">
                         {% csrf_token %}
 
-                        <label for="first">First Name:</label>
-                        <input name="first" id="first" type="text" placeholder="First Name" class="form-control" required minlength="3">
+                        <div class="row">
+                            <div class="col">
+                                <label for="first_name" class="form-label">First Name:</label>
+                                <input name="first" type="text" class="form-control" id="first_name" placeholder="First Name..." required>
+                            </div>
 
-                        <label for="last">Last Name:</label>
-                        <input name="last" type="text" placeholder="Last Name" class="form-control" required minlength="3">
+                            <div class="col">
+                                <label for="last_name" class="form-label">Last Name:</label>
+                                <input name="last" type="text" class="form-control" id="last_name" placeholder="Last Name..." required>
+                            </div>
+                        </div>
 
-                        <label for="email">Email Address:</label>
-                        <input type="email" name="email" id="email" placeholder="example@gmail.com" class="form-control">
+                        <div class="col">
+                            <label for="email" class="form-label">Email Address:</label>
+                            <div class="input-group">
+                              <span class="input-group-text">@</span>
+                              <input name="email" type="email" class="form-control" id="email" placeholder="example@gmail.com" required>
+                            </div>
+                        </div>
 
                         <label for="message">Your Message:</label>
                         <textarea name="message" id="message" placeholder="Messages..." cols="30" rows="5" class="form-control"></textarea>

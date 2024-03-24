@@ -17,7 +17,7 @@
                             <h5>{{plant.first_name}} {{plant.last_name}}</h5>
                         </div>
 
-                        <h6><a href="#">{{ plant.email }}</a></h6>
+                        <h6><a href="mailto:{{ plant.email }} " target='_blank' rel=noopener noreferrer>{{ plant.email }}</a></h6>
                         <h6>{{ plant.message }}</h6>
                         <h6 class="text-muted">{{ plant.created_at }}</h6>
                     </div>
