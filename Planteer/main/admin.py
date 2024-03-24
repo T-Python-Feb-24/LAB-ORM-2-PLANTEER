@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Plant
+from .models import Plant, Comment
 
 # Register your models here.
 
@@ -11,3 +11,4 @@ class PostAdmin(admin.ModelAdmin):
     list_filter =  ['name', 'category']
 
 admin.site.register(Plant, PostAdmin)
+admin.site.register(Comment)

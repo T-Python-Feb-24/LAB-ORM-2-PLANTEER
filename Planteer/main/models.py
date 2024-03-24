@@ -1,24 +1,4 @@
-# from django.db import models
-
-# # Create your models here.
-
-
-# class Post(models.Model):
-
-#     #catergories choices
-#     categories = models.TextChoices("Category", ["General", "Tech", "Science", "Fashion"])
-
-#     title = models.CharField(max_length=2048)
-#     content = models.TextField()
-#     is_published = models.BooleanField()
-#     published_at = models.DateTimeField(auto_now_add=True)
-#     poster = models.ImageField(upload_to="images/", default="images/default.jpeg")
-#     category = models.CharField(max_length=64, choices=categories.choices)
      
-# # الادمن
-# def __str__(self):
-#     return self.title     
-
 from django.db import models
 
 # Create your models here.
@@ -28,6 +8,8 @@ class Plant(models.Model):
     about = models.TextField()
     used_for = models.TextField()
     image = models.ImageField(upload_to='images/', default='images/default_img.jpg')
+    # is_published = models.BooleanField()
+    # published_at = models.DateTimeField(auto_now_add=True)
     
     Categories = models.TextChoices('Category', ["Tree","Fruit", "Vegetables"]) 
     category = models.CharField(max_length = 64, choices = Categories.choices)
@@ -37,3 +19,12 @@ class Plant(models.Model):
 
     def __str__(self):
         return self.name
+    
+# comment
+class Comment(models.Model):
+    
+    plant= models.ForeignKey(Plant, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=2084)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+

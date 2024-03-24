@@ -28,4 +28,5 @@ urlpatterns = [
     path('plants/<plant_id>/update/', views.update_plant, name='update_plant'),
     path('plants/<plant_id>/delete/', views.delete_plant, name='delete_plant'),
     path('plants/search/', views.search, name='search'),
+    path("comments/add/<plant_id>/", views.add_comment, name="add_comment"),
 ]
