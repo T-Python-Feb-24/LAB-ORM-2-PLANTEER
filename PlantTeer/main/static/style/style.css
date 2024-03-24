@@ -1,0 +1,27 @@
+*{
+  overflow: hidden;
+}
+/* home */
+.masthead {
+    height: 85vh;
+    min-height: 500px;
+    background-image: url('/static/image/succulent-1031033_1280.jpg') ;
+    background-size: cover;
+    object-fit:cover ;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius:30px;
+    
+  }
+
+/* base */
+.nav-1{
+    display: flex;
+
+    justify-content: right;
+    
+    column-gap: 5px;
+    
+}
+
+

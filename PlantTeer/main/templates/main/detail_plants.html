@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+{% block title %}{% endblock %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        <img src="{{ plant.image.url }}"  class=" rounded-4 mp-5" style="width: 500px; margin-top: 20px; margin-left: 70px;"/>
+        
+
+    </div>
+    <div class="col">
+        <div class="d-flex flex-column gap-2">
+            
+            <h1>{{ plant.name  }}</h1>
+            <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{plant.categroy}}">{{ plant.categroy}}</h6>
+            <h6>{{plant.created_at}}</h6>
+            <p>{{ plant.about }}</p>
+            <p> Is edible :{% if plant.is_edible == False %} No {% else %} Yes {% endif %}</p>
+            <div class="d-flex gap-2">
+                <a href="{% url 'main:update_plants' plant.id %}" class="btn btn-primary mt-3">update</a>
+                <a href="{% url 'main:delete_plants' plant.id %}" class="btn btn-danger mt-3">Delete</a>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+{% endblock content %}
