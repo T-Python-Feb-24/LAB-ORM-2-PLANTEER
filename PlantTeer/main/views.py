@@ -7,16 +7,16 @@ def home_page(requset:HttpRequest):
     
     plants=Plant.objects.all().order_by('-created_at')[0:3]
     
-    return render(requset,"main/home_page.html",{"plants":plants,})
+    return render(requset,"main/home_page.html",{"plants":plants})
 
 
 def all_plants(requset:HttpRequest):
     if "cat" in requset.GET:
-        plants = Plant.objects.filter(category=requset.GET["cat"])
+        plant = Plant.objects.filter(category = requset.GET["cat"])
     else:
-        plants = Plant.objects.all()
+        plant = Plant.objects.all().order_by("-created_at")
     
-    return render(requset, "main/all_plants.html", {"plants" : plants, "Category":Plant.categories.choices})
+    return render(requset, "main/all_plants.html", {"plants" : plant, "Category":Plant.categories.choices})
 
 
 

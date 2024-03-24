@@ -2,6 +2,9 @@
 {% block title %}{% endblock %}
 
 {% block content %}
+
+
+
 <div class="row g-4">
 
     <div class="d-flex flex-column gap-2">
@@ -12,7 +15,7 @@
             <input type="submit" value="search" class="btn btn-primary" />
         </form> 
 
-        <h2>Search results for {{ request.GET.search }}  </h2>
+        <h2>Search results for {{ request.GET.search }} {{ plants.count}} </h2>
     </div>
 
 </div>
@@ -26,10 +29,10 @@
     {% for plant in plants %}
             <div class="col-4">
                 <div class="d-flex flex-column gap-2 border border-1 shadow p-3 rounded-4 h-100">
-                    <img src="{{ plants.image.url }}"  class="w-100 rounded-4"/>
-                    <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{plants.category}} ">{{ plants.Category }}</h6>
-                    <h6 class="text-muted">{{ plants.created_at }}</h6>
-                    <h2><a href="{% url 'main:detail_plants' plant.id  %}" class="text-decoration-none">{{plants.name}}</a></h2>
+                    <img src="{{ plant.image.url }}"  class="w-100 rounded-4"/>
+                    <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{plant.category}} ">{{ plant.Category }}</h6>
+                    <h6 class="text-muted">{{ plant.created_at }}</h6>
+                    <h2><a href="{% url 'main:detail_plants' plant.id  %}" class="text-decoration-none">{{plant.name}}</a></h2>
                     
                 </div>
             </div>

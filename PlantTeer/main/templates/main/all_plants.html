@@ -10,7 +10,7 @@
             <a href="{% url 'main:all_plants' %}" class="p-2 ps-3 pe-3 rounded-pill cat  text-decoration-none">All</a>
             
             {% for val, key in Category %}
-                <a href="?cat={{val}}" class="p-2 ps-3 pe-3 rounded-pill cat {{ val }} text-decoration-none">{{val}}</a>
+                <a href="?cat={{val}}" class="p-2 ps-3 pe-3 rounded-pill cat {% if request.GET.cat == val %} {{ val }} {% endif %} text-decoration-none">{{val}}</a>
             {% endfor %}
             
         </div>
@@ -19,7 +19,7 @@
 </div>
 
 <div class="row mt-2 g-5">
-        {% for plant in plants %}
+        {% for plant in plant %}
         <div class="col-4">
             <div class="d-flex flex-column gap-2 border border-1 shadow p-3 rounded-4 h-100">
                 <img src="{{ plant.image.url }}"  class="w-100 rounded-4"/>
