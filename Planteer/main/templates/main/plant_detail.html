@@ -30,6 +30,43 @@
             </div>
             
         </div>
+        
+        <div class="row">
+            <div class="col d-flex flex-column gap-3">
+        
+                {% for comment in comments %}
+                    <div class="shadow-sm p-3 mb-3 bg-body rounded">
+                        <h5>{{ comment.full_name }}</h5>
+                        <p>{{ comment.content }}</p>
+                        <small class="text-muted">Posted on {{ comment.created_at|date:"M d, Y" }}</small>
+                    </div>
+                {% endfor %}
+        
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col">
+                <form action="{% url 'main:add_comment' plant.id %}" method="post" class="p-3 bg-light border rounded">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="full_name" class="form-label">Full Name</label>
+                        <input type="text" name="full_name" class="form-control" id="full_name"/>
+                    </div>
+        
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Comment</label>
+                        <textarea name="content" class="form-control" id="content"></textarea>
+                    </div>
+        
+                    <div class="d-grid">
+                        <input type="submit" value="Add Comment" class="btn btn-primary"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+    </div>
         <h2>Related Plants</h2>
 <div class="row">
   {% for related_plant in related_plants %}
@@ -45,6 +82,7 @@
   </div>
   {% endfor %}
 </div>
+
     </div>
 </div>
 

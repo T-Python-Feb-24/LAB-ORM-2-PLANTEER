@@ -1,15 +1,15 @@
 
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound,HttpRequest
 from django.shortcuts import render, redirect,get_object_or_404
 from django.core.paginator import Paginator
 from .models import  Plant 
-from .models import Contact
+from .models import Contact, Comment
 
 def home(request):
     print(request.GET)
     plants = Plant.objects.all()
     
-    
+    latest_comments = Comment.objects.order_by('-created_at')[:5]
     
     paginator = Paginator(plants, 3) 
 
@@ -19,7 +19,7 @@ def home(request):
 
 
 
-    return render(request, 'main/index.html', {'plants': plants})
+    return render(request, 'main/index.html', {'plants': plants, 'latest_comments': latest_comments})
 
 
 
@@ -40,11 +40,13 @@ def plant_detail(request, plant_id):
     try:
         plant = Plant.objects.get(pk=plant_id)
         related_plants = Plant.objects.filter(category=plant.category).exclude(pk=plant_id)[:3]
-
+        plant = Plant.objects.get(pk=plant_id)
+        comments = Comment.objects.filter(plant=plant)
         
-        return render(request, 'main/plant_detail.html', {'plant': plant, 'related_plants': related_plants})
+        return render(request, 'main/plant_detail.html', {'plant': plant, 'related_plants': related_plants,  "comments" : comments})
     except Plant.DoesNotExist:
         return HttpResponseNotFound('Plant not found')
+    
 def update_plant(request, plant_id):
     plant = get_object_or_404(Plant, pk=plant_id)
 
@@ -119,3 +121,12 @@ def contact_view(request):
 
 def contact_success(request):
      return render(request, 'main/contact_success.html')
+ 
+def add_comment(request: HttpRequest , plant_id):
+    
+    if request.method == "POST":
+        plant_object = Plant.objects.get(pk=plant_id)
+        new_comment = Comment(plant=plant_object,full_name=request.POST["full_name"],content=request.POST["content"])
+        new_comment.save()
+        
+    return redirect("main:plant_detail", plant_id=plant_object.id)

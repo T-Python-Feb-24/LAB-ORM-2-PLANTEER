@@ -1,6 +1,8 @@
 from django.contrib import admin
 from .models import Plant
 from .models import Contact
+from .models import Comment
+
 # Register your models here.
 
 
@@ -15,3 +17,9 @@ class ContactAdmin(admin.ModelAdmin):
     list_filter = ['created_at']
     
 admin.site.register(Contact, ContactAdmin)
+
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['full_name', 'content', 'created_at']  # Correct field names used here
+    list_filter = ['created_at']  # Assuming you might want to filter by creation date
+
+admin.site.register(Comment, CommentAdmin)

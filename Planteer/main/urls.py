@@ -12,6 +12,7 @@ urlpatterns = [
     path("plants/all/", views.all_plants_view, name="all_plants_view"),
     path('search/', views.search_plants, name='search_plants'),
     path('contact/', views.contact_view, name='contact'),
-     path('contact/success/', views.contact_success, name='contact_success'),
+    path('contact/success/', views.contact_success, name='contact_success'),
+     path("comment/<plant_id>/", views.add_comment, name="add_comment")
     
 ]
