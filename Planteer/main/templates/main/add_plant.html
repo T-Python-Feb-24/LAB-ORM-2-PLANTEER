@@ -1,0 +1,34 @@
+{% extends "main/base.html" %}
+{% block title %}add plant{% endblock title %}
+
+{% block content %}
+    <div class="row p-3 m-5 form-container">
+        <h2>Add a new plant here:</h2>
+        <div class="col">
+            <form action="{% url 'main:add_plant_view' %}" method="post" enctype="multipart/form-data" class="d-flex flex-column align-items-center gap-4">
+            {% csrf_token %}
+
+                <input class="form-control w-50" name="name" type="text" placeholder="Enter the name of the plant..." required minlength="4">
+                <textarea class="form-control w-50" name="about" required minlength="20" placeholder="Write about the plant"></textarea>
+                <textarea class="form-control w-50" name="used_for" required minlength="10" placeholder="Used For?"></textarea>
+
+                <h5>Category:</h5>
+                <select name="category" class="form-select w-50" required>
+                    {% for val, cat in categories %}
+                        <option value="{{val}}">{{cat}}</option>
+                    {% endfor %}
+                </select>
+
+                <h5>Upload an image:</h5>
+                <input class="form-control w-50" name="image" type="file" required accept="image/*">
+
+                <div class="form-check form-switch">
+                    <input name="is_edible" value="True" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Is edible</label>
+                </div>
+
+                <input type="submit" class="btn btn-primary" value="Add Plant">
+            </form>
+        </div>
+    </div>
+{% endblock content %}
