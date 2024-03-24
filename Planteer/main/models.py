@@ -18,6 +18,15 @@ class Plant(models.Model):
         return self.name
         
 
+class Comment(models.Model):
+    plant = models.ForeignKey(Plant,on_delete = models.CASCADE)
+    full_name = models.CharField(max_length=2000)
+    content = models.TextField()
+    created_at = models.DateField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.full_name
+    
 # Bonus : 
 
 class Contact(models.Model):
@@ -26,4 +35,3 @@ class Contact(models.Model):
     email = models.EmailField()
     messagee = models.TextField()
     created_at = models.DateTimeField(auto_now_add = True)
-    

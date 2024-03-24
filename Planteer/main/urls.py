@@ -12,6 +12,7 @@ urlpatterns = [
     path("plants/new/",views.new_plant,name="new_plant"),
     path("plants/<plant_id>/update/",views.update_plant,name="update_plant"),
     path("plants/<plant_id>/delete/",views.delete_plant,name="delete_plant"),
+    path("comments/add/<plant_id>/",views.plant_comment,name="plant_comment"),
     # #Bonus pages :
     # path("contact/"),
     # path("contact/messages/"),

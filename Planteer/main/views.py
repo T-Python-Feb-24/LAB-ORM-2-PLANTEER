@@ -1,6 +1,6 @@
 from django.shortcuts import render , redirect
 from django.http import HttpRequest, HttpResponse
-from.models import Plant
+from.models import Plant , Comment
 # Create your views here.
 
 #home page : 
@@ -23,11 +23,12 @@ def all_plants(request :HttpRequest):
 def plant_detail(request :HttpRequest , plant_id):
     plant = Plant.objects.get(pk=plant_id)
     
-    return render(request,"main/plant_detail.html",{"plant":plant})
+    comments = Comment.objects.filter(plant__id =plant_id)
+    
+    return render(request,"main/plant_detail.html",{"plant":plant ,"comments": comments})
 
 
 # Plant Search Page (by name), Bonus -> Add search by category, and is_edible in the Plant Search Page 
-
 def search_page(request :HttpRequest):
     plants=[]
     
@@ -83,6 +84,25 @@ def delete_plant(request :HttpRequest,plant_id):
     plant.delete()
     
     return redirect("home_page.html")
+
+
+
+def plant_comment(request : HttpRequest , plant_id):
+    # you want to save all the attributes values that will be be send from the user , so you will create the instance of the model class so that you can save it 
+    if request.method == "POST":
+        #here we access all the attributes inside the Model
+        plant = Plant.objects.get(pk=plant_id)
+        #then we will take the "plant" which is the access for the model ,  and put it inside the "plant" attribute so that we can get its comments 
+        comment = Comment(
+            plant = plant,
+            full_name = request.POST["full_name"],
+            content = request.POST["content"]
+            )
+        comment.save()
+    
+    return redirect ("main:plant_detail",plant_id)
+
+
 
 # # #  Bonus pages :
 
