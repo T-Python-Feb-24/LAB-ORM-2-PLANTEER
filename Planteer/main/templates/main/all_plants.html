@@ -1,76 +1,74 @@
 {% extends 'main/base.html' %}
+{% block title %} Plants {% endblock %}
 {% load static %}
 {% block content %}
-
-
 
 <section>
 
     <h2 class="mt-5 mb-5 text-center">All Plants</h2>
       <div class="card-container">
+
         <div class="card">
           <img src="{% static 'images/annual/petunia1.jpeg' %}" alt="Image description">
           <div class="card-content">
             <h2>Petunia</h2>
             <p>Nature's vibrant brushstrokes of color.</p>
-            <!-- <a class="search-bar btn-outline-success" href="#">Read More</a> -->
             <button class="search-bar btn-outline-success" ><a href="" >Read more</a></button>
           </div>
         </div>
+
         <div class="card">
           <img src="{% static 'images/biennial/angelica.jpeg' %}" alt="Image description">
           <div class="card-content">
             <h2>Angelica</h2>
             <p>A graceful and aromatic herb with delicate clusters of blossoms.</p>
-            <!-- <a href="#">Read More</a> -->
             <button class="search-bar btn-outline-success" ><a href="" >Read more</a></button>
-
           </div>
-        </div>        
+        </div>       
+
         <div class="card">
           <img src="{% static 'images/perennial/lantana.jpeg' %}" alt="Image description">
           <div class="card-content">
             <h2>lantana</h2>
             <p>Fragrant blooms that exude elegance and captivate with their timeless beauty.</p>
-            <!-- <a href="#">Read More</a> -->
             <button class="search-bar btn-outline-success" ><a href="" >Read more</a></button>
-
           </div>
         </div>
+      </div>  
 </section>
+
+
 <section>
         <div class="card-container">
+
             <div class="card">
               <img src="{% static 'images/shrub/abelia.jpeg' %}" alt="Image description">
               <div class="card-content">
                 <h2>Abelia</h2>
                 <p>Delicate blooms that adorn gardens with their graceful charm and sweet fragrance.</p>
-                <!-- <a class="search-bar btn-outline-success" href="#">Read More</a> -->
                 <button class="search-bar btn-outline-success" ><a href="" >Read more</a></button>
               </div>
             </div>
+
             <div class="card">
               <img src="{% static 'images/annual/kale.webp' %}" alt="Image description">
               <div class="card-content">
                 <h2>Kale</h2>
                 <p>A versatile and nutrient-rich leafy green that adds a vibrant burst of color and a hearty flavor to culinary creations.</p>
-                <!-- <a href="#">Read More</a> -->
                 <button class="search-bar btn-outline-success" ><a href="" >Read more</a></button>
-    
               </div>
-            </div>        
+            </div>  
+
             <div class="card">
               <img src="{% static 'images/biennial/foxglove.jpeg' %}" alt="Image description">
               <div class="card-content">
                 <h2>Foxglove</h2>
                 <p>Delicate and enchanting, its blossoms exude grace and allure, lending a magical touch to any setting.</p>
-                <!-- <a href="#">Read More</a> -->
                 <button class="search-bar btn-outline-success" ><a href="" >Read more</a></button>
-    
               </div>
             </div>
-      </div>
+
+        </div>
         
-    </section>
-    
-      {% endblock %}
+</section>
+{% endblock %}

@@ -1,10 +1,11 @@
+
 {% extends 'main/base.html' %}
+
+{% block title %} Add Plants {% endblock %}
 
 {% block content %}
 
 <section>
-
-
     <div class="row">
         <h1 class="mt-5 mb-5 text-center">Add new post</h1>
         <div class="col">
@@ -14,48 +15,45 @@
 
                 <input name="name" type="text" placeholder="Name" class="form-control" required minlength="5" />
                 <hr>
+
                 <h5>Category</h5>
                 <select name="category" class="form-select" required>
                     {% for val, cat in categories %}
-                        <option value="{{val}}">{{cat}}</option>
+                        <option value="{{ val }}">{{ cat }}</option>
                     {% endfor %}
                 </select>
                 <hr>
-                <h5>Discription:</h5>
 
-                <textarea name="about" class="form-control" placeholder="Discription" required minlength="20"></textarea>
+                <h5>Description:</h5>
+                <textarea name="about" class="form-control" placeholder="Description" required minlength="20"></textarea>
                 <hr>
-                <h5>Native to:</h5>
 
+                <!-- <h5>Native to:</h5>
+                <input name="native_to" type="text" placeholder="Native to..." class="form-control" required minlength="5" />
+                <hr> -->
 
-                <input name="category" type="text" placeholder="native to..." class="form-control" required minlength="5" />
-                <hr>
                 <h5>Is it edible:</h5>
-
                 <div class="radio-container">
                     <label for="yes">Yes</label>
-                    <input type="radio" id="yes" name="choice" value="yes">
+                    <input type="radio" id="yes" name="is_edible" value="yes">
                   
                     <label for="no">No</label>
-                    <input type="radio" id="no" name="choice" value="no">
-                  </div>
-                  <hr>
-                  <h5>Used for:</h5>
-                  <textarea name="about" class="form-control" placeholder="Used for..." required minlength="20"></textarea>
-
+                    <input type="radio" id="no" name="is_edible" value="no">
+                </div>
                 <hr>
+
+                <h5>Used for:</h5>
+                <textarea name="used_for" class="form-control" placeholder="Used for..." required minlength="20"></textarea>
+                <hr>
+
                 <h5>Choose Image:</h5>
                 <input name="image"  type="file"  accept="image/*" class="form-control" required />
                 <hr>
-                <input type="submit" class="btn" value="Add Post"/>
+                <input type="submit" class="search-bar btn-outline-success p-2" value="Add Post"/>
 
             </form>
-
         </div>
-
-
     </div>
-
 </section>
 
 {% endblock %}

@@ -1,35 +1,26 @@
 {% extends 'main/base.html' %}
-
 {% block title %} Search {% endblock %}
-
-
 {% block content %}
 
 
 <section>
 
-
     <div class="search-page row g-4">
-
         <div class="d-flex flex-column gap-2">
-            
             <h1>Search</h1>
             <form action="{% url 'main:plant_search' %}"  method="get" class="d-flex gap-2">
                 <input type="search" class="form-control" name="search" value="{{request.GET.search}}"/>
                 <input type="submit" value="search" class="btn btn-primary" />
             </form> 
-
             <h2>Search results for {{ request.GET.search }} ({{ plants.count }}) </h2>
         </div>
-
     </div>
 
     <div class="row ">
-
         {% if plants.count == 0 %}
             <h3 class="nore">No results for your search '{{request.GET.search}}' </h3>
         {% endif %}
-
+        
         {% for plant in plants %}
             <div class="col-4">
                 <div class="d-flex flex-column gap-2 border border-1 shadow p-3 rounded-4 h-100">
@@ -37,13 +28,11 @@
                     <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{plant.category}} ">{{ plant.category }}</h6>
                     <h6 class="text-muted">{{ plant.created_at }}</h6>
                     <h2><a href="{% url 'main:plant_detail' plant.id  %}" class="text-decoration-none">{{plant.name}}</a></h2>
-                    
                 </div>
             </div>
-            
         {% endfor %}
-
     </div>
+
 </section>
 
 {% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'main/base.html' %}
+{% block title %} Contact Us {% endblock %}
+{% block content %}
+
+<section>
+    <!-- <div class="row">
+        <h1 class="mt-5 mb-5 ">Contact Us</h1>
+        <div class="col">
+            <h6>First Name</h6>
+            <form action="{% url 'main:add_plant' %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                {% csrf_token %}
+
+                <input name="name" type="text" placeholder="Name" class="form-control" required minlength="5" />
+                <hr>
+
+                <h5>Category</h5>
+                <select name="category" class="form-select" required>
+                    {% for val, cat in categories %}
+                        <option value="{{val}}">{{cat}}</option>
+                    {% endfor %}
+                </select>
+                <hr>
+
+                <h5>Discription:</h5>
+                <textarea name="about" class="form-control" placeholder="Discription" required minlength="20"></textarea>
+                <hr>
+
+                <h5>Native to:</h5>
+                <input name="category" type="text" placeholder="native to..." class="form-control" required minlength="5" />
+                <hr>
+
+                <h5>Is it edible:</h5>
+                <div class="radio-container">
+                    <label for="yes">Yes</label>
+                    <input type="radio" id="yes" name="choice" value="yes">
+                  
+                    <label for="no">No</label>
+                    <input type="radio" id="no" name="choice" value="no">
+                </div>
+                <hr>
+
+                <h5>Used for:</h5>
+                <textarea name="about" class="form-control" placeholder="Used for..." required minlength="20"></textarea>
+                <hr>
+
+                <h5>Choose Image:</h5>
+                <input name="image"  type="file"  accept="image/*" class="form-control" required />
+                <hr>
+                <input type="submit" class="search-bar btn-outline-success p-2" value="Add Post"/>
+
+            </form>
+        </div>
+    </div> -->
+
+
+    <h1>Contact Us</h1>
+    <form method="post" action="{% url 'main:contact_us' %}">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" required></textarea><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+</section>
+
+{% endblock %}

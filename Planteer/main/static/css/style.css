@@ -16,7 +16,6 @@ html {
     overflow-x: hidden;
 }
 
-
 #section3{
     background-color: rgb(50, 52, 47);
 }
@@ -48,8 +47,6 @@ html {
     font-weight: 100;
 }
 
-
-
 .more{
     text-decoration: none;
     color: rgb(30, 29, 29);
@@ -58,8 +55,9 @@ html {
 .learn{
     color: rgba(17, 19, 18, 0.451);
 }
-/* main section  */
 
+
+/* main section  */
 section{
     padding: 100px 100px;
 } 
@@ -108,7 +106,12 @@ section{
 }
 
 .card{
-    margin: 50px;
+    margin: 80px;
+    padding: 10px;
+}
+
+section .card{
+    margin: 80px;
     padding: 10px;
 }
 
@@ -150,7 +153,6 @@ section{
     justify-content: center;
   }
 
-
 .card {
     position: relative;
     flex-direction: column;
@@ -168,7 +170,6 @@ section{
     object-fit: cover;
       }
 
-
   .card-content h2 {
     font-size: 20px;
     margin-bottom: 10px;
@@ -179,7 +180,6 @@ section{
     color: #555;
     margin-bottom: 15px;
   }
-
 
   .card-content {
     padding: 20px;
@@ -199,3 +199,7 @@ section{
   .nore{
     padding-left: 130px ;
   }
+
+.footer-icon{
+    border-radius: 20px;
+}
