@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="row">
+        
+        <div class="col">
+            <div class="d-flex flex-column gap-2">
+                <h1>{{ plant.title  }}</h1>
+                <img src="{{ plant.poster.url }}"  class="w-100 rounded-4"/>
+                <div class="d-flex justify-content-between">
+                    <h6>{{plant.published_at}}</h6>
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'main:update_plant_view' plant.id %}" class="btn btn-primary">Update</a>
+                        <a href="{% url 'main:delete_plant_view' plant.id %}" class="btn btn-danger">Delete</a>
+                    </div>
+                    
+                </div>
+                <h6>Is Edible: {{plant.is_edible}}</h6>
+                <p>{{ plant.content }}</p>
+            </div>
+
+        </div>
+
+
+    </div>
+{% endblock %}

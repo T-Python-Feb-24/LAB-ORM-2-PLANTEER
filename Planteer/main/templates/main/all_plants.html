@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+
+
+
+{% block content %}
+
+    <div class="row g-4">
+
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>{% if 'cat' in request.GET %} {{request.GET.cat}} {% else %} All {% endif %} Plants ({{ vs.count }})</h2>
+
+            <div class="d-flex gap-2">
+                <a href="{% url 'main:all_plant_view' %}" class="p-2 ps-3 pe-3 rounded-pill cat  text-decoration-none {% if 'cat' not in request.GET %} All  {% endif %}">All</a>
+                {% for val, key in categories %}
+                    <a href="?cat={{val}}" class="p-2 ps-3 pe-3 rounded-pill cat {% if request.GET.cat == val %} {{ val }}{% endif %} text-decoration-none">{{val}}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row mt-2 g-5">
+
+        {% for plant in plants %}
+            <div class="col-4">
+                <div class="d-flex flex-column gap-2 border border-1 shadow p-3 rounded-4 h-100">
+                    <img src="{{ plant.poster.url }}"  class="w-100 rounded-4"/>
+                    <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{plant.category}} ">{{ plant.category }}</h6>
+                    <h6 class="text-muted">{{ plant.published_at }}</h6>
+                    <h2><a href="{% url 'main:plant_detail_view' plant.id  %}" class="text-decoration-none">{{plant.title}}</a></h2>
+                    
+                </div>
+            </div>
+            
+        {% endfor %}
+
+    </div>
+
+{% endblock %}
