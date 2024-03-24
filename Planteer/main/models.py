@@ -5,7 +5,7 @@ class Plant(models.Model):
     class category_choices(models.TextChoices):
         Fruit = "Fruit"
         Vegetables = "Vegetables"
-        Flawer = "Flawer"
+        Flawer = "Flower"
         Herb = "Herb"
         Mushroom = "Mushroom"
 
@@ -34,4 +34,17 @@ class Contact(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return ' '.join([self.first_name, self.last_name])
+        return f"{self.first_name} {self.last_name}"
+
+
+class Comment(models.Model):
+    plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
+    user_name = models.CharField(max_length=20)
+    content = models.TextField()
+    comment_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-comment_date']
+
+    def __str__(self) -> str:
+        return f"{self.user_name} {self.plant.name}"

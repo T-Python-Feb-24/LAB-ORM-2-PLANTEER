@@ -1,12 +1,14 @@
 from django.shortcuts import redirect, render
 from django.http import HttpRequest, QueryDict
-from .models import Plant, Contact
+from .models import Plant, Contact, Comment
 from django.core.paginator import Paginator
 
 
 def index_view(request: HttpRequest):
     plants = Plant.objects.all().order_by('-created_at')[0:3]
-    return render(request, "main/index.html", {"plants": plants})
+    comments = Comment.objects.all()[0:5]
+    return render(request, "main/index.html", {"plants": plants,
+                                               "comments": comments})
 
 
 def new_plant_view(request: HttpRequest):
@@ -34,11 +36,14 @@ def plant_detail_view(request: HttpRequest, plant_id):
         plant = Plant.objects.get(pk=plant_id)
         relateds = Plant.objects.filter(
             category=plant.category, is_edible=plant.is_edible)
+        comments = Comment.objects.filter(plant=plant)
     except Plant.DoesNotExist:
         return render(request, "404.html")
     except Exception as e:
         print(e)
-    return render(request, "main/plant_detail.html", {'plant': plant, 'relateds': relateds})
+    return render(request, "main/plant_detail.html", {'plant': plant,
+                                                      'relateds': relateds,
+                                                      'comments': comments})
 
 
 def update_plant_view(request: HttpRequest, plant_id):
@@ -123,7 +128,7 @@ def contact_view(request: HttpRequest):
     return render(request, "main/contact.html")
 
 
-def messages_view(request: HttpRequest):
+def contactUs_messages_view(request: HttpRequest):
     messages = Contact.objects.all()
     pages = Paginator(messages, per_page=8)
     req = request.GET
@@ -133,3 +138,13 @@ def messages_view(request: HttpRequest):
     else:
         messages = pages.get_page(1)
     return render(request, "main/messages.html", {"pages": pages, "messages": messages})
+
+
+def add_comment_view(request: HttpRequest, plant_id):
+    if request.method == "POST":
+        plant = Plant.objects.get(pk=plant_id)
+        Comment.objects.create(
+            plant=plant,
+            user_name=request.POST.get("user_name"),
+            content=request.POST.get("content"))
+    return redirect("main:plant_detail_view", plant_id=plant.pk)

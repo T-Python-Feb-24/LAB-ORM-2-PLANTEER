@@ -47,5 +47,24 @@ PLANTEER
     </a>
     {% endfor %}
   </div>
+
+  <h2 class="fw-semibold">Comments</h2>
+  <div id="line"></div>
+
+  <div class="cards cards-comments">
+    {% if posts.count == 0 %}
+    <h2>No posts Found</h2>
+    {% else %}
+    {% for comment in comments %}
+    <div class="card card-comment">
+      <div class="card-body">
+        <h4>{{ comment.user_name }}</h4>
+        <span>{{comment.comment_date}}</span>
+        <p class="card-text mt-3 ">{{ comment.content }}</p>
+      </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+  </div>
 </div>
 {% endblock content %}

@@ -1,7 +1,7 @@
 {# djlint:off H013,H006,H021 #}
 {% extends "main/base.html" %}
 {% block title %}
-plant Detail
+Plant Detail
 {% endblock title %}
 {% block content %}
 <div class="plant-detail">
@@ -14,17 +14,14 @@ plant Detail
             <div class="edible-div bg-danger bg-opacity-25 rounded-3">
                 <span class="text-danger">It Not Edible</span>
                 {% endif %}
-
             </div>
         </div>
         <div class="d-flex flex-column plant-detail-info">
             <div class="d-flex justify-content-between plant-title-info">
                 <div id="name-flex" class="d-flex flex-column">
                     <h2>{{ plant.name }}</h2>
-                    <span>{{plant.created_at|date:"d/m/Y h:m"}}</span>
-
+                    <span>{{ plant.created_at|date:"d/m/Y h:m" }}</span>
                 </div>
-
                 <div class="d-flex h-80 gap-2">
                     <a href="{% url 'main:update_plant_view' plant.id %}" class="btn btn-primary">update</a>
                     <button class="btn btn-danger" onclick="myconfirm()">Delete</button>
@@ -34,20 +31,18 @@ plant Detail
             </div>
             <span class="fs-5 mt-1 opacity-25">{{ plant.category }}</span>
             <p class="fs-6 mt-1 opacity-75">{{ plant.about }}</p>
-
-            <span><br><br>Used For:</span>
+            <span>
+                <br>
+                <br>
+                Used For:</span>
             <p class="fs-6 mt-1 opacity-75">{{ plant.used_for }}</p>
-
         </div>
     </div>
-
     <div class="d-flex flex-column mt-4">
-
         <h4 class="fw-semibold">Related Plants</h4>
-
         <div class="cards">
             {% for related in relateds %}
-            <a href="{% url "main:plant_detail_view" related.id%}">
+            <a href="{% url "main:plant_detail_view" related.id %}">
                 <div class="card card-plant">
                     <div class="plant-img">
                         <img src="{{ related.image.url }}" class="card-img-top" height="100%"
@@ -55,14 +50,33 @@ plant Detail
                     </div>
                     <div class="card-body">
                         <div class="plant-info">
-                            <h4>{{plant.name}}</h4>
-                            <p class="card-text fw-semibold">{{related.about}}</p>
-                            <h5>{{related.category}}</h5>
+                            <h4>{{ plant.name }}</h4>
+                            <p class="card-text fw-semibold">{{ related.about }}</p>
+                            <h5>{{ related.category }}</h5>
                         </div>
                     </div>
                 </div>
             </a>
             {% endfor %}
+        </div>
+    </div>
+    {% for comment in comments %}
+    <div class="d-flex flex-column border w-100 p-4">
+        <h3 id="comment-user-name">{{ comment.user_name }}</h3>
+        <span>{{ comment.comment_date }}</span>
+        <p>{{ comment.content }}</p>
+    </div>
+    {% endfor %}
+    <div class="d-flex my-4 justify-self-center w-75">
+        <div class="col ">
+            <form action="{% url 'main:add_comment_view' plant.id %}" method="post" class="d-flex flex-column gap-2">
+                {% csrf_token %}
+                <label for="user_name" class="form-label">Name:</label>
+                <input type="text" name="user_name" class="form-control" placeholder="put your name here" />
+                <label for="content" class="form-label m-0">Content:</label>
+                <textarea name="content" rows="3" class="form-control" placeholder="Put your comment here"></textarea>
+                <input type="submit" value="Add Comment" class="btn btn-dark my-2" />
+            </form>
         </div>
     </div>
 </div>
