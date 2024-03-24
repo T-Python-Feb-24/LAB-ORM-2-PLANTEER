@@ -1,6 +1,6 @@
 {% extends 'App/base.html' %}
 
-{% block title %} Blogger Website {% endblock %}
+{% block title %} planteer {% endblock %}
 
 
 {% block content %}
@@ -16,7 +16,7 @@
                 <input type="submit" value="search" class="btn btn-primary" />
             </form> 
 
-            <h2>Search results for {{ request.GET.search }} ({{ posts.count }}) </h2>
+            <h2>Search results for {{ request.GET.search }} ({{ posts.count }}) </h2> 
         </div>
 
     </div>
@@ -42,4 +42,6 @@
 
     </div>
 
-{% endblock %}
+{% endblock %}     
+
+

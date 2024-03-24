@@ -1,3 +1,4 @@
+
 from django.shortcuts import render,redirect
 from django.http import HttpRequest,HttpResponse
 from datetime import date,timedelta
@@ -17,14 +18,15 @@ def add_post_view(request:HttpRequest):
                         about=request.POST['about'],
                         used_for=request.POST['used_for'],
                         image = request.FILES['image'] ,
-                        edible = request.post.get("edible"),
-                        created_at = request.POST.get("created_at", False), )
+                        eidble = request.POST["eidble"],
+                        category= request.POST["category"],
+                        created_at = request.POST.get("created_at", False) )
             new_post.save()
-            return redirect('App:home_page')
         except Exception as e:
             print(e)
+        return redirect('App:home_page')
 
-    return render(request,'App/add_post.html',)#{"categories" : Post.categories.choices})
+    return render(request,'App/add_post.html',{"categories" : Post.categories.choices})
 
 
 
@@ -115,7 +117,9 @@ def all_posts_view(request: HttpRequest):
     else:
         posts = Post.objects.all()
 
-    return render(request, "All/all_posts.html", {"posts" : posts, "categories" : Post.categories.choices, })
+    return render(request, "App/all_posts.html", {"posts" : posts, "categories" : Post.categories.choices, })
+
+
 
 
 

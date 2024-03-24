@@ -12,6 +12,5 @@ class Post(models.Model):
     image= models.ImageField(upload_to="images/", default="images/default.jpeg",null=True)
     category= models.CharField(max_length=64, choices=categories.choices,default='General')
     eidble=models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
 
 

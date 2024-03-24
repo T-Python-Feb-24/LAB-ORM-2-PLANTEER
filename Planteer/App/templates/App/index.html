@@ -1,7 +1,7 @@
 {% extends 'App/base.html' %}
 {% load static %}
 
-{% block title %} Blogger Website {% endblock %}
+{% block title %} planteer{% endblock %}
 
 
 {% block content %}
@@ -20,7 +20,7 @@
     <hr />
     <div class="d-flex justify-content-between align-items-center">
         <h2>Latest Posts</h2>
-        <a class="" href="{% url 'App:home_page' %}">View All</a>
+        <a class="" href="{% url 'App:all_posts_view' %}">View All</a>
     </div>
     <div class="row g-5">
 
