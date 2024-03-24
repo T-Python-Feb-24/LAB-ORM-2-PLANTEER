@@ -1,15 +1,36 @@
-{% extends 'App/base.html'%}
-{%block content%}
-<form action="{% url 'App:add_post_view'%}" method="post"  enctype="multipart/form-data">
-    {% csrf_token %}
-    <input type="text" class="text" name="Name" >
-    <input type="text" class="text" name="about">
-    <input type="text" class="text" name="used_for">
-    <input type="text" class="text" name="category">
-    <h5>Choose Image:</h5>
-                <input name="image"  type="file"  accept="image/*" class="form-control" required />
+{% extends 'App/base.html' %}
 
-                <input type="submit" class="btn btn-primary" value="add" />
+{% block content %}
+    <div class="row">
+        <h1>Add new post</h1>
+        <div class="col">
 
-</form>
-{%endblock%}
+            <form action="{% url 'App:add_post_view' %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                {% csrf_token %}
+
+                <input name="Name" type="text" placeholder="Name" class="form-control" required minlength="5" />
+                <input name="category" type="text" placeholder="category" class="form-control" required minlength="5" />
+                <input name="used_for" type="text" placeholder="cused_for" class="form-control" required minlength="5" />
+
+
+                <textarea name="about" class="form-control" required minlength="20"></textarea>
+
+                <div class="form-check form-switch">
+                    <input name="eidble" value="True" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">eidble</label>
+                </div>
+
+                <h5>Choose Image:</h5>
+                
+                <input name="poster"  type="file"  accept="image/*" class="form-control" required />
+
+                <h5>Category</h5>
+                
+                <input type="submit" class="btn btn-primary" value="Add Post" />
+            </form>
+
+        </div>
+
+
+    </div>
+{% endblock %}

@@ -2,18 +2,22 @@
 
 {% block content %}
     <div class="row">
-        <h1>Update post</h1>
+        <h1>Update plant</h1>
         <div class="col">
 
             <form action="{% url 'App:update_post_view' post.id %}" method="post" class="d-flex flex-column gap-2" enctype="multipart/form-data">
                 {% csrf_token %}
 
-                <input name="title" type="text" placeholder="Title" class="form-control" required minlength="5" value="{{ post.title }}" />
-                <textarea name="content" class="form-control" required minlength="20">{{post.content}}</textarea>
+                <input name="Name" type="text" placeholder="Name" class="form-control" required minlength="5" />
+                <input name="category" type="text" placeholder="category" class="form-control" required minlength="5" />
+                <input name="used_for" type="text" placeholder="cused_for" class="form-control" required minlength="5" />
+
+
+                <textarea name="about" class="form-control" required minlength="20"></textarea>
 
                 <div class="form-check form-switch">
-                    <input name="is_published" value="True" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" {% if post.is_published %} checked {% endif %}>
-                    <label class="form-check-label" for="flexSwitchCheckDefault">is publihed</label>
+                    <input name="eidble" value="True" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" {% if post.eidble %} checked {% endif %}>
+                    <label class="form-check-label" for="flexSwitchCheckDefault">eidble</label>
                 </div>
 
                 <h5>Choose Image:</h5>

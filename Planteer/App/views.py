@@ -6,19 +6,25 @@ import math
 from .models import Post
 def home_page(request: HttpRequest):
 
+
     return render(request,"App/index.html")
 
 
 def add_post_view(request:HttpRequest):
     if request.method=='POST':
         try:
-            new_post=Post(Name=request.POST['Name'],about=request.POST['about'], used_for=request.POST['used_for'], image = request.FILES['image'] , created_at=request.POST.get("created_at", False), )
+            new_post=Post(Name=request.POST['Name'],
+                        about=request.POST['about'],
+                        used_for=request.POST['used_for'],
+                        image = request.FILES['image'] ,
+                        edible = request.post.get("edible"),
+                        created_at = request.POST.get("created_at", False), )
             new_post.save()
             return redirect('App:home_page')
         except Exception as e:
             print(e)
 
-    return render(request,'App/add_post.html')
+    return render(request,'App/add_post.html',)#{"categories" : Post.categories.choices})
 
 
 
@@ -46,6 +52,7 @@ def post_detail_view(request:HttpRequest, post_id):
 
 
 def update_post_view(request:HttpRequest, post_id):
+
 
     post = Post.objects.get(pk=post_id)
 
@@ -98,19 +105,6 @@ def posts_search_view(request:HttpRequest):
 
 
 
-def post_detail_view(request:HttpRequest, post_id):
-
-    try:
-        #getting a  post detail
-        post = Post.objects.get(pk=post_id)
-    except Post.DoesNotExist:
-        return render(request, "App/not_found.html")
-    except Exception as e:
-        print(e)
-
-
-    return render(request, "App/post_detail.html", {"post" : post})
-
 
 
 
@@ -120,7 +114,8 @@ def all_posts_view(request: HttpRequest):
         posts = Post.objects.filter(category=request.GET["cat"])
     else:
         posts = Post.objects.all()
-    return render(request, "All/all_posts.html", {"posts" : posts, "categories" : Post.categories.choices, "pages_count":pages_count})
+
+    return render(request, "All/all_posts.html", {"posts" : posts, "categories" : Post.categories.choices, })
 
 
 

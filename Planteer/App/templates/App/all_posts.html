@@ -28,7 +28,7 @@
                     <img src="{{ post.poster.url }}"  class="w-100 rounded-4"/>
                     <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{post.category}} ">{{ post.category }}</h6>
                     <h6 class="text-muted">{{ post.published_at }}</h6>
-                    <h2><a href="{% url 'App:post_detail_view' post.id  %}" class="text-decoration-none">{{post.title}}</a></h2>
+                    <h2><a href="{% url 'App:post_detail_view' post.id  %}" class="text-decoration-none">{{post.Name}}</a></h2>
                     
                 </div>
             </div>

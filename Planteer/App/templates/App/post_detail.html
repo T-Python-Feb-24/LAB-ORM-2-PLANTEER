@@ -5,11 +5,11 @@
         
         <div class="col">
             <div class="d-flex flex-column gap-2">
-                <h1>{{ post.title  }}</h1>
+                <h1>{{ post.Name}}</h1>
                 <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{post.category}}">{{ post.category }}</h6>
                 <img src="{{ post.poster.url }}"  class="w-100 rounded-4"/>
                 <div class="d-flex justify-content-between">
-                    <h6>{{post.published_at}}</h6>
+                    <h6>{{post.creatad}}</h6>
                     <div class="d-flex gap-2">
                         <a href="{% url 'App:update_post_view' post.id %}" class="btn btn-primary">update</a>
                         <a href="{% url 'App:delete_post_view' post.id %}" class="btn btn-danger">Delete</a>
@@ -17,10 +17,10 @@
                     
                 </div>
                 
-                <p>{{ post.content }}</p>
+                <p>{{ post.about }}</p>
             </div>
         </div>
 
 
     </div>
-{% endblock %}
+{% endblock %} 
