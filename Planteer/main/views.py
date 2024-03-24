@@ -57,7 +57,6 @@ def detail(request: HttpRequest ,plant_id):
 
 def update(request: HttpRequest , plant_id):
 
-    print("hiiiii")
     plant=Plant.objects.get(pk=plant_id)
 
     if request.method == "POST":
