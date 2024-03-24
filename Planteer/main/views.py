@@ -1,6 +1,6 @@
 from django.shortcuts import render ,redirect
 from django.http import HttpRequest, HttpResponse
-from .models import Plant , Contact
+from .models import Plant
 # Create your views here.
 def home(request: HttpRequest):
     plants = Plant.objects.filter(is_edible=False)[0:3]
@@ -40,8 +40,6 @@ def add(request: HttpRequest):
     
     return render(request,"main/add_plant.html" , {"category" : Plant.categories.choices})
 
-
-
 def detail(request: HttpRequest ,plant_id):
     try:
         plant=Plant.objects.get(pk=plant_id)
@@ -58,6 +56,8 @@ def detail(request: HttpRequest ,plant_id):
 
 
 def update(request: HttpRequest , plant_id):
+
+    print("hiiiii")
     plant=Plant.objects.get(pk=plant_id)
 
     if request.method == "POST":
@@ -67,19 +67,20 @@ def update(request: HttpRequest , plant_id):
             plant.is_edible=request.POST.get("is_edible" , False)
             plant.used_for=request.POST["used_for"]
             plant.category=request.POST["category"]
-            plant.image=request.FILES.get("image", Plant.image.field.default)
+            plant.image=request.FILES.get("image", plant.image)
             plant.save()
-            return redirect('main:detail_page' , plant_id=plant.id)
         except Plant.DoesNotExist:
          return redirect('main:home')
         except Exception as e:
             print(e)
+        return redirect('main:detail_page' , plant_id=plant.id)
 
     return render(request,"main/update.html" , {"plant" : plant , "category" : Plant.categories.choices })
 
 
 
 def delete(request: HttpRequest , plant_id):
+
     try:
         plant=Plant.objects.get(pk=plant_id)
         plant.delete()
@@ -99,25 +100,3 @@ def search(request: HttpRequest):
 
 
 
-
-
-def info(request: HttpRequest):
- if request.method ==" POST ":
-        try:
-            info=Contact(
-            f_name=request.POST["f_name"],
-            l_name=request.POST["l_name"],
-            email=request.POST["email"],
-            message=request.POST["message"],
-            )
-            info.save()
-            return redirect('main:home')
-        except Exception as e :
-            print(e)
- return render(request,"main/contact.html")
-
-
-def user_message(request: HttpRequest):
-    con=Contact.objects.all()
-
-    return render(request,"main/message.html", {"con" : con})
