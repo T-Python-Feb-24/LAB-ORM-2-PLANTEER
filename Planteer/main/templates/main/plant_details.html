@@ -22,6 +22,8 @@
         <div class="ms-5 mt-2">
         <h6>Created at: {{plant.created_at}}</h6>
         <h6>categore: {{ plant.categore }}</h6>
+        <h6>is edible?: {{ plant.is_edible }}</h6>
+
         <div class="d-flex gap-2 mt-3 mb-3 ">
             <a href="{% url 'main:update_plant_view' plant.id %}" class="btn bg-success text-white">update</a>
             <a href="{% url 'main:delete_plant_view' plant.id %}" class="btn btn-danger">Delete</a>
