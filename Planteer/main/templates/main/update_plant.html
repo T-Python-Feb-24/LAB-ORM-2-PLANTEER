@@ -2,7 +2,7 @@
 {% block title %}Update Plant{% endblock title %}
 
 {% block content %}
-    <div class="row p-3 m-5 form-container">
+    <div class="row p-3 m-5 rounded-3 form-container">
         <h2>Update Your Plant Here:</h2>
         <div class="col">
             <form action="{% url 'main:update_plant_view' plant.id %}" method="post" enctype="multipart/form-data" class="d-flex flex-column align-items-center gap-4">
@@ -24,7 +24,7 @@
 
                 <h5>Current Image:</h5>
                 {% if plant.image %}
-                    <img src="{{plant.image.url}}" alt="Current Image" class="w-50">
+                    <img src="{{plant.image.url}}" alt="Current Image" class="rounded-4 w-50">
                 {% else %}
                     <p>No image uploaded</p>
                 {% endif %}

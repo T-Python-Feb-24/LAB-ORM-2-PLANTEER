@@ -4,15 +4,15 @@
 {% block content %}
     <main class="m-5">
         <div class="row">
-            <div class="m-3 d-flex gap-2">
+            <div class="mt-4 d-flex gap-2">
                 <a href="{% url 'main:update_plant_view' plant.id %}" class="btn btn-primary">update</a>
                 <a href="{% url 'main:delete_plant_view' plant.id %}" class="btn btn-danger">Delete</a>
             </div>
             
-            <div class="col-6">
+            <div class="col-6 mt-4">
                 <img class="w-100 rounded-4" src="{{ plant.image.url }}" alt="plant-image">
             </div>
-            <div class="col-6">
+            <div class="col-6 mt-4">
                 <h2>{{plant.name}}</h2>
                 <h6>Category: {{plant.category}}</h6>
                 <h6>About: </h6>

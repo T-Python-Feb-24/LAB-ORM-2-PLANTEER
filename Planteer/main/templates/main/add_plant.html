@@ -2,7 +2,7 @@
 {% block title %}add plant{% endblock title %}
 
 {% block content %}
-    <div class="row p-3 m-5 form-container">
+    <div class="row p-3 m-5 rounded-3 form-container">
         <h2>Add a new plant here:</h2>
         <div class="col">
             <form action="{% url 'main:add_plant_view' %}" method="post" enctype="multipart/form-data" class="d-flex flex-column align-items-center gap-4">

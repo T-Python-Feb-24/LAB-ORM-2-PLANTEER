@@ -10,7 +10,7 @@
                 <form class="d-flex flex-column justify-content-evenly gap-5" action="{% url 'main:contact_us_view' %}" method="post">
                     {% csrf_token %}
 
-                    <div class="d-flex justify content-evenly gap-2">
+                    <div class="d-flex justify-content-evenly gap-2">
                         <div>
                             <label for="firs-name">First Name</label>
                             <input class="form-control" type="text" id="firs-name" name="first_name" placeholder="Jane" required minlength="2">
