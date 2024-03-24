@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
-from .models import Plant
+from .models import Plant,Contact,Comment
 # Create your views here.
 
 def home_page(requset:HttpRequest):
@@ -12,7 +12,7 @@ def home_page(requset:HttpRequest):
 
 def all_plants(requset:HttpRequest):
     if "cat" in requset.GET:
-        plant = Plant.objects.filter(category = requset.GET["cat"])
+        plant = Plant.objects.filter(categroy = requset.GET["cat"])
     else:
         plant = Plant.objects.all().order_by("-created_at")
     
@@ -23,12 +23,14 @@ def all_plants(requset:HttpRequest):
 def detail_plants(requset:HttpRequest,plant_id):
     try:
         plant = Plant.objects.get(pk=plant_id)
-        print(plant)
+        comments=Comment.objects.filter(plant=plant)
+        related = Plant.objects.filter(category=plant.categroy).exclude(id=plant_id)[:3]
     except Plant.DoesNotExist:
         pass
     except Exception as e:
         print(e)
-    return render(requset ,"main/detail_plants.html", {"plant":plant})
+    return render(requset ,"main/detail_plants.html", {"plant":plant,"comments":comments ,"related":related})
+
 
 def plants_search(requset:HttpRequest):
     plants = []
@@ -89,9 +91,40 @@ def delete_plants(requset:HttpRequest,plant_id):
         print(e)
     return redirect('main:home_page')
     
-    
 
 def contact(requset:HttpRequest):
-    contact=contact.o
+    if requset.method== 'POST':
+        try:
+            contact =Contact(
+                first_name=requset.POST["first_name"], 
+                last_name=requset.POST["last_name"],
+                message=requset.POST[" message"],  
+                email=requset.POST["email"],
+            )
+            contact.save()
+            return redirect("main:contact_messages")
+        except Exception as e:
+            print(e)
 
-    return render("main/contact.html", {})
+    return render(requset, "main/contact.html",{"contact":contact} )
+
+def contact_messages(requset:HttpRequest):
+    try:
+        contact= Contact.objects.all()
+    except Exception as e:
+            print(e)
+    return render( requset,'main/contact_messages.html',{"contact":contact})
+
+
+def add_comment(request:HttpRequest, plant_id):
+
+    if request.method == "POST":
+        try:
+            plant_object = Plant.objects.get(pk=plant_id)
+            new_comment = Comment(plant=plant_object,full_name=request.POST["full_name"], content=request.POST["content"])
+            new_comment.save()
+        except Exception as e:
+                print(e)
+    
+    return redirect("main:detail_plants", plant_id=plant_object.id)
+    

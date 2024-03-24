@@ -17,5 +17,16 @@ class Contact(models.Model):
     first_name=models.CharField(max_length=2048)
     last_name=models.CharField(max_length=2048)
     email=models.EmailField()
-    message=models.TextField
+    message=models.TextField()
     created_at=models.DateTimeField(auto_now_add=True)
+    
+    
+class Comment(models.Model):
+
+    plant = models.ForeignKey(  Plant, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=2084)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+def __str__(self):
+    return self.title
