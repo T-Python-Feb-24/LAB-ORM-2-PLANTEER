@@ -3,19 +3,14 @@ from django.http import HttpRequest, HttpResponse
 from .models import Plant
 
 def index_view(request: HttpRequest):
-
-    #getting the Query Parameters
     print(request.GET)
-
-    #limiting the result using slicing
     plants = Plant.objects.all()
 
 
     return render(request, "main/index.html", {"plants" : plants})
 
 def contact_view(request:HttpRequest):
-    # Logic to handle the contact form submission
-
+    
     return render(request, "main/contact.html") 
 
 def all_plants_view(request: HttpRequest):
@@ -44,10 +39,7 @@ def add_plant_view(request:HttpRequest):
 def plant_detail_view(request:HttpRequest, plant_id):
 
     try:
-        #getting a plant to display its detail
         plant = Plant.objects.get(pk=plant_id)
-
-        #here getting the plants for 'related plants'
         plants_with_same_cat = Plant.objects.filter(category=plant.category).exclude(pk=plant_id)
     except Plant.DoesNotExist:
         return render(request, "main/not_exist.html")
