@@ -1,0 +1,43 @@
+{% extends 'main/S1.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container mt-3">
+    <div class="custom-card">
+        <div class="custom-card-body">
+            <div class="custom-row">
+                <div class="custom-col">
+                    <form class="d-inline custom-form" method="get" action="{% url 'all_plants' %}">
+                        <div class="form-group mb-0">
+                            <label for="search" class="custom-form-label">Search:</label>
+                            <input type="text" name="q" id="search" class="custom-form-control" placeholder="Search plants" value="{{ search_query }}">
+                            <button type="submit" class="custom-btn custom-btn-primary">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+    <br>
+    {% for plant in plants %}
+        <div class="plant-box">
+            <div class="plant-image">
+                <img src="{{ plant.image.url }}" class="card-img-top" alt="{{ plant.name }}">
+            </div>
+            <div class="plant-details">
+                <h2>{{ plant.name }}</h2>
+                <p>Category: {{ plant.category }}</p>
+                <p> <b> About:</b> {{ plant.about }}</p>
+                <!--<p>Published at: {{ plant.create_at }}</p>-->
+                <a href="{% url 'plant_detail' plant.pk %}" class="read-more-button">Read More</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

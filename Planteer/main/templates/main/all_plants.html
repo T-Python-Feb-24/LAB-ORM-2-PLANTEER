@@ -1,0 +1,93 @@
+{% extends 'main/S1.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="container mt-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <form class="d-inline" method="get" action="{% url 'all_plants' %}">
+                            <div class="form-group mb-0">
+                                <label for="search" class="form-label">Search:</label>
+                                <input type="text" name="q" id="search" class="form-control" placeholder="Search plants" value="{{ search_query }}">
+                            </div><br>
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <form class="d-inline" method="get" action="{% url 'all_plants' %}">
+                            <div class="form-group mb-0">
+                                <label for="category" class="form-label">Filter by Category:</label>
+                                <select name="category" id="category" class="form-select">
+                                    <option value="">All Categories</option>
+                                    {% for category_count in category_counts %}
+                                        <option value="{{ category_count.category }}">{{ category_count.category }} ({{ category_count.count }})</option>
+                                    {% endfor %}
+                                </select>
+                            </div><br>
+                            <div class="form-group mb-0">
+                                <label for="edible" class="form-label">Filter by Edibility:</label>
+                                <select name="edible" id="edible" class="form-select">
+                                    <option value="">Any</option>
+                                    <option value="true">Edible</option>
+                                    <option value="false">Not Edible</option>
+                                </select>
+                            </div><br>
+                            <button type="submit" class="btn btn-primary">Apply Filter</button>
+                        </form>
+                    </div>                
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row">
+            {% for plant in plants %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{ plant.image.url }}" class="card-img-top" alt="{{ plant.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ plant.name }}</h5>
+                            <p class="card-text">Category: {{ plant.get_category_display }}</p>
+                            {% if plant.is_edible %}
+                                <p class="card-text">Edible: Yes</p>
+                            {% else %}
+                                <p class="card-text">Edible: No</p>
+                            {% endif %}
+                            <a href="{% url 'plant_detail' plant.pk %}" class="read-more-button">Read More</a>
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% if plants.has_other_pages %}
+    <ul class="pagination">
+        {% if plants.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1">&laquo;</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ plants.previous_page_number }}">{{ plants.previous_page_number }}</a>
+            </li>
+        {% endif %}
+        
+        <li class="page-item active">
+            <a class="page-link" href="?page={{ plants.number }}">{{ plants.number }}</a>
+        </li>
+        
+        {% if plants.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ plants.next_page_number }}">{{ plants.next_page_number }}</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ plants.paginator.num_pages }}">&raquo;</a>
+            </li>
+        {% endif %}
+    </ul>
+{% endif %}
+
+{% endblock %}
