@@ -13,4 +13,5 @@ urlpatterns=[
     path("plants/search/" , views.search_page ,name="search_page"),
     path("contact",views.contact_page ,name="contact_page"),
     path("contact/messages/",views.show_message_page,name="show_message_page"),
+    path("comments/add/<plant_id>",views.add_comment_view,name="add_comment_view"),
 ]

@@ -1,7 +1,7 @@
 import os
 from django.shortcuts import redirect, render
 from django.http import HttpRequest,HttpResponse
-from .models import Plant,Contact
+from .models import Plant,Contact,Comment
 from datetime import datetime
 
 # Create your views here.
@@ -9,8 +9,8 @@ def index_page(request:HttpRequest):
     print(request.GET)
 
     plants=Plant.objects.all()[0:3]
-        
-    return render(request,'main/index.html',{"plants":plants})
+    lastest_comments=Comment.objects.order_by("-created_at")[:5]    
+    return render(request,'main/index.html',{"plants":plants,"lastest_comments":lastest_comments})
 
 def add_plants(request:HttpRequest):
     if request.method=="POST":
@@ -48,13 +48,14 @@ def plant_detail(request ,plant_id):
     try:
         #getting a  post detail
         plant = Plant.objects.get(pk=plant_id)
-    except Plant.DoesNotExist:
-        # return render(request, "main/not_found.html")
-        pass
+        comments=Comment.objects.filter(plant=plant)
+        count = comments.count()
+
+  
     except Exception as e:
         print(e)
     
-    return render(request,"main/plant_details.html",{"plant" : plant})
+    return render(request,"main/plant_details.html",{"plant" : plant,"comments":comments,"count":count})
 
 def delete_plant_view(request:HttpRequest, plant_id):
 
@@ -134,3 +135,14 @@ def contact_page(request):
 def show_message_page(request):
     messages = Contact.objects.all().order_by('-created_at')
     return render(request, "main/show_message_page.html", {'messages': messages})
+
+
+
+def add_comment_view(request: HttpRequest ,plant_id):
+    if request.method == "POST":
+        plant= Plant.objects.get(pk=plant_id)
+        new_comment = Comment(plant=plant,full_name=request.POST["full_name"], content=request.POST["content"])
+        new_comment.save()
+    
+    
+    return redirect("main:plants_details",plant_id=plant.id)

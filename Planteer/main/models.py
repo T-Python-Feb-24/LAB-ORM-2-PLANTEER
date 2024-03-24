@@ -24,3 +24,15 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.first_name
+    
+
+class Comment(models.Model):
+    plant= models.ForeignKey(Plant, on_delete=models.CASCADE)
+    full_name=models.CharField(max_length=2048)
+    content=models.TextField()
+    created_at = models.DateField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f"{self.full_name} - {self.plant.name}"
+
+
