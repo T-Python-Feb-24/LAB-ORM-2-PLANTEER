@@ -200,6 +200,16 @@ section .card{
     padding-left: 130px ;
   }
 
-.footer-icon{
-    border-radius: 20px;
+.footer-icon img{
+    border-radius: 10px;
+}
+
+.plant-name{
+    text-decoration: none;
+    color: #603979;
+}
+
+.image-container {
+  height: 200px; 
+  overflow: hidden;
 }

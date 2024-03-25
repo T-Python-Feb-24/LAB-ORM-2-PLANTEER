@@ -1,8 +1,5 @@
-
 {% extends 'main/base.html' %}
-
 {% block title %} Add Plants {% endblock %}
-
 {% block content %}
 
 <section>
@@ -35,10 +32,10 @@
                 <h5>Is it edible:</h5>
                 <div class="radio-container">
                     <label for="yes">Yes</label>
-                    <input type="radio" id="yes" name="is_edible" value="yes">
+                    <input type="radio" id="yes" name="is_edible" value="True">
                   
                     <label for="no">No</label>
-                    <input type="radio" id="no" name="is_edible" value="no">
+                    <input type="radio" id="no" name="is_edible" value="False">
                 </div>
                 <hr>
 
@@ -47,7 +44,7 @@
                 <hr>
 
                 <h5>Choose Image:</h5>
-                <input name="image"  type="file"  accept="image/*" class="form-control" required />
+                <input name="image"  type="file"  accept="image/*" class="form-control"/>
                 <hr>
                 <input type="submit" class="search-bar btn-outline-success p-2" value="Add Post"/>
 

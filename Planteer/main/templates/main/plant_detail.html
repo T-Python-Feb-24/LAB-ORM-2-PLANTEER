@@ -1,26 +1,49 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
+<!-- <section>
     <div class="row">
-        
         <div class="col">
-            <div class="d-flex flex-column gap-2">
-                <h1>{{ post.title  }}</h1>
-                <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{post.category}}">{{ post.category }}</h6>
-                <img src="{{ post.poster.url }}"  class="w-100 rounded-4"/>
+            <div class="d-flex flex-column gap-2 text-center mt-5">
+                <h1><strong>{{ plant.name }}</strong></h1>
+                <h5 class="cat pt-1 pb-5 ps-3 pe-3 rounded-pill {{plant.category}}">{{ plant.category }}</h5>
+                <img src="{{ plant.image.url }}"  class=" rounded-4"/>
                 <div class="d-flex justify-content-between">
-                    <h6>{{post.published_at}}</h6>
+                    <h6>{{plant.created_at}}</h6>
                     <div class="d-flex gap-2">
-                        <a href="{% url 'main:update_post_view' post.id %}" class="btn btn-primary">update</a>
-                        <a href="{% url 'main:delete_post_view' post.id %}" class="btn btn-danger">Delete</a>
-                    </div>
-                    
+                        <a href="{% url 'main:update_plant' plant.id %}" class="btn btn-primary">update</a>
+                        <a href="{% url 'main:delete_plant' plant.id %}" class="btn btn-danger">Delete</a>
+                    </div> 
                 </div>
-                
-                <p>{{ post.content }}</p>
+                <p>{{ plant.about }}</p>
             </div>
         </div>
-
-
     </div>
+</section> -->
+
+
+<section>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="d-flex flex-column gap-2 text-center mt-5">
+                <h1><strong>{{ plant.name }}</strong></h1>
+                <h5 class="cat pt-1 pb-5 ps-3 pe-3 rounded-pill {{plant.category}}">{{ plant.category }}</h5>
+                <div class="d-flex justify-content-between">
+                    <h6>{{plant.created_at}}</h6>
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'main:update_plant' plant.id %}" class="btn btn-warning">Update</a>
+                        <a href="{% url 'main:delete_plant' plant.id %}" class="btn btn-danger">Delete</a>
+                    </div> 
+                </div>
+                <p>{{ plant.about }}</p>
+                <h6><b>Is edible : </b> {{ plant.is_edible }}</h6>
+                <h6><b>Used for : </b> {{ plant.used_for }}</h6>
+
+            </div>
+        </div>
+        <div class="col-md-6 d-flex justify-content-end align-items-center">
+            <img src="{{ plant.image.url }}" class="img-fluid rounded-4" style="max-width: 500px;" alt="{{ plant.name }}">
+        </div>
+    </div>
+</section>
 {% endblock %}

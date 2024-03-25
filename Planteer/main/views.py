@@ -12,8 +12,11 @@ def home_page(request: HttpRequest):
     print(request.GET)
     plants=Plant.objects.all()
     plants = Plant.objects.all().order_by('-created_at')[0:3]
+    # comments = Comment.objects.all()[0:3]
 
     return render(request, "main/home_page.html", {"plants" : plants})
+
+
 
 
 
@@ -23,9 +26,9 @@ def all_plants(request: HttpRequest):
     if "cat" in request.GET:
         plants = Plant.objects.filter(category=request.GET["cat"])
     else:
-        plants = Plant.objects.all()
+        plants = Plant.objects.all().order_by("-created_at")
 
-    return render(request, "main/all_plants.html", {"posts" : plants, "categories" : Plant.categories.choices})
+    return render(request, "main/all_plants.html", {"plants" : plants, "categories" : Plant.categories.choices})
 
 
 
@@ -75,17 +78,16 @@ def update_plant(request:HttpRequest, plant_id):
         try:
             plant.name = request.POST["name"]
             plant.about = request.POST["about"]
-            plant.used_for = request.POST("used_for")
-            plant.image = request.FILES("image", plant.image)
+            plant.used_for = request.POST["used_for"]
+            plant.image = request.FILES.get("image", plant.image)
             plant.category = request.POST["category"]
-            plant.is_edible = request.POST["is_edible"]
-            plant.created_at = request.POST["created_at"]
+            plant.is_edible = request.POST.get("is_edible", False )
             plant.save()
-            return redirect("main:plant_detail_view", plant_id=plant.id)
+            return redirect("main:plant_detail", plant_id=plant.id)
         except Exception as e:
             print(e)
 
-    return render(request, 'main/update_plant.html', {"post" : plant, "categories" : Plant.categories.choices})
+    return render(request, 'main/update_plant.html', {"plant" : plant, "categories" : Plant.categories.choices})
 
 
 
@@ -130,11 +132,6 @@ def plant_search(request: HttpRequest):
     return HttpResponse('Invalid request')
 
 
-
-# def contact_us(request: HttpRequest):
-#     if request.method == 'POST':
-
-#         try:
 
 
 def contact_us(request: HttpRequest):
