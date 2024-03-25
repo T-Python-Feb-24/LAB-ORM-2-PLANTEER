@@ -16,3 +16,12 @@ class Plant(models.Model):
     #string representation
     def __str__(self):
         return self.name
+
+class Comment(models.Model):
+    plant = models.ForeignKey(Plant, on_delete = models.CASCADE)
+    full_name = models. CharField(max_length=2000)
+    content = models.TextField()
+    comment_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.full_name} - {self.plant.name}"

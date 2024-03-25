@@ -13,7 +13,7 @@
                     <h1 class="hero-h1 mb-1">Planteer</h1>
                     <p class="hero-p mt-1 mb-3">Plant Database For Plants Lovers</p>
                     <form action="{% url 'plants:plant_search_view' %}" class="d-flex w-50" role="search" method="get">
-                        <input class="form-control me-2 rounded-pill p-2" type="search" placeholder="Search" aria-label="Search" name="search" >
+                        <input class="form-control me-2 rounded-pill p-2" type="search" placeholder="Search" aria-label="Search" name="search" required>
                         <button class="btn btn-success rounded-pill" type="submit">Search</button>
                     </form>
                 </div>  
@@ -51,6 +51,11 @@
                 </div>
             </div>
         {% endfor %}
+</section>
+
+<section>
+   <!-- Latest Comments -->
+      
 </section>
 
 {% endblock %}

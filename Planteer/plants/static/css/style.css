@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Reem Kufi", sans-serif;
+    font-family: "Varela Round", sans-serif;
     font-style: normal;
     color: black;
 }
@@ -65,6 +65,7 @@
 
 h2{
   font-size: 40px;
+  font-weight: 600;
 }
 
 /* Search page */
@@ -264,5 +265,42 @@ h2{
   font-size: 26px;
   padding-left: 5px;
   margin-right: 5px;
+}
+
+.com-date{
+  color: rgb(131, 129, 129);
+  font-size: 14px;
+}
+
+.com-p{
+  font-size: 18px;
+}
+
+.new-com{
+  background-color: #99cf9c4f;
+}
+
+
+.all-comments{
+  position: relative;
+  overflow-y: scroll;
+  height: 400px;
+  right: 15px;
+  padding-left: 20px;
+}
+
+
+.all-comments::-webkit-scrollbar {
+  width: 8px;
+}
+
+.all-comments::-webkit-scrollbar-track {
+  box-shadow: 0;
+  border-radius: 0;
+}
+
+.all-comments::-webkit-scrollbar-thumb {
+  background:#198754;
+  border-radius: 15px;
 }
 
