@@ -3,7 +3,6 @@ from django.shortcuts import render,redirect
 from django.http import HttpRequest,HttpResponse
 from datetime import date,timedelta
 import math
-# Create your views here.
 from .models import Post
 def home_page(request: HttpRequest):
 
@@ -38,8 +37,8 @@ def add_post_view(request:HttpRequest):
 def post_detail_view(request:HttpRequest, post_id):
 
     try:
-        #getting a  post detail
         post = Post.objects.get(pk=post_id)
+        #comments = comments.objects.filter(post=post)
     except Post.DoesNotExist:
         return render(request, "App/not_found.html")
     except Exception as e:
@@ -85,24 +84,45 @@ def delete_post_view(request:HttpRequest, post_id):
         print(e)
     
 
-    return redirect("App:index_view")
+    return redirect("App:post_detail.html")
 
 
 
 
-def posts_search_view(request:HttpRequest):
-    posts = []
-
-    if "search" in request.GET:
-        posts = Post.objects.filter(__name____contains=request.GET["search"])
-
-    if "date" in request.GET and len(request.GET["date"]) > 4:
-        first_date = date.fromisoformat(request.GET["date"])
-        end_date = first_date + timedelta(days=1)
-        posts = posts.filter(published_at__gte=first_date, published_at__lt=end_date)
 
 
-    return render(request, "App/search_page.html", {"posts" : posts})
+
+
+
+
+
+def posts_search_view(request):
+    query = request.GET.get('search')
+    if query:
+    
+        posts = Post.objects.filter(Name__icontains=query)
+    else:
+        posts = Post.objects.all()
+    return render(request, 'posts_search.html', {'posts': posts})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -122,4 +142,22 @@ def all_posts_view(request: HttpRequest):
 
 
 
+def add_comment_view(request:HttpRequest, post_id):
 
+    if request.method == "POST":
+        post_object = Post.objects.get(pk=post_id)
+        new_comment = Comment(post=post_object,full_name=request.POST["full_name"], content=request.POST["content"])
+        new_comment.save()
+
+    
+    return redirect("App:post_detail_view", post_id=post_object.id)
+
+
+
+
+def contact_us_view(request):
+    if request.method == 'POST':
+        return HttpResponse('Message sent successfully! Thank you for contacting us.')
+    else:
+        return render(request, 'App/contact.html')
+    

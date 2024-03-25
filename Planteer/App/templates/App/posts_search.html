@@ -12,8 +12,8 @@
             <h1>Search</h1>
             <form action="{% url 'App:posts_search_view' %}"  method="get" class="d-flex gap-2">
                 <input type="search" class="form-control" name="search" value="{{request.GET.search}}"/>
-                <input type="date" class="form-control" name="date" value="{{request.GET.date}}"/>
-                <input type="submit" value="search" class="btn btn-primary" />
+                <input type="delete" class="form-control" name="delete" value="{{request.GET.delete}}"/>
+               <!--- <input type="submit" value="search" class="btn btn-primary" />-->
             </form> 
 
             <h2>Search results for {{ request.GET.search }} ({{ posts.count }}) </h2> 
