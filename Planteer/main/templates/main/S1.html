@@ -13,8 +13,28 @@
             <a href="{% url 'add_plant' %}" class="add-plant-link">Add Plant</a>
             <a href="{% url 'all_plants' %}" class="add-plant-link">All Plants</a> 
             <a href="{% url 'contact_us' %}" class="add-plant-link">Contact Us</a>
+            
+            {% if user.is_authenticated %}
+            <div class="dropdown">
+                <button class="dropbtn">{{ user.username }}</button>
+                <div class="dropdown-content">
+                    <a href="{% url 'user_info:user_detail' user.username %}">User Detail</a>
+                    <a href="{% url 'user_info:user_logout' %}">Log Out</a>
+                </div>
+            </div>
+            {% else %}
+            <div class="dropdown">
+                <button class="dropbtn">Login/Sign Up</button>
+                <div class="dropdown-content">
+                    <a href="{% url 'user_info:user_login' %}">Log In</a>
+                    <a href="{% url 'user_info:register_user' %}">Sign Up</a>
+                </div>
+            </div>
+            {% endif %}
         </nav>
     </header>
+    
+    
 
     {% block content %}
 

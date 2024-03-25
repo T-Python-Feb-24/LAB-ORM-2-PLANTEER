@@ -1,0 +1,20 @@
+{% extends 'main/S1.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>User Profile</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">User Information</h5>
+            <ul>
+                <li><strong>Username:</strong> {{ user.username }}</li>
+                <li><strong>First Name:</strong> {{ user.first_name }}</li>
+                <li><strong>Last Name:</strong> {{ user.last_name }}</li>
+                <li><strong>Email:</strong> {{ user.email }}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

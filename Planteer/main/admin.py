@@ -1,13 +1,15 @@
 from django.contrib import admin
+from .models import Plant
+
+
+class Adminmain (admin.ModelAdmin):
+
+   list_display=['name','category','create_at']
+
+
+admin.site.register(Plant , Adminmain)
+
 '''
-#from .models import #madel name
-
-#class Admin4main (admin.ModelAdmin):
-   # list_display=[]
-
-
-#admin.site.register('#model name ', Admin4main)
-
 admin 
 username: abdulah
 eamil: A@gmail.com

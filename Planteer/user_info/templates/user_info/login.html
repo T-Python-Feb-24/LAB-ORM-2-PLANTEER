@@ -1,0 +1,26 @@
+{% extends 'main/S1.html' %}
+
+{% block title %}Login User{% endblock %}
+
+{% block content %}
+
+    <h1>Login</h1>
+    {% if msg %}
+    <div class="alert alert-danger">{{msg}}</div>
+    {% endif %}
+    <div class="row">
+        <div class="col">
+
+            <form action="{% url 'user_info:user_login' %}" method="post" class="d-flex flex-column gap-2">
+                {% csrf_token %}
+
+                <input name="username" class="form-control" type="text" minlength="3" required placeholder="Username" />
+                <input name="password" class="form-control" type="password" minlength="6" required placeholder="Password" />
+
+                <input type="submit" class="btn btn-primary" value="Login" />
+
+            </form>
+            
+        </div>
+    </div>
+{% endblock %}
