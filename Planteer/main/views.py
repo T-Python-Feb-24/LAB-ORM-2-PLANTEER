@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
-from .models import Plant, Contact
+from .models import Plant, Contact, Comment
 # Create your views here.
 
 def index_view(request : HttpRequest):
@@ -37,11 +37,14 @@ def plant_detail_view(request:HttpRequest, plant_id):
 
         #here getting the plants for 'related plants'
         plants_with_same_cat = Plant.objects.filter(category=plant.category).exclude(pk=plant_id)
+
+        #here we getting the Comments
+        comments = Comment.objects.filter(plant = plant) #the first plant here its a column from the table of Comment and the second its the object from Plant
     except Plant.DoesNotExist:
         return render(request, "main/not_exist.html")
     except Exception as e:
         print(e)
-    return render(request, "main/plant_detail.html", {"plant": plant, "plants_with_same_cat":plants_with_same_cat})
+    return render(request, "main/plant_detail.html", {"plant": plant, "plants_with_same_cat":plants_with_same_cat, "comments":comments})
 
 def update_plant_view(request:HttpRequest, plant_id):
 
@@ -134,3 +137,16 @@ def all_messages_view(request:HttpRequest):
     messages = Contact.objects.all()
 
     return render(request, "main/all_messages.html", {"messages":messages})
+
+def add_comment_view(request:HttpRequest, plant_id):
+    if request.method == 'POST':
+        #add a new comment
+        plant = Plant.objects.get(pk=plant_id)
+        new_comment = Comment(
+            plant = plant,#the first plant from Comment table of a column called 'plant', and the other plant its the object from Plant
+            full_name = request.POST["full_name"],
+            content = request.POST["content"]
+        )
+        new_comment.save()
+    
+    return redirect("main:plant_detail_view", plant_id=plant.id)

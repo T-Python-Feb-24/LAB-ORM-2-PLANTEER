@@ -12,6 +12,12 @@ class Plant(models.Model):
     is_edible = models.BooleanField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+class Comment(models.Model):
+    plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=2084)
+    content = models.TextField() 
+    created_at = models.DateTimeField(auto_now_add=True)
+
 class Contact(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
