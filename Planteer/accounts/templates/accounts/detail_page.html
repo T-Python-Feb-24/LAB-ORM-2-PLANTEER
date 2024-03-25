@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+{% block title %}User Detail{% endblock %}
+
+{% block content %}
+  <div class="container mt-5">
+    {% if error %}
+      <div class="alert alert-danger" role="alert">
+        {{ error }}
+      </div>
+    {% else %}
+      <h1>User Detail</h1>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
+          <p class="card-text">Username: {{ user.username }}</p>
+          <p class="card-text">Email: {{ user.email }}</p>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Login User{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header">
+                    <h3 class="text-center">Login</h3>
+                </div>
+                <div class="card-body">
+                    {% if msg %}
+                    <div class="alert alert-danger">{{msg}}</div>
+                    {% endif %}
+                    <form action="{% url 'accounts:login_user' %}" method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input name="username" class="form-control" type="text" minlength="3" required placeholder="Username" id="username">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input name="password" class="form-control" type="password" minlength="6" required placeholder="Password" id="password">
+                        </div>
+                        <div class="d-grid">
+                            <input type="submit" class="btn btn-primary" value="Login">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

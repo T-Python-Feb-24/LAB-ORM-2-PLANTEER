@@ -16,31 +16,90 @@
 </head>
 <body>
 <header>
+    
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'main:home' %}">Planteer</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'main:home' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'main:all_plants_view' %}">All Plants</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'main:contact' %}">Contact Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-outline-success" href="{% url 'main:add_plant' %}">Add Post</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
+                <header>
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                        <div class="container-fluid">
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarNav">
+                                <ul class="navbar-nav ms-auto">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'main:home' %}">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'main:all_plants_view' %}">All Plants</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'main:contact' %}">Contact Us</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="btn btn-outline-success" href="{% url 'main:add_plant' %}">Add Post</a>
+                                    </li>
+                                    <!-- <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Account
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <li><a class="dropdown-item" href="{% url 'accounts:login_user' %}">Login</a></li>
+                                            <li><a class="dropdown-item" href="{% url 'accounts:register_user' %}">Signup</a></li>
+                                        </ul>
+                                    </li> -->
+                                    <!-- Navigation Bar -->
+                                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                                        <div class="container-fluid">
+                                        <!-- Other navbar content -->
+                                    
+                                        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                                            <ul class="navbar-nav ms-auto">
+                                            <!-- Other nav items -->
+                                            {% if user.is_authenticated %}
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Welcome, {{ request.user.username }}
+                                                </a>
+                                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                                <li><a class="dropdown-item" href="{% url 'accounts:user_detail' username=user.username %}">Profile</a></li>
+                                                
+                                                <li><a class="dropdown-item" href="{% url 'accounts:logout_user' %}">Logout</a></li>
+                                                </ul>
+                                            </li>
+                                            {% else %}
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{% url 'accounts:login_user' %}">Login</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{% url 'accounts:register_user' %}">Register</a>
+                                            </li>
+                                            {% endif %}
+                                            </ul>
+                                        </div>
+                                        </div>
+                                    </nav>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </header>
+                
+                <script>
+                    
+                    var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
+                    var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+                        return new bootstrap.Dropdown(dropdownToggleEl)
+                    });
+                </script>
+                
+                
 <main class="mt-5 pt-3">
     {% block content %}
     {% endblock %}
