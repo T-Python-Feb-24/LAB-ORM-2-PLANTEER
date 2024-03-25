@@ -7,6 +7,10 @@ from .models import Plant, Comment
 # page 1: Home page
 def index_view(request: HttpRequest):
 
+     #get user info
+    if request.user.is_authenticated:
+        print(request.user.first_name)
+        
     #limiting the result using slicing
     plants = Plant.objects.all().order_by('-created_at')[0:3]
     return render(request, "plants/index.html", {"plants" : plants})

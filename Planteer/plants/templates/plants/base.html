@@ -43,6 +43,25 @@
             <li class="nav-item px-1">
               <a class="nav-link" href="{% url 'plants:add_plant_view' %}">Add Plant</a>
             </li>
+
+            <li class="nav-item">
+              {% if request.user.is_authenticated %} 
+              <div class="d-flex gap-1">
+                <a class="nav-link" >welcome, {{request.user.username }}</a>
+                <a class="nav-link" href="{% url 'accounts:logout_user_view' %}">Logout</a>
+              </div>
+
+              {% else %}
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Sign up</button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'accounts:register_user_view' %}">Sign up</a></li>
+                    <li><a class="dropdown-item" href="{% url 'accounts:login_user_view' %}">Login</a></li>
+                  </ul>
+                </div>
+              {% endif %}
+            </li>
+            
           </ul>
         </div>
       </div>
