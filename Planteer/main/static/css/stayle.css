@@ -5,6 +5,7 @@ body {
 }
 
 a {
+  text-decoration: none;
   color: inherit;
 }
 
@@ -205,9 +206,12 @@ section {
   margin-left: .5ch;
 }
 
-#comment-user-name~p {
-  padding-top: 1rem;
+#comment-user-name~p,
+.commnt_p {
+  padding-top: .5ch;
+  min-height: 5rem;
   padding-left: 2ch;
+  background-color: rgba(240, 248, 255, 0.56);
 }
 
 #update-img {

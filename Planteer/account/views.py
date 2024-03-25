@@ -62,7 +62,22 @@ def logout_view(request: HttpRequest):
     return redirect('main:index_view')
 
 
-def profile_view(request: HttpRequest):
-    if request.user.is_authenticated:
-        return render(request, "account/profile.html")
-    redirect("account:login_view")
+def user_profile_view(request: HttpRequest, user_name):
+    try:
+        msg = None
+        user = get_user_model().objects.get(username=user_name)
+    except User.DoesNotExist:
+        msg = "User Not Found"
+        return render(request, "account/user_profile.html", {"msg": msg})
+    return render(request, "account/user_profile.html", {"user": user})
+
+
+def profiles_view(request: HttpRequest):
+    try:
+        msg = None
+        users = get_user_model().objects.all()
+    except User.DoesNotExist:
+        msg = "No Users Found"
+        return render(request, "account/profile.html", {"msg": msg})
+
+    return render(request, "account/profile.html", {"users": users})

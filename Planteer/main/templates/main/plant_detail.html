@@ -64,7 +64,7 @@ Plant Detail
     <div class="d-flex flex-column border w-100 p-4">
         <h3 id="comment-user-name">{{ comment.user_name }}</h3>
         <span>{{ comment.comment_date }}</span>
-        <p>{{ comment.content }}</p>
+        <p class="border mb-4 rounded-2">{{ comment.content }}</p>
     </div>
     {% endfor %}
     <div class="d-flex my-4 justify-self-center w-75">
@@ -72,7 +72,8 @@ Plant Detail
             <form action="{% url 'main:add_comment_view' plant.id %}" method="post" class="d-flex flex-column gap-2">
                 {% csrf_token %}
                 <label for="user_name" class="form-label">Name:</label>
-                <input type="text" name="user_name" class="form-control" placeholder="put your name here" />
+                <input type="text" {% if request.user.is_authenticated %}disabled value="{{request.user.username}}"
+                    {% endif %} name="user_name" class="form-control" placeholder="put your name here" />
                 <label for="content" class="form-label m-0">Content:</label>
                 <textarea name="content" rows="3" class="form-control" placeholder="Put your comment here"></textarea>
                 <input type="submit" value="Add Comment" class="btn btn-dark my-2" />
