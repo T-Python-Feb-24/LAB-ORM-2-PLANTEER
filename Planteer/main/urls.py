@@ -13,4 +13,7 @@ urlpatterns = [
     path("plant/delete/<plant_id>/", views.delete_plant_view, name="delete_plant_view"),
     path("plant/all/", views.all_plant_view, name="all_plant_view"),
     path("plants/search/", views.plants_search_view, name="plant_search_view"),
+    path("contact/", views.contact_view, name="contact_view"),
+    path("message/", views.message_view, name="message_view"),
+    path("comments/add/<plant_id>/", views.add_comment_view, name="add_comment_view")
 ]

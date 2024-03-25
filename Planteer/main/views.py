@@ -2,13 +2,13 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 from datetime import date, timedelta
 # Create your views here.
-from .models import Plant, Contact
+from .models import Plant, Contact, Comment
 
 def home_view(request: HttpRequest):
 
     plants = Plant.objects.all().order_by('-published_at')[0:3]
-
-    return render(request, "main/index.html", {"plants" : plants})
+    comments = Comment.objects.all().order_by('-created_at')
+    return render(request, "main/index.html", {"plants" : plants, "comments" : comments})
 
 def add_plant_view(request: HttpRequest):
 
@@ -30,13 +30,14 @@ def plant_detail_view(request:HttpRequest, plant_id):
 
     try:
         plant = Plant.objects.get(pk=plant_id)
+        comments = Comment.objects.filter(plant=plant)
     except Plant.DoesNotExist:
             return render(request,"main/not_found.html")
     except Exception as e:
         print(e)
 
 
-    return render(request, "main/detail.html", {"plant" : plant})
+    return render(request, "main/detail.html", {"plant" : plant, "comments" : comments})
 
 def update_plant_view(request:HttpRequest, plant_id):
 
@@ -97,3 +98,30 @@ def plants_search_view(request:HttpRequest):
 
 
     return render(request, "main/search.html", {"plants" : plants})
+
+def contact_view(request:HttpRequest):
+    if request.method == "POST":
+            new_message = Contact(first_name=request.POST["first_name"],
+                                  last_name=request.POST["last_name"], 
+                                  email=request.POST["email"],  
+                                  message= request.POST["message"],)
+            
+            new_message.save()
+
+    return render(request, "main/contact.html")
+
+def message_view(request:HttpRequest):
+
+    messages = Contact.objects.all()
+    
+    return render(request, "main/message.html", {"messages" : messages})
+
+def add_comment_view(request:HttpRequest, plant_id):
+    if request.method == "POST":
+        plant_object = Plant.objects.get(pk=plant_id)
+        new_comment = Comment(plant=plant_object,full_name=request.POST["full_name"],
+                              content=request.POST["content"])
+        
+        new_comment.save()
+
+        return redirect("main:plant_detail_view", plant_id=plant_object.id)

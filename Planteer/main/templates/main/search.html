@@ -10,7 +10,17 @@
             <h1>Search</h1>
             <form action="{% url 'main:plant_search_view' %}"  method="get" class="d-flex gap-2">
                 <input type="search" class="form-control" name="search" value="{{request.GET.search}}"/>
-                <input type="date" class="form-control" name="date" value="{{request.GET.date}}"/>
+                <select class="form-control" name="category" value="{{request.GET.category}}">
+                    <option value="">All</option>
+                    <option value="Tree">Tree</option>
+                    <option value="Fruit">Fruit</option>
+                    <option value="Vegetables">Vegetables</option>
+                </select>
+                <select class="form-control" name="Is Edible" value="{{request.GET.is_edible}}">
+                    <option value="">Any</option>
+                    <option value="True">Yes</option>
+                    <option value="False">No</option>
+                </select>
                 <input type="submit" value="search" class="btn btn-primary" />
             </form> 
 

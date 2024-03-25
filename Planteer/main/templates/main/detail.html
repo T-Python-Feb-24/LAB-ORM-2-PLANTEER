@@ -21,6 +21,36 @@
 
         </div>
 
+    </div>
+    
+    <hr/>
 
+    <h2>Comments:</h2>
+
+    <div class="row">
+        <div class="col d-flex flex-column gap-2">
+
+            {% for comment in comments %}
+                <div class="d-flex flex-column gap-2 border border-1 p-3 rounded-3">
+                    <h4>{{ comment.full_name }}</h4>
+                    <p>{{ comment.content }}</p>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col">
+
+            <form action="{% url 'main:add_comment_view' plant.id %}" method="post" class="d-flex flex-column gap-2">
+                {% csrf_token %}
+                <input type="text" name="full_name" class="form-control"/>
+                <textarea name="content" class="form-control"></textarea>
+
+                <input type="submit" value="Add Comment" class="btn btn-primary"/>
+            </form>
+
+        </div>
     </div>
 {% endblock %}

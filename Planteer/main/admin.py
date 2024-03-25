@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Plant
+from .models import Plant, Contact, Comment
 # Register your models here.
 
 class PlantAdmin(admin.ModelAdmin):
@@ -7,4 +7,7 @@ class PlantAdmin(admin.ModelAdmin):
     list_filter = ['category', 'published_at', 'is_edible']
 
 admin.site.register(Plant , PlantAdmin)
+admin.site.register(Contact)
+admin.site.register(Comment)
+
 
