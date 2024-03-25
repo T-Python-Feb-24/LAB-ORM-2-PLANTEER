@@ -48,3 +48,7 @@ class Comment(models.Model):
 
     def __str__(self) -> str:
         return f"{self.user_name} {self.plant.name}"
+
+
+def plant_count():
+    return Plant.objects.count()

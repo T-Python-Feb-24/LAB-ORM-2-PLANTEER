@@ -35,7 +35,7 @@ def plant_detail_view(request: HttpRequest, plant_id):
     try:
         plant = Plant.objects.get(pk=plant_id)
         relateds = Plant.objects.filter(
-            category=plant.category, is_edible=plant.is_edible)
+            category=plant.category, is_edible=plant.is_edible).exclude(pk=plant_id)
         comments = Comment.objects.filter(plant=plant)
     except Plant.DoesNotExist:
         return render(request, "404.html")

@@ -1,87 +1,92 @@
 {# djlint:off H030,H031 #}
 {% load static %}
+{% load tags %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>
-      {% block title %}
-      {% endblock title %}
-    </title>
-    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet" />
-    <link href="{% static "css/stayle.css" %}" rel="stylesheet" />
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    {% block form_js %}
-    {% endblock form_js %}
-    <link rel="icon" href="{% static "icon/green.svg" %}" sizes="any" type="image/svg+xml">
-  </head>
-  <body>
-    <div class="main-layout">
-      <!-- NAVBAR -->
-      <nav class="navbar navbar-expand-sm rounded-2 my-5">
-        <div class="container-fluid p-0 ">
-          <a href="{% url "main:index_view" %}" class="navbar-brand ms-1">Planteer</a>
-          <button class="navbar-toggler"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#navbarText"
-                  aria-controls="navbarText"
-                  aria-expanded="false"
-                  aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navbarText">
-            <ul class="navbar-nav mb-2 mb-lg-0 gap-3">
-              <li class="nav-item">
-                <a class="nav-link active"
-                   aria-current="page"
-                   href="{% url "main:all_plants_view" %}">All Plants</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url "main:contact_view" %}">Contact Us</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url "main:contactUs_messages_view" %}">Messages</a>
-              </li>
-              <li class="nav-item">
-                <a class="btn me-2 btn-dark" href="{% url "main:new_plant_view" %}">Add Plant</a>
-              </li>
-            </ul>
-          </div>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>
+    {% block title %}
+    {% endblock title %}
+  </title>
+  <link href="{% static "css/bootstrap.css" %}" rel="stylesheet" />
+  <link href="{% static "css/stayle.css" %}" rel="stylesheet" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  {% block form_js %}
+  {% endblock form_js %}
+  <link rel="icon" href="{% static "icon/green.svg" %}" sizes="any" type="image/svg+xml">
+</head>
+
+<body>
+  <div class="main-layout">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-sm rounded-2 my-5">
+      <div class="container-fluid p-0 ">
+        <a href="{% url "main:index_view" %}" class="navbar-brand ms-1">Planteer</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+          aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarText">
+          <ul class="navbar-nav mb-2 mb-lg-0 gap-3">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url "main:all_plants_view" %}">All Plants</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url "main:contact_view" %}">Contact Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url "main:contactUs_messages_view" %}">Messages</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn me-2 btn-dark" href="{% url "main:new_plant_view" %}">Add Plant</a>
+            </li>
+          </ul>
         </div>
-      </nav>
-      <!-- END NAVBAR -->
-      <section class="d-grid">
-        {% block content %}
-        {% endblock content %}
-      </section>
-      <footer class="py-0 my-0">
-        <ul class="nav justify-content-center border-bottom pb-1 mb-1">
-          <li class="nav-item">
-            <a href="{% url "main:index_view" %}"
-               class="nav-link px-2 text-body-secondary">Home</a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url "main:all_plants_view" %}"
-               class="nav-link px-2 text-body-secondary">All Plants</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-body-secondary">Random Plant</a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url "main:contact_view" %}"
-               class="nav-link px-2 text-body-secondary">Contact Us</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-body-secondary">About</a>
-          </li>
-        </ul>
-        <p class="text-center text-body-secondary">© 2024 PLANTEER, Inc</p>
-      </footer>
-    </div>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static "js/index.js" %}"></script>
-  </body>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarUser">
+          <div class="d-flex flex-colunmn"></div>
+          {% if request.user.is_authenticated %}
+          <a href="{% url 'account:profile_view' %}" class="me-3 fw-semibold">Welcome {{ request.user.username }}</a>
+          <a class="btn me-2 btn-dark" href="{% url 'account:logout_view' %}">Logout</a>
+          {% else %}
+          <a href="{% url "account:login_view" %}" class="btn me-2 btn-dark">Sign In</a>
+          <a href="{% url "account:sign_up_view" %}" class="btn me-2 btn-dark">Sign UP</a>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+    <!-- END NAVBAR -->
+    <section class="d-grid">
+      {% block content %}
+      {% endblock content %}
+    </section>
+    <footer class="py-0 my-0">
+      <ul class="nav justify-content-center border-bottom pb-1 mb-1">
+        <li class="nav-item">
+          <a href="{% url "main:index_view" %}" class="nav-link px-2 text-body-secondary">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url "main:all_plants_view" %}" class="nav-link px-2 text-body-secondary">All Plants</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url "main:plant_detail_view" plant_id|random:"1," %}"
+            class="nav-link px-2 text-body-secondary">Random Plant</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url "main:contact_view" %}" class="nav-link px-2 text-body-secondary">Contact Us</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link px-2 text-body-secondary">About</a>
+        </li>
+      </ul>
+      <p class="text-center text-body-secondary">© 2024 PLANTEER, Inc</p>
+    </footer>
+  </div>
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static "js/index.js" %}"></script>
+</body>
+
 </html>
