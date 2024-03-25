@@ -9,23 +9,48 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
+  
     <!-- NAVBAR -->
-    <nav>
-        <ul>
-          <li>
-            <a href="/">Home</a>
-          </li>
-          <li>
-            <a class="" href="{% url 'main:all_plant_view' %}">All plants</a>
-          </li>
-          <li>
-            <a href="{% url 'main:contact_view' %}">Contact Us</a>
-          </li>
-          <li>
-            <a href="{% url 'main:add_plant_view' %}">Add a plant</a>
-          </li>
-        </ul>
-      </nav>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">Planteer</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item">
+              <a class="nav-link btn btn-primary" href="{% url 'main:add_plant_view' %}">Add plant</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'main:contact_view' %}">Contact us</a>
+            </li>
+
+            <li class="nav-item">
+              {% if request.user.is_authenticated %} 
+              <div class="d-flex gap-1">
+                <a class="nav-link" href="{% url 'accounts:user_detail_view' user.id  %}">welcome, {{request.user.username }}</a>
+                <a class="nav-link" href="{% url 'accounts:logout_user_view' %}">Logout</a>
+              </div>
+
+              {% else %}
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">account</button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'accounts:register_user_view' %}">Sign up</a></li>
+                    <li><a class="dropdown-item" href="{% url 'accounts:login_user_view' %}">Login</a></li>
+                  </ul>
+                </div>
+              {% endif %}
+            </li>
+          </ul>
+          <form action="{% url 'main:plant_search_view' %}" class="d-flex" role="search" method="get">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" >
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
     <!-- END NAVBAR -->
 
     <div class="container mt-5 pt-5">
