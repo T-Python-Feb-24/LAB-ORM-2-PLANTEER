@@ -32,7 +32,7 @@
             </div>
         </div>
     </div>
-    <h2>Comments:</h2>
+    <h2>Comments({{comments.count}}):</h2>
 
 <div class="row">
     <div class="col d-flex flex-column gap-2">
@@ -52,8 +52,8 @@
 
         <form action="{% url 'main:add_comment' plant.id %}" method="post" class="d-flex flex-column gap-2">
             {% csrf_token %}
-            <input type="text" name="full_name" class="form-control"/>
-            <textarea name="content" class="form-control"></textarea>
+            <input type="text" name="full_name" class="form-control" placeholder="Full name"/>
+            <textarea name="content" class="form-control" placeholder="Write comment ..."></textarea>
 
             <input type="submit" value="Add Comment" class="btn btn-primary"/>
         </form>

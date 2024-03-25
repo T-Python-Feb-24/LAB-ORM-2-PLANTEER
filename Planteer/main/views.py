@@ -11,10 +11,15 @@ from .models import Plant,Comment
 # Create your views here.
 
 def home(request:HttpRequest):
-    
+    comments=Comment.objects.all()[0:3]
     plants = Plant.objects.all()[0:3]
 
-    return render(request,'main/index.html', {'plants' : plants})
+    #get user info
+    if request.user.is_authenticated:
+        print(request.user.first_name)
+   
+
+    return render(request,'main/index.html', {'plants' : plants ,'comments' : comments})
 
 def add_plant(request:HttpRequest):
     if request.method == 'POST':
@@ -62,7 +67,7 @@ def  plant_detail(request:HttpRequest, plant_id):
             #getting a  post detail
             plant = Plant.objects.get(pk=plant_id)
             related = Plant.objects.all()
-            comments = Comment.objects.filter(plant= plant) #this is to get the comments on the above post using filter
+            comments = Comment.objects.filter(plant= plant).exclude(id=plant.id) #this is to get the comments on the above post using filter
         except Plant.DoesNotExist:
             return render(request, "404.html")
         except Exception as e:

@@ -29,17 +29,38 @@
               <a class="nav-link " aria-current="page" href="{% url 'main:home' %}">HOME</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'main:all_plants' %}">PLANTS</a>
+              <a class="nav-link" href="{% url 'main:all_plants' %}">ALL PLANTS</a>
             </li>
           </ul>
 
         </div>
         <div>
-          <a class="btn btn-dark" href="{% url 'main:add_plant' %}" style="color: aliceblue; background: linear-gradient(#080822, #050516, #02020b);">Add Plant</a>
+          <a class="btn btn-dark m-2" href="{% url 'main:add_plant' %}" style="color: aliceblue; background:black">Add Plant</a>
         </div>
+         <!-- هذي تسجيل الدخول -->
+         {% if request.user.is_authenticated %} 
+        <li class="nav-item">
+      <div class="d-flex gap-3">
+        <a class="nav-link" >welcome, {{request.user.username }}</a>
+        <a class="nav-link" href="{% url 'account:logout_user_view' %}">Logout</a>
       </div>
-    </nav>
 
+      {% else %}
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle m-2" style="color: rgb(248, 248, 248); background:black;" type="button" data-bs-toggle="dropdown" aria-expanded="false">Sign up</button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'account:register_user_view' %}">Sign up</a></li>
+            <li><a class="dropdown-item" href="{% url 'account:login_user_view' %}">Login</a></li>
+          </ul>
+        </div>
+      </li>
+      {% endif %}
+    </div>
+       
+    </nav>
+   
+   
+    <!-- لحد هنا -->
     <script>
       const navEl = document.querySelector('.navbar');
       window.addEventListener('scroll', () => {
