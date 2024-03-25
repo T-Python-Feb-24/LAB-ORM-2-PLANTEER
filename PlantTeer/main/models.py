@@ -17,7 +17,7 @@ class Contact(models.Model):
     first_name=models.CharField(max_length=2048)
     last_name=models.CharField(max_length=2048)
     email=models.EmailField()
-    message=models.TextField()
+    message=models.TextField(default='no message')
     created_at=models.DateTimeField(auto_now_add=True)
     
     

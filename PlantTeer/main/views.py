@@ -21,10 +21,11 @@ def all_plants(requset:HttpRequest):
 
 
 def detail_plants(requset:HttpRequest,plant_id):
+    related=[]
     try:
         plant = Plant.objects.get(pk=plant_id)
         comments=Comment.objects.filter(plant=plant)
-        related = Plant.objects.filter(category=plant.categroy).exclude(id=plant_id)[:3]
+        related = Plant.objects.filter(categroy=plant.categroy).exclude(id=plant_id)[:3]
     except Plant.DoesNotExist:
         pass
     except Exception as e:
@@ -126,5 +127,5 @@ def add_comment(request:HttpRequest, plant_id):
         except Exception as e:
                 print(e)
     
-    return redirect("main:detail_plants", plant_id=plant_object.id)
+    return redirect("main:detail_plants", plant_id)
     

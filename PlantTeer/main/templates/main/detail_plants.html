@@ -46,12 +46,11 @@
                 {% csrf_token %}
                 <input type="text" name="full_name" placeholder="name" class="form-control"/>
                 <textarea name="content"  placeholder="comment" class="form-control"></textarea>
-
                 <input type="submit" value="Add Comment" class="btn btn-primary"/>
             </form>
 
         </div>
-        
+
         <hr>
         <h1>Related Plants:</h1>
         <div class="row g-5">
@@ -59,7 +58,7 @@
                 <div class="col-4">
                     <div class="d-flex flex-column gap-2 border border-1 shadow p-2 rounded-3 h-100">
                         <img src="{{ rel.image.url }}"  class="w-100 h-50 rounded-4"/>
-                        <h3><a href="{% url 'main:detail_plant' rel.id %}" class="text-decoration-none text-dark">{{ rel.name }}</a></h3>
+                        <h3><a href="{% url 'main:detail_plants' rel.id %}" class="text-decoration-none text-dark">{{ rel.name }}</a></h3>
                         <p>{{ rel.is_edible }}</p>
                         <h6 class="cat align-items-center {{ rel.categroy }}">{{ rel.categroy }}</h6>
                     </div>
