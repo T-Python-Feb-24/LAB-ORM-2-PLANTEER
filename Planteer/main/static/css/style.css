@@ -16,8 +16,10 @@ a {
     color:white;
     align-self: flex-start;
 }
+.account{
+    width: 50px;
+}
 /*End For All*/
-
 .main-bg-row{
     background-image: url('/static/images/bg-plant.jpg');
     background-size: cover;
@@ -62,4 +64,16 @@ a {
 .user-email{
     text-decoration:underline;
     color: blue;
+}
+/*end for conatact us messages*/
+
+.account-container{
+    margin-left: 10rem;
+    margin-right: 10rem;
+}
+
+/*end for main*/
+.signUp{
+    margin-left: 10rem;
+    margin-right: 10rem;
 }

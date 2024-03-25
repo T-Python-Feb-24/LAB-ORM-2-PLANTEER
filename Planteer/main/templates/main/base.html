@@ -22,6 +22,26 @@
             <a href="{% url 'main:all_plant_view' %}" class="nav-link">All Plants</a>
             <a href="{% url 'main:contact_us_view' %}" class="nav-link">Contact US</a>
             <a href="{% url "main:add_plant_view" %}" class="btn btn-outline-success">Add Plant</a>
+            {% if request.user.is_authenticated  %}
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                  <span class="material-symbols-outlined account">person</span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                  <a href="{% url 'main:user_account_view' %}"><li><button class="dropdown-item" type="button">{{request.user.first_name}}</button></li></a>
+                  <a href="{% url 'accounts:logout_view' %}"><li><button class="dropdown-item text-danger" type="button">Logout</button></li></a>
+                </ul>
+              </div>
+            {% else%}
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="material-symbols-outlined account">person</span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                <a href="{% url 'accounts:login_view' %}"><li><button class="dropdown-item" type="button">Login</button></li></a>
+              </ul>
+            </div>
+            {% endif %}
         </div>
     </nav>
     <!--End Nav Bar-->

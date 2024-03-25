@@ -13,5 +13,6 @@ urlpatterns = [
     path("plants/search/", views.search_view, name="search_view"),
     path("contact/", views.contact_us_view, name="contact_us_view"),
     path("contact/messages/", views.all_messages_view, name="all_messages_view"),
-    path("Comments/<plant_id>/add", views.add_comment_view, name="add_comment_view")
+    path("Comments/<plant_id>/add", views.add_comment_view, name="add_comment_view"),
+    path("account/", views.user_account_view, name="user_account_view")
 ]

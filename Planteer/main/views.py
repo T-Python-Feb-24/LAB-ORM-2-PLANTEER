@@ -150,3 +150,7 @@ def add_comment_view(request:HttpRequest, plant_id):
         new_comment.save()
     
     return redirect("main:plant_detail_view", plant_id=plant.id)
+
+def user_account_view(request:HttpRequest):
+    
+    return render(request, 'main/user_account.html')
