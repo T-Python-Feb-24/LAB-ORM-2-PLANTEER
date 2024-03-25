@@ -48,41 +48,39 @@
     </div> <!-- row 2-->
 
     <hr>
-    <h2>Comments:</h2>
-
-    <div class="row">
-        <div class="col d-flex flex-column gap-2">
-
-            {% for comment in comments %}
-            <div class="d-flex flex-column border border-1 shadow p-3 rounded-4 h-100" style="width: 300px;">
-                <div class="d-flex flex-row gap-2">
-                    <span class="material-symbols-rounded ">account_circle</span>
-                    <h3>{{ comment.full_name }}</h3>
+    <h2 id="comments">Comments ({{comments.count}})</h2>
+    <div class="container">
+        
+        <div class="row mt-4">
+            <div class="col-12 col-md-6 order-1 order-md-1 d-flex gap-2">
+                {% for comment in comments %}
+                <div class="d-flex flex-column border border-1 shadow p-3 rounded-4 w-100">
+                    <div class="d-flex gap-2">
+                        <span class="material-symbols-rounded ">account_circle</span>
+                        <h3>{{ comment.full_name }}</h3>
+                    </div>
+                    <p>{{ comment.content }}</p>
+                    <h6 class="text-muted">{{ comment.created_at }}</h6>
                 </div>
-                <p>{{ comment.content }}</p>
-                <h6 class="text-muted">{{ comment.created_at }}</h6>
+                {% endfor %}
             </div>
-            {% endfor %}
+        
+            <div class="col col-md-6 order-2 order-md-2 d-flex justify-content-end">
+                <div class="d-flex flex-column border border-1 shadow p-3 rounded-4" style="width: 500px;">
+                    <form action="{% url 'main:add_comment' plant.id %}" method="post" class="d-flex flex-column gap-2">
+                        {% csrf_token %}
 
-        </div>
-    </div>
+                        <label for="full_name">Full Name:</label>
+                        <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Full Name..."/>
 
-    <hr>
-    <div class="row mt-4">
-        <div class="col">
+                        <label for="content">Your Comment:</label>
+                        <textarea id="content" name="content" class="form-control" placeholder="Write Your Comment..."></textarea>
 
-            <form action="{% url 'main:add_comment' plant.id %}" method="post" class="d-flex flex-column gap-2">
-                {% csrf_token %}
+                        <input type="submit" value="Add Comment" class="btn btn-dark" style="background: linear-gradient(#080822, #050516, #02020b);"/>
+                    </form>
 
-                <label for="full_name">Full Name:</label>
-                <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Full Name..."/>
-
-                <label for="content">Your Comment:</label>
-                <textarea id="content" name="content" class="form-control" placeholder="Write Your Comment..."></textarea>
-
-                <input type="submit" value="Add Comment" class="btn btn-dark" style="background: linear-gradient(#080822, #050516, #02020b);"/>
-            </form>
-
+                </div>
+            </div>
         </div>
     </div>
 </div>

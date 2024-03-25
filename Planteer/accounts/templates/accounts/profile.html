@@ -1,0 +1,67 @@
+{% extends 'main/base.html' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block style %}
+<style>
+
+    .user-profile {
+          margin-bottom: 1rem;
+        }
+
+    .user-profile table {
+        margin-top: 50px;
+        border-collapse: collapse;
+        width: 50%;
+    }
+
+    .user-profile th,
+    .user-profile td {
+          border: 1px solid #9b9b9b9c;
+          padding: 0.6rem;
+          text-align: center;
+        }
+
+    .user-profile th {
+        width: 150px;
+        color: aliceblue;
+        background-color: #4ea75e94;
+    }
+    
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    
+    <div class="row" style="margin-top: 100px;">
+        <div class="col">
+
+              <h1>{{ username }}'s Profile: </h1>
+              <div class="user-profile d-flex justify-content-center">
+                <table>
+                  <tbody>
+                    <tr>
+                      <th>Username:</th>
+                      <td>{{ username }}</td>
+                    </tr>
+                    <tr>
+                      <th>First Name:</th>
+                      <td>{{ first_name }}</td>
+                    </tr>
+                    <tr>
+                      <th>Last Name:</th>
+                      <td>{{ last_name }}</td>
+                    </tr>
+                    <tr>
+                      <th>Email:</th>
+                      <td>{{ email }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
