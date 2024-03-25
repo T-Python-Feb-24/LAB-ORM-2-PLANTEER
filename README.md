@@ -12,6 +12,11 @@
 - Add search by `category`, and `is_edible` in the Plant Search Page **(Bonus)**
 
 
+## Using your previous LAB LAB-ORM-2-PLANTEER, do the following to :
+
+- Add the ability to post comments on plants (to achieve that, create a new model Comment)
+- Display the comments under each plant.
+- In your home page, add a section to show the latest comments generally on all plants (order them by - creation descending  limit to the latest 5 comments)
 
 
 ## wireframe for the main pages
@@ -23,3 +28,5 @@
 
 ## UML for the models `Plant` & (note: the `Contact` Model is a Bonus)
 <img width="618" style="width:100%; height:auto;" alt="Screenshot 2024-03-19 at 3 16 01 PM" src="https://github.com/T-Python-Feb-24/LAB-ORM-2-PLANTEER/assets/91186666/dc891468-cd65-443b-bf29-462b3c727701">
+
+

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Plant
+from .models import Plant,Comment
 
 # Register your models here.
 class PlantAdmin(admin.ModelAdmin):
@@ -8,3 +8,9 @@ class PlantAdmin(admin.ModelAdmin):
     list_filter =("created_at",)
 
 admin.site.register(Plant,PlantAdmin)
+
+
+class CommentAdmin(admin.ModelAdmin):
+    list_display=("full_name", "content" , "plant")
+    
+admin.site.register(Comment,CommentAdmin)

@@ -15,6 +15,17 @@
        <h6>{{plant.category}}</h6>
     </div>
     {% endfor %}
+</div>
 
+<div class="row mt-5">
+    <h3>latest comments: </h3>
+    <div class="col d-flex gap-3 px-3">
+        {% for comment in comments %}
+        <div class="d-flex flex-column border border-1 ">
+            <h4>{{comment.full_name}}</h4>
+            <p>{{comment.content}}</p>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock  %}

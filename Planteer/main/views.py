@@ -9,9 +9,13 @@ def home_page(request :HttpRequest):
 # a QuerySet equates to a SELECT statement in sql, You get a QuerySet by using your model’s Manager. Each model has at least one Manager, and it’s called "objects" by default. 
 # Basic lookups keyword arguments take the form field__lookuptype=value. 
 
+
+#In your home page, add a section to show the latest comments generally on all plants (order them by creation descending  limit to the latest 5 comments)
     plants = Plant.objects.order_by('?').all()[:3]
     
-    return render(request,"main/home_page.html",{"plants":plants})
+    comments = Comment.objects.order_by("-created_at")[0:5]
+        
+    return render(request,"main/home_page.html",{"plants":plants , "comments":comments})
 
 #All Plants page
 def all_plants(request :HttpRequest):
@@ -92,7 +96,6 @@ def plant_comment(request : HttpRequest , plant_id):
     if request.method == "POST":
         #here we access all the attributes inside the Model
         plant = Plant.objects.get(pk=plant_id)
-        #then we will take the "plant" which is the access for the model ,  and put it inside the "plant" attribute so that we can get its comments 
         comment = Comment(
             plant = plant,
             full_name = request.POST["full_name"],
