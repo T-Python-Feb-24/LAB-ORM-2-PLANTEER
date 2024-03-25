@@ -33,9 +33,9 @@
         {% for plant in plants %}
             <div class="col-4">
                 <div class="d-flex flex-column gap-2 border border-1 shadow p-2 rounded-3 h-100">
-                    <img src="{{ plant.image.url }}"  class="w-100 h-50 rounded-4"/>
-                    <h2><a href="{% url 'main:detail_view' plant.id  %}" class="text-decoration-none ">{{ plant.name }}</a></h2>
-                    <p>{{plant.is_edible}}</p>
+                    <img src="{{ plant.image.url }}"  class="w-100 h-50 p-0 rounded-4"/>
+                    <h3><a href="{% url 'main:detail_view' plant.id  %}" class="text-decoration-none text-dark">{{ plant.name }}</a></h3>
+                    <p>Is edible: {{plant.is_edible}}</p>
                     <h6 class="cat align-items-center {{ plant.category }}">{{ plant.category }}</h6>
                 </div>
             </div>

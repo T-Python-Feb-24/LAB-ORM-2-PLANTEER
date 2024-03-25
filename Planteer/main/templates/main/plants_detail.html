@@ -9,6 +9,7 @@
                 <img src="{{ plant.image.url }}"  class="w-100 rounded-4" style="height: 500px;"/>
                 <h1>{{ plant.name  }}</h1>
                 <h3 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{plant.category}}">{{ plant.category }}</h6>
+                    <h3>Is edible: {{plant.is_edible}}</h3>
                     <h3 class="p-3 rounded-4">{{plant.used_for}}</h3>
                     <div class="d-flex justify-content-between">
                    
@@ -22,6 +23,7 @@
         </div>
         <div class="col">
                 <p class="p-5">{{ plant.about }}</p>
+                
              
             </div>
         </div>
@@ -63,7 +65,9 @@
         </div>
     </div>
     <hr>
+    {% if related.count > 0 %}
     <div class="row g-5">
+   
         <h4>Related Plants:</h4>
         {% for rel in related %}
             <div class="col-4">
@@ -76,6 +80,6 @@
             </div>
         {% endfor %}
     </div>
-
+   {% endif%}
 
 {% endblock %}

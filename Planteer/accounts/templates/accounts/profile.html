@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Profile User{% endblock %}
+{% load static %}
+{% block content%}
+<div class="row mt-4">
+  <div class="col-md-8">
+    <div class="card shadow" style="width: 45rem; text-align: center; height: 100%;">
+        <div class="card-body ">
+            <h5 class="card-title">Profile</h5>
+            <h6 class="card-title">User Information:</h6>
+            <h6 class="card-title">Username:</h6>
+            <p class="card-text">{{username}}</p>
+            <h6 class="card-title">First Name:</h6>
+            <p class="card-text">{{first_name}}</p>
+            <h6 class="card-title">Last Name:</h6>
+            <p class="card-text">{{last_name}}</p>
+            <h6 class="card-title">Email:</h6>
+            <p class="card-text">{{email}}</p>
+            <a href="{% url 'main:home_view'  %}" class="card-link btn btn-dark text-decoration-none">Home Page</a>
+            <a href="{% url 'accounts:register_view' %}" class="card-link btn btn-dark text-decoration-none">Sign in</a>
+        </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <img src="{% static 'images/pro1.jpg' %}" alt="Contact Image" class="img-fluid rounded-5 " />
+  </div>
+</div>
+{% endblock %}
