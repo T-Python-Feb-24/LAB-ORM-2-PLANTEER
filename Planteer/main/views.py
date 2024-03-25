@@ -2,7 +2,12 @@ from django.shortcuts import render ,redirect
 from django.http import HttpRequest, HttpResponse
 from .models import Plant , Contact , Comment
 # Create your views here.
+
+
 def home(request: HttpRequest):
+    if request.user.is_authenticated:
+     print(request.user.first_name)
+
     plants = Plant.objects.filter(is_edible=False)[0:3]
     comments=Comment.objects.order_by("-created_at")[0:5]
 
@@ -42,7 +47,7 @@ def add(request: HttpRequest):
 def detail(request: HttpRequest ,plant_id):
     try:
         plant=Plant.objects.get(pk=plant_id)
-        plants=Plant.objects.filter(category=plant.category)[0:3]
+        plants=Plant.objects.filter(category=plant.category).exclude(id=plant_id)[0:3]
         comments=Comment.objects.filter(plant=plant)
         
     except Plant.DoesNotExist:

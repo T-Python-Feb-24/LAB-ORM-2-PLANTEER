@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+
+{% block title %}User information{% endblock %}
+
+{% block content %}
+
+ <div class="row">
+ <div class="col">
+ <div class="d-flex flex-column gap-2">
+      <img src="/static/images/flower2.jpeg" class="w-100 rounded-4" />
+
+
+ </div>
+ </div>
+        <div class="col">
+         <div class="user-info d-flex flex-column gap-2">
+         <div class="info">
+        <h4 class="info"> Username :{{user.username}}</h4>
+        <p>First name :{{user.first_name}}</p>
+        <p>Last name: {{user.last_name}}</p>
+        <p>Email : {{user.email}}</p>
+        </div>
+</div>
+</div>
+</div>
+  {% endblock %}

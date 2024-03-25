@@ -23,8 +23,8 @@
 
         {% for plant in plants %}
         <div class="col-4">
-            <div class="d-flex flex-column gap-2 border border-1 p-3 mt-3 shadow rounded-4 h-100">
-                <img src="{{ plant.image.url }}"  class="w-100  h-80 object-fit-cover rounded-4"/>
+            <div class=" card d-flex flex-column gap-2 border border-1 p-3 mt-3 shadow rounded-4 h-100">
+                <img class="pic" src="{{ plant.image.url }}"  class="w-100  h-80 object-fit-cover rounded-4"/>
                 <h2><a href="{% url 'main:detail_page' plant.id  %}" class="text-decoration-none">{{plant.name}}</a></h2>
                 <p>{{ plant.category }}</p>
                 <p> {{ plant.created_at }}</p>
