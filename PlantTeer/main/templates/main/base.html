@@ -17,16 +17,24 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class=" collapse navbar-collapse  " id="navbarSupportedContent">
-            <ul class="nav-1 navbar-nav me-auto mb-2 mb-lg-0 align-items-center" style="padding-left: 850px;">
+            <ul class="nav-1 navbar-nav me-auto mb-2 flex-row mb-lg-0 align-items-center">
               <li class="nav-item">
                 <a class="nav-link " aria-disabled="true" href="{% url 'main:contact' %}">Contact Us</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link " aria-disabled="true" href="{% url 'main:plants_search' %}">Search</a>
               </li> 
-              <li class="nav-item  ">
-                <button class="order-0 rounded-8 " style="background-color: black; border-radius: 10px;"><a class="nav-link btn btn-outline-success text-decoration-none" style="color: aliceblue;" href="{% url 'main:add_plants' %}">Add Plant</a></button>
-               
+              <li class="nav-item">
+                  {% if request.user.is_authenticated %} 
+                  <div class="d-flex gap-1">
+                    <a class="nav-link" >welcome, {{request.user.username }}</a>
+                    <a class="nav-link" href="{% url 'accounts:logout_user' %}">Logout</a>
+                  </div>
+                  {% else %}
+                  <a href="{% url 'accounts:register_user' %}"><button type="button" class="btn btn-primary btn-sm" >Sign up</button></a>
+                  <a href="{% url 'accounts:login_user' %}"><button type="button" class="btn btn-secondary btn-sm" >Login</button></a>
+                  {% endif %}
+                  <a href="{% url 'main:add_plants' %}"><button type="button" class="btn btn-secondary btn-sm" >Add Plant</button></a>
               </li>
             </ul>
             

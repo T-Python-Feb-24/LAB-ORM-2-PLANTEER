@@ -6,8 +6,12 @@ from .models import Plant,Contact,Comment
 def home_page(requset:HttpRequest):
     
     plants=Plant.objects.all().order_by('-created_at')[0:3]
+    comments=Comment.objects.all()
+    if requset.user.is_authenticated:
+        print(requset.user.first_name)
+
     
-    return render(requset,"main/home_page.html",{"plants":plants})
+    return render(requset,"main/home_page.html",{"plants":plants,"comments": comments })
 
 
 def all_plants(requset:HttpRequest):
