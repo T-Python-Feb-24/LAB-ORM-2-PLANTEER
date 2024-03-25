@@ -29,7 +29,7 @@ def register_user_view(request:HttpRequest):
             new_user.save()
 
             #redirect to login page
-            return redirect("accounts:login_user_view")
+            return redirect("accounts:login")
 
         except Exception as e:
             print(e)
@@ -57,7 +57,7 @@ def logout_user_view(request:HttpRequest):
     if request.user.is_authenticated:
         logout(request)
     
-    return redirect('accounts:login_user_view')
+    return redirect('accounts:login')
 
 def profile_view(request:HttpRequest):
     if request.user.is_authenticated:
@@ -71,4 +71,4 @@ def profile_view(request:HttpRequest):
         
         return render(request, 'accounts/profile.html', context)
     else:
-        return redirect("accounts:login_user_view")
+        return redirect("accounts:login")

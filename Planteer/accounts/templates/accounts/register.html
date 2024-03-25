@@ -15,7 +15,7 @@
         <div class="col" style="display: flex;  justify-content: center; margin-top: 30px;">
             <div class="d-flex flex-column gap-1 border border-1 shadow p-3 rounded-4 h-100 justify-content-center" style="width: 500px;">
                 
-                <form action="{% url 'accounts:register_user_view' %}" method="post" class="d-flex flex-column gap-2">
+                <form action="{% url 'accounts:register' %}" method="post" class="d-flex flex-column gap-2">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col">
@@ -64,7 +64,7 @@
 
                     <input type="submit" class="btn btn-dark rounded-4" value="Sign Up" style="background: linear-gradient(#080822, #050516, #02020b);"/>
                 </form>
-                <p class="link">Already have an account? <a href="{% url 'accounts:login_user_view' %}">Login</a></p>
+                <p class="link">Already have an account? <a href="{% url 'accounts:login' %}">Login</a></p>
             </div>
             </div>
         </div>

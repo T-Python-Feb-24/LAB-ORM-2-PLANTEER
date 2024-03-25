@@ -75,18 +75,18 @@
                   welcome, <strong>{{request.user.username }}</strong>
                 </a>
                 <ul class="dropdown-menu" style="background: #e4e4e4b7;">
-                  <li><a class="dropdown-item" href="{% url 'accounts:profile_view' %}">Profile</a></li>
+                  <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">Profile</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="{% url 'accounts:logout_user_view' %}">Logout</a></li>
+                  <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a></li>
                 </ul>
               </div>
             </div>
   
             {% else %}
             <div>
-              <a href="{% url 'accounts:register_user_view' %}" style="color: #02020b; text-decoration: none;">Sign Up</a>
+              <a href="{% url 'accounts:register' %}" style="color: #02020b; text-decoration: none;">Sign Up</a>
               /
-              <a href="{% url 'accounts:login_user_view' %}" style="color: #02020b; text-decoration: none;">Login</a>
+              <a href="{% url 'accounts:login' %}" style="color: #02020b; text-decoration: none;">Login</a>
             </div>
   
             {% endif %}
@@ -121,7 +121,7 @@
             <a class="navbar-brand diplomata-regular" href="{% url 'main:home' %}">PLANTEER</a>
             <ul class="list-unstyled d-flex flex-row gap-5 mt-5">
               <li><a href="#" style="color: #02020b; font-size: larger;"><i class="fa-brands fa-facebook"></i></a></li>
-              <li><a href="#" style="color: #02020b; font-size: larger;"><i class="fa-brands fa-linkedin"></i></a></li>
+              <li><a href="#" style="color: #02020b; font-size: larger;"><i class="fa-brands fa-tiktok"></i></a></li>
               <li><a href="#" style="color: #02020b; font-size: larger;"><i class="fa-brands fa-youtube"></i></a></li>
               <li><a href="#" style="color: #02020b; font-size: larger;"><i class="fa-brands fa-instagram"></i></a></li>
             </ul>

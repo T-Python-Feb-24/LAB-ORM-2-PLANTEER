@@ -71,10 +71,10 @@
                         {% csrf_token %}
 
                         <label for="full_name">Full Name:</label>
-                        <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Full Name..."/>
+                        <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Full Name..." required/>
 
                         <label for="content">Your Comment:</label>
-                        <textarea id="content" name="content" class="form-control" placeholder="Write Your Comment..."></textarea>
+                        <textarea id="content" name="content" class="form-control" placeholder="Write Your Comment..." required></textarea>
 
                         <input type="submit" value="Add Comment" class="btn btn-dark" style="background: linear-gradient(#080822, #050516, #02020b);"/>
                     </form>
