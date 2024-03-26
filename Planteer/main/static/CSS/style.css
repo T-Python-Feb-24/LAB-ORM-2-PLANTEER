@@ -117,3 +117,15 @@ input[type="radio"] {
 .Vegetables:hover {
     box-shadow: 0 0 20px rgba(0, 128, 0, 0.473);
 }
+
+/* Profile */
+.avatar {
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Favorites */
+.favorite {
+  font-size: 2rem;
+  color: red;
+}

@@ -16,13 +16,15 @@
             </div>
 
             <div class="row">
-                <div class="d-flex gap-2">
+                <div class="d-flex gap-2 justify-content-center">
+                    <a href="{% url 'favorites:add_remove_favorites_view' plant.id %}" class="text-decoration-none"><i class="bi {% if is_favored %} bi-suit-heart-fill {% else %} bi-suit-heart {% endif %} favorite"></i></a>
                     <a href="{% url 'main:update_plant' plant.id %}" class="btn btn-primary"><span class="material-symbols-rounded">
                         edit
                         </span></a>
                     <a href="{% url 'main:delete_plant' plant.id %}" class="btn btn-danger"><span class="material-symbols-rounded">
                         delete
                         </span></a>
+
                 </div>
             </div>
         </div>
@@ -57,7 +59,7 @@
                 <div class="d-flex flex-column border border-1 shadow p-3 rounded-4 w-100">
                     <div class="d-flex gap-2">
                         <span class="material-symbols-rounded ">account_circle</span>
-                        <h3>{{ comment.full_name }}</h3>
+                        <a href="{% url 'accounts:profile' comment.user.username %}" class="text-decoration-none"><h4>{{ comment.user.username }}</h4></a>
                     </div>
                     <p>{{ comment.content }}</p>
                     <h6 class="text-muted">{{ comment.created_at }}</h6>
@@ -66,22 +68,28 @@
             </div>
         
             <div class="col col-md-6 order-2 order-md-2 d-flex justify-content-end">
-                <div class="d-flex flex-column border border-1 shadow p-3 rounded-4" style="width: 500px;">
+                <div class="d-flex flex-column border border-1 shadow p-3 rounded-4" style="color: aliceblue; width: 500px; background: linear-gradient(#145a3b, #124e2d, #0f4324);">
+                    
+                    {% if request.user.is_authenticated %}
                     <form action="{% url 'main:add_comment' plant.id %}" method="post" class="d-flex flex-column gap-2">
                         {% csrf_token %}
-
+<!-- 
                         <label for="full_name">Full Name:</label>
-                        <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Full Name..." required/>
+                        <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Full Name..." required/> -->
 
-                        <label for="content">Your Comment:</label>
+                        <label for="content" class="d-flex justify-content-center" style="font-size: 32px;">Share Your Comment</label>
                         <textarea id="content" name="content" class="form-control" placeholder="Write Your Comment..." required></textarea>
 
-                        <input type="submit" value="Add Comment" class="btn btn-dark" style="background: linear-gradient(#080822, #050516, #02020b);"/>
+                        <input type="submit" value="Add Comment" class="btn btn-dark" style="background: linear-gradient(#082211, #05160b, #020b04);"/>
                     </form>
+                    {% else %} 
+                        <div class="alert alert-warning">You must <a href="{% url 'accounts:login' %}">Sign in</a> to comment.</div>
+                    {% endif %}
+        
 
                 </div>
             </div>
-        </div>
+        </div> <!--Comment Row-->
     </div>
 </div>
 {% endblock %}

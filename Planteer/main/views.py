@@ -1,10 +1,17 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 
+import math
 from .models import Plant, Contact, Comment
+from favorites.models import Favorite
+
 # Create your views here.
 
 def home(request:HttpRequest):
+
+    #get user info
+    if request.user.is_authenticated:
+        print(request.user.first_name)
     
     plants = Plant.objects.all().order_by('-created_at')[0:3]
 
@@ -38,7 +45,7 @@ def all_plant(request:HttpRequest):
         plants = Plant.objects.all().order_by("-created_at") 
     
     limit = 3
-    pages_count = [str(n) for n in range(1, round(plants.count()/limit)+1)]
+    pages_count = [str(n) for n in range(1, math.ceil(plants.count()/limit)+1)] #use list comprehension to convert number to string number
     start = (int(request.GET.get("page", 1))-1)*limit
     end = (start)+limit
 
@@ -54,15 +61,15 @@ def plant_detail(request:HttpRequest, plant_id):
             plant = Plant.objects.get(pk=plant_id)
             related = Plant.objects.filter(category =  plant.category).exclude(pk=plant_id)[:4]
 
-            comments = Comment.objects.filter(post=plant) #this is to get the comments on the above post using filter
-
+            comments = Comment.objects.filter(plant=plant) #this is to get the comments on the above post using filter
+            is_favored = request.user.is_authenticated and  Favorite.objects.filter(user=request.user, plant=plant).exists()
         except Plant.DoesNotExist:
             return render(request, "404.html")
         except Exception as e:
             print(e)
         
 
-        return render(request, "main/plant_detail.html", {"plant" : plant, "related": related, "comments": comments})
+        return render(request, "main/plant_detail.html", {"plant" : plant, "related": related, "comments": comments, "is_favored" : is_favored})
 
 def update_plant(request:HttpRequest, plant_id):
         try:
@@ -143,14 +150,16 @@ def add_comment(request:HttpRequest, plant_id):
     #     comment_id = Comment.objects.get(pk=plant_id)
     # except Comment.DoesNotExist:
     #     comment_id = None
-
+    if not request.user.is_authenticated:
+        return redirect("accounts:login")
+    
     if request.method == "POST":
         #add new comment
 
             comment = Plant.objects.get(pk=plant_id)
             new_comment = Comment(
-            post=comment,
-            full_name=request.POST["full_name"],
+            plant=comment,
+            user = request.user,
             content=request.POST["content"]
             )
             new_comment.save()

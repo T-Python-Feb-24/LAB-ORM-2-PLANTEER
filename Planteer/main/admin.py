@@ -11,7 +11,7 @@ class PublisherCon(admin.ModelAdmin):
     list_display= ('first_name', 'last_name', 'email', 'created_at')
 
 class PublisherComm(admin.ModelAdmin):
-    list_display= ('full_name', 'post','created_at')
+    list_display= ('plant', 'user', 'created_at')
 
 admin.site.register(Plant, PublisherAdmin)
 admin.site.register(Contact, PublisherCon)

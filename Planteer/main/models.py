@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 class Plant(models.Model):
 
@@ -14,8 +14,8 @@ class Plant(models.Model):
     is_edible = models.BooleanField()
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.name
+    # def __str__(self):
+    #     return self.name
 
 class Contact(models.Model):
 
@@ -27,10 +27,10 @@ class Contact(models.Model):
 
 class Comment(models.Model):
 
-    post = models.ForeignKey(Plant, on_delete=models.CASCADE)
-    full_name = models.CharField(max_length=200)
+    plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self) -> str:
-        return self.full_name
+    # def __str__(self):
+    #     return f"{self.user.username} - {self.plant.name}"
