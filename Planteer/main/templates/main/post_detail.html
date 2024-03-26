@@ -50,7 +50,7 @@
 <div class="row mt-4">
     <div class="col">
 
-        <form action="{% url 'main:add_comment' plant.id %}" method="post" class="d-flex flex-column gap-2">
+        <form action="{% url 'main:add_comment' plant.id %}" method="post" class="d-flex flex-column gap-2" id="commentPost">
             {% csrf_token %}
             <input type="text" name="full_name" class="form-control" placeholder="Full name"/>
             <textarea name="content" class="form-control" placeholder="Write comment ..."></textarea>

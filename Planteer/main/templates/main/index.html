@@ -56,7 +56,7 @@
         {% for comment in comments %}
             <div class="d-flex flex-column gap-2 border border-1 p-3 rounded-3">
                 <h4>{{ comment.full_name }}</h4>
-               <a href="{% url 'main:add_comment' comment.plant.id %}"> <h6 class="text-muted">{{comment.plant.name}}</h6></a>
+               <a href="{% url 'main:plant_detail' comment.plant.id %}#commentPost"> <h6 class="text-muted">{{comment.plant.name}}</h6></a>
                 <p>{{ comment.content }}</p>
             </div>
         {% endfor %}

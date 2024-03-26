@@ -134,8 +134,11 @@ def add_comment(request:HttpRequest, plant_id):
 
     if request.method == "POST":
         #add new comment
-        post_object = Plant.objects.get(pk=plant_id)
-        new_comment = Comment(plant=post_object,full_name=request.POST["full_name"], content=request.POST["content"])
+        object = Plant.objects.get(pk=plant_id)
+        new_comment = Comment(plant=object,full_name=request.POST["full_name"], content=request.POST["content"])
         new_comment.save()
 
-    return redirect("main:plant_detail", plant_id=post_object.id)
+        
+    
+    return redirect("main:plant_detail", plant_id=object.id)
+    

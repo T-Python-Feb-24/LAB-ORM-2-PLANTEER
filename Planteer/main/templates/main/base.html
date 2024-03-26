@@ -39,11 +39,11 @@
         </div>
          <!-- هذي تسجيل الدخول -->
          {% if request.user.is_authenticated %} 
-        <li class="nav-item">
       <div class="d-flex gap-3">
-        <a class="nav-link" >welcome, {{request.user.username }}</a>
+        <a class="nav-link" href="{% url 'account:user_profile_view' request.user.username %}" >welcome, {{request.user.username }}</a>
         <a class="nav-link" href="{% url 'account:logout_user_view' %}">Logout</a>
       </div>
+  
 
       {% else %}
         <div class="dropdown">
@@ -53,8 +53,7 @@
             <li><a class="dropdown-item" href="{% url 'account:login_user_view' %}">Login</a></li>
           </ul>
         </div>
-      </li>
-      {% endif %}
+        {% endif %}
     </div>
        
     </nav>

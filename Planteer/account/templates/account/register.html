@@ -5,6 +5,9 @@
 {% block content %}
 
     <h1>Register New User</h1>
+    {% if msg %}
+        <div class="alert alert-danger">{{msg}}</div>
+        {% endif %}
     <div class="row">
         <div class="col">
             <form action="{% url 'account:register_user_view' %}" method="post" class="d-flex flex-column gap-2">
