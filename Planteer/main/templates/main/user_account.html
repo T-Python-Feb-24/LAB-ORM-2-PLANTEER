@@ -1,0 +1,18 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block title %}Account{% endblock title %}
+
+{% block content %}
+<main class="m-5">
+    <div class="row">
+        <div class="col border border-black d-flex flex-column gap-2 align-items-center account-container p-3 rounded-4">
+            <div class="w-50">
+                <img class="w-100 user-img" src="{% static 'images/user.png' %}" alt="img">
+            </div>
+            <h4>{{request.user.first_name}} {{request.user.last_name}}</h4>
+            <h6>{{request.user.email}}</h6>
+            <h6>{{request.user.username}}</h6>
+        </div>
+    </div>
+</main>
+{% endblock content %}

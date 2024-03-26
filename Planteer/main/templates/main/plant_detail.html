@@ -1,0 +1,80 @@
+{% extends "main/base.html" %}
+{% block title %}{% endblock title %}
+
+{% block content %}
+    <main class="m-5">
+        <div class="row">
+            <div class="mt-4 d-flex gap-2">
+                <a href="{% url 'main:update_plant_view' plant.id %}" class="btn btn-primary">update</a>
+                <a href="{% url 'main:delete_plant_view' plant.id %}" class="btn btn-danger">Delete</a>
+            </div>
+            
+            <div class="col-6 mt-4">
+                <img class="w-100 rounded-4" src="{{ plant.image.url }}" alt="plant-image">
+            </div>
+            <div class="col-6 mt-4">
+                <h2>{{plant.name}}</h2>
+                <h6>Category: {{plant.category}}</h6>
+                <h6>About: </h6>
+                <p class="about-plant">{{plant.about}}</p>
+                <h6>
+                    Is Edible: {% if plant.is_edible == True %} Yes
+                    {% else %} No
+                    {% endif %}
+                </h6>
+                <h6>Used For:</h6>
+                <p>{{plant.used_for}}</p>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <h4>Comments: </h4>
+            
+            <div class="col d-flex">
+                {% for comment in comments  %}
+                <div class="border rounded-4 ml-2 mr-2 p-2 border-black w-50">
+                    <h5>{{comment.full_name}}</h5>
+                    <p>{{ comment.content }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            
+        </div>
+
+        <div class="row mt-4">
+            <h4>Add comment here:</h4>
+            <div class="col">
+                <form action="{% url 'main:add_comment_view' plant.id %}" method="post" class="d-flex flex-column gap-2">
+                    {% csrf_token %}
+                    
+                    <div>
+                        <label for="full_name">Full Name</label>
+                        <input id="full_name" type="text" name="full_name" class="form-control"/>
+                    </div>
+
+                    <div>
+                        <label for="content">Comment:</label>
+                        <textarea id="content" name="content" placeholder="here..." class="form-control"></textarea>
+                    </div>
+                    
+                    <input type="submit" value="Add Comment" class="btn btn-outline-success"/>
+                </form>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <h4>Related Plants</h4>
+            {% for p in plants_with_same_cat %}
+            <div class="col-4 plant-card">
+                <a href="{% url 'main:plant_detail_view' p.id %}" class="text-decoration-none">
+                <div class="d-flex flex-column gap-2 border border-1 shadow p-3 rounded-4 h-100">
+                    <img src="{{p.image.url}}" class="w-100 rounded-4" alt="plant-image">
+                    <h3>{{p.name}}</h3>
+                    <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill" >{{p.category}}</h6>
+                </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+{% endblock content %}
