@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
-from .models import Plant
+from .models import Plant, Comment
 from django.core.mail import send_mail
 from django.conf import settings
 # Create your views here.
@@ -10,11 +10,13 @@ from django.conf import settings
 def home_page(request: HttpRequest):
 
     print(request.GET)
-    plants=Plant.objects.all()
+    plants= Plant.objects.all()
     plants = Plant.objects.all().order_by('-created_at')[0:3]
+    comment=Comment.objects.order_by("-created_at")[0:3]
+    # comments = Comment.objects.all().order_by('-created-at')[0:3]
     # comments = Comment.objects.all()[0:3]
 
-    return render(request, "main/home_page.html", {"plants" : plants})
+    return render(request, "main/home_page.html", {"plants" : plants , "comments" : comment})
 
 
 
@@ -60,12 +62,13 @@ def plant_detail(request:HttpRequest, plant_id):
 
     try:
         plant = Plant.objects.get(pk=plant_id)
+        comment=Comment.objects.filter(plant=plant)
     except Plant.DoesNotExist:
         return render(request, "main/not_found.html")
     except Exception as e:
         print(e)
 
-    return render(request, "main/plant_detail.html", {"plant" : plant})
+    return render(request, "main/plant_detail.html", {"plant" : plant , "comments" : comment})
 
 
 
@@ -132,20 +135,16 @@ def plant_search(request: HttpRequest):
     return HttpResponse('Invalid request')
 
 
+# COMMENTS 
+def add_comment(request:HttpRequest, plant_id):
+
+    if request.method == "POST":
+        #add new comment
+        plant_object = Plant.objects.get(pk=plant_id)
+        new_comment = Comment(plant=plant_object,full_name=request.POST["full_name"], content=request.POST["content"])
+        new_comment.save()
+
+    
+    return redirect("main:plant_detail", plant_id=plant_id)
 
 
-def contact_us(request: HttpRequest):
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        message = request.POST.get('message')
-
-        send_mail(
-            'Contact Form Submission',
-            f'Name: {name}\nEmail: {email}\nMessage: {message}',
-            settings.DEFAULT_FROM_EMAIL,
-            [settings.DEFAULT_FROM_EMAIL],
-            fail_silently=False,
-        )
-        return render(request, 'contact_us/thank_you.html')
-    return render(request, 'main/home_page.html')

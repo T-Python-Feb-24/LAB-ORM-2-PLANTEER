@@ -23,9 +23,7 @@
     </div>
   </div>
   <hr>
-
-
-
+  
   <div class="row g-4">
     {% for plant in plants %}
       <div class="col-md-4">
@@ -41,7 +39,7 @@
             <div>
               <small class="text-muted">{{ plant.created_at }}</small>
             </div>
-            <a href="{% url 'main:plant_detail' plant.id %}" class="btn btn-primary">Learn More</a>
+            <a href="{% url 'main:plant_detail' plant.id %}" class="btn btn-warning m-1">Learn More</a>
           </div>
         </div>
       </div>
@@ -49,24 +47,22 @@
   </div>
 
 
-
-
-  <!-- <div class="row g-5">
-    {% for plant in plants %}
-      <div class="col-4">
-        <div class="d-flex flex-column gap-2 border border-1 shadow p-3 rounded-4 h-100">
-          <img src="{{ plant.image.url }}"  class="w-100 rounded-4"/>
-          <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{plant.category}} ">{{ plant.category }}</h6>
-          <h6 class="text-muted">{{ plant.created_at }}</h6>
-          <h2><a href="{% url 'main:plant_detail' plant.id  %}" class="text-decoration-none">{{ plant.name }}</a></h2>
-        </div>
-      </div>
-    {% endfor %}
-  </div> -->
-
-
   <hr>
-  <h2>Lastest Comments</h2>
+  <section> 
+  <h2>• Lastest Comments </h2><br>
+  <div class="row">
+    <div class="col d-flex flex-column gap-3">
+
+        {% for comment in comments %}
+            <div class="d-flex flex-column gap-2 border border-1 p-3 rounded-3">
+                <h4>{{ comment.full_name }}</h4>
+                <p>{{ comment.content }}</p>
+            </div>
+        {% endfor %}
+
+    </div>
+  </section>
+</div>
 
 
 {% endblock %}

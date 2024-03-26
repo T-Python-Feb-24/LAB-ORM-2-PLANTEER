@@ -2,40 +2,13 @@
 {% block title %} Plants {% endblock %}
 {% load static %}
 {% block content %}
-<!-- <section>
-
-  <div class="row g-4">
-    <div class="d-flex justify-content-between align-items-center">
-      <div class=" c d-flex gap-2">
-        <a href="{% url 'main:all_plants' %}" class="p-2 ps-3 pe-3 rounded-pill categories  text-decoration-none  {% if 'categories' not in request.GET %} All  {% endif %}">All</a>
-          {% for val, key in category %}
-            <a href="?categories={{val}}" class=" p-2 ps-3 pe-3 rounded-pill categories {% if request.GET.categories == val %} {{ val }} {% endif %} text-decoration-none">{{val}}</a>
-          {% endfor %}
-      </div>
-    </div>
-  </div>
-
-  <div class="row mt-2 g-5 plant-name">
-    {% for plant in plants %}
-      <div class="col-4 ">
-        <div class="d-flex flex-column gap-2 border border-1 p-3 mt-3 shadow rounded-4 h-100">
-          <img src="{{ plant.image.url }}"  class="w-100 h-80 object-fit-cover rounded-4"/>
-          <h2><a href="{% url 'main:plant_detail' plant.id  %}" class="height-8vh" >{{plant.name}}</a></h2>
-          <p>{{ plant.category }}</p>
-          <p> {{ plant.created_at }}</p>
-        </div> 
-      </div>    
-    {% endfor %}
-  </div>
-
-</section> -->
 
 <section>
 <h1 class="text-center mt-5">ALL PLANTS</h1>
   <div class="row g-4">
     <div class="col">
       <div class="d-flex justify-content-between align-items-center">
-        <div class="c d-flex gap-2">
+        <div class="d-flex gap-2">
           <!-- <a href="{% url 'main:all_plants' %}" class="p-2 ps-3 pe-3 rounded-pill categories text-decoration-none {% if 'categories' not in request.GET %} All {% endif %}">All</a> -->
           {% for val, key in category %}
             <a href="?categories={{val}}" class="p-2 ps-3 pe-3 rounded-pill categories {% if request.GET.categories == val %} {{ val }} {% endif %} text-decoration-none">{{val}}</a>
@@ -56,7 +29,7 @@
           </div>
           <div class="card-footer bg-light d-flex justify-content-center">
             <h6 class="card-text">{{ plant.created_at }}</h6>
-            <a href="{% url 'main:plant_detail' plant.id  %}" class="btn btn-primary">Read More</a>
+            <a href="{% url 'main:plant_detail' plant.id  %}" class="btn btn-warning m-2">Read More</a>
           </div>
         </div>
       </div>

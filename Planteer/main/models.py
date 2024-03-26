@@ -16,6 +16,25 @@ class Plant(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
+    def __str__(self):
+        return self.name
+    
+
+    
+
+class Comment(models.Model):
+
+    plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=2084)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f"{self.full_name} - {self.plant.name}"
+    
+
+
+
 class Contact(models.Model):
 
     first_name = models.CharField(max_length=100)
