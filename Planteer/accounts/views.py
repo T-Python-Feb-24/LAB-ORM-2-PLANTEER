@@ -36,7 +36,7 @@ def login_view(request:HttpRequest):
 
         if user:
             login(request,user)
-            return redirect("accounts:profile_view")
+            return redirect("main:home_view")
         else:
             msg="username or password not found ,try agin"
     return render(request,'accounts/login.html',{"msg":msg})
