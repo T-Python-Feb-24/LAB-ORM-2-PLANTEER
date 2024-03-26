@@ -16,6 +16,7 @@ urlpatterns=[
     path('contact/', views.contact_us_view, name='contact_us_view'),
 
 
+
   
 ]
 

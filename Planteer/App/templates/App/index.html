@@ -9,11 +9,11 @@
     <div class="row g-4">
 
         <div class="col">
-            <div class="d-flex align-items-baseline gap-2">
-                <h1>planteer</h1>
+            <div class="content ">
+                <h1 >planteer</h1>
                 <h4>plant Database For Plants Lovers</h4>
             </div>
-            <img src="{% static '/images/b851b268ed939af58cb0211b2cdaf4ab.webp' %}" class="w-100 hero rounded-4" />
+            <img src="{% static '/images/fd9a7d636d175a04cf145f73c5606d84.jpg' %}" class="w-100 hero rounded-4" />
         </div>
     </div>
 
@@ -27,7 +27,7 @@
         {% for post in posts %}
             <div class="col-4">
                 <div class="d-flex flex-column gap-2 border border-1 shadow p-3 rounded-4 h-100">
-                    <img src="{{ post.poster.url }}"  class="w-100 rounded-4"/>
+                    <img src="{{ post.image.url }}"  class="w-100 rounded-4"/>
                     <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{post.category}} ">{{ post.category }}</h6>
                     <h6 class="text-muted">{{ post.eidble}}</h6>
                     <h2><a href="{% url 'App:post_detail_view' post.id  %}" class="text-decoration-none">{{post.Name}}</a></h2>
@@ -35,7 +35,7 @@
                 </div>
             </div>
             
-        {% endfor %}
+        {% endfor %}    
 
     </div>
 

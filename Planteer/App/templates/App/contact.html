@@ -1,11 +1,11 @@
-<!--{% extends 'App/base.html' %}
+{% extends 'App/base.html' %}
 
 {% block title %} Contact Us {% endblock %}
 
 {% block content %}
     <h1>Contact Us</h1>
     <p>Please use the form below to contact us:</p>
-    <form action="{% url 'App:contact_submit_view' %}" method="post">
+    <form action="{% url 'App:contact_us_view' %}" method="post">
         {% csrf_token %}
         <label for="name">Your Name:</label>
         <input type="text" id="name" name="name" required><br><br>
@@ -15,4 +15,4 @@
         <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
         <input type="submit" value="Send Message">
     </form>
-{% endblock %}-->
+{% endblock %}

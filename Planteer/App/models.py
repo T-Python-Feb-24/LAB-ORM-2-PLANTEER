@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 # Create your models here.
 class Post(models.Model):
@@ -9,10 +10,10 @@ class Post(models.Model):
     Name= models.CharField(max_length=2048)
     about= models.TextField()
     used_for= models.TextField()
-    image= models.ImageField(upload_to="images/", default="images/default.jpeg",null=True)
+    image= models.ImageField(upload_to="images/", default="images/0001.jpg",null=True)
     category= models.CharField(max_length=64, choices=categories.choices,default='General')
     eidble=models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=datetime.now())
 
 
 class ContactMessage(models.Model):
@@ -20,14 +21,14 @@ class ContactMessage(models.Model):
     last_name = models.CharField(max_length=100)
     email = models.EmailField()
     message = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=datetime.now())
+
 
 
 class Comment(models.Model):
-    Post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-    author = models.CharField(max_length=100)
-    text = models.TextField()
+    post = models.ForeignKey('Post', on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=100)
+    content = models.TextField()
 
-def __str__(self):
-        return f'Comment by {self.author} on {self.plant.Name}'
-
+    def __str__(self):
+        return self.full_name

@@ -7,7 +7,7 @@
             <div class="d-flex flex-column gap-2">
                 <h1>{{ post.Name}}</h1>
                 <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{post.category}}">{{ post.category }}</h6>
-                <img src="{{ post.poster.url }}"  class="w-100 rounded-4"/>
+                <img src="{{ post.image.url }}"  class="w-100 rounded-4"/>
                 <div class="d-flex justify-content-between">
                     <h6>{{post.creatad}}</h6>
                     <div class="d-flex gap-2">
@@ -23,4 +23,26 @@
 
 
     </div>
-{% endblock %} 
+    <h2>Comments:</h2>
+
+    <
+
+            {% for comment in comments %}
+                    <h4>{{ comment.full_name }}</h4>
+                    <p>{{ comment.content }}</p>
+            {% endfor %}
+
+    <div class="row mt-4">
+        <div class="col">
+
+            <form action="{% url 'App:add_comment_view' post.id %}" method="post" class="d-flex flex-column gap-2">
+                {% csrf_token %}
+                <input type="text" name="full_name" class="form-control"/>
+
+            </form>
+
+        </div>
+    </div>
+
+
+{% endblock %}

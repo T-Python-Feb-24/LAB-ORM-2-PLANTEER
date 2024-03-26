@@ -4,10 +4,14 @@ from django.http import HttpRequest,HttpResponse
 from datetime import date,timedelta
 import math
 from .models import Post
+from .models import Comment
+
 def home_page(request: HttpRequest):
 
 
-    return render(request,"App/index.html")
+    plant = Post.objects.all()
+
+    return render(request,"App/index.html",{"posts":plant})
 
 
 def add_post_view(request:HttpRequest):
@@ -16,14 +20,15 @@ def add_post_view(request:HttpRequest):
             new_post=Post(Name=request.POST['Name'],
                         about=request.POST['about'],
                         used_for=request.POST['used_for'],
-                        image = request.FILES['image'] ,
-                        eidble = request.POST["eidble"],
-                        category= request.POST["category"],
-                        created_at = request.POST.get("created_at", False) )
+                        image = request.FILES.get('image', Post.image.field.default),
+                        eidble = request.POST.get("eidble", False),
+                        category= request.POST["category"]
+                    )
             new_post.save()
+            return redirect('App:home_page')
+
         except Exception as e:
             print(e)
-        return redirect('App:home_page')
 
     return render(request,'App/add_post.html',{"categories" : Post.categories.choices})
 
@@ -63,7 +68,6 @@ def update_post_view(request:HttpRequest, post_id):
             post.Name= request.POST["Name"]
             post.about= request.POST["about"]
             post.used_for= request.POST["used_for"]
-
             post.category = request.POST["category"]
             post.poster = request.FILES.get("poster", post.poster)
             post.save()
@@ -103,7 +107,7 @@ def posts_search_view(request):
         posts = Post.objects.filter(Name__icontains=query)
     else:
         posts = Post.objects.all()
-    return render(request, 'posts_search.html', {'posts': posts})
+    return render(request, 'App/posts_search.html', {'posts': posts})
 
 
 
@@ -117,6 +121,17 @@ def posts_search_view(request):
 
 
 
+def add_comment_view(request:HttpRequest, post_id):
+
+    if request.method == "POST":
+        #add new comment
+        post_object = Post.objects.get(pk=post_id)
+        new_comment = Comment(post=post_object,full_name=request.POST["full_name"], content=request.POST["content"])
+        new_comment.save()
+
+    
+    return redirect("App:post_detail_view", post_id=post_id)
+    
 
 
 
