@@ -4,14 +4,28 @@
 <div class="row">
         
     <div class="col">
-        <div class="d-flex flex-column gap-2">
-            <h1>{{ user.username  }}</h1>
-            <h6>{{user.first_name}}</h6>
-            <h6>{{user.last_name}}</h6>
-            <h6>{{user.email}}</h6>
-            <h6>{{user.created_at}}</h6>
+        <div class="card-container">
 
-        </div>
+            <div class="upper-container">
+              <div class="image-container">
+                <!-- <img src="" /> -->
+              </div>
+            </div>
+        
+            <div class="lower-container">
+              <div>
+                <h3>{{ user.username }}</h3>
+                <h4>{{user.first_name}} - {{ user.last_name }}</h4>
+              </div>
+              <div>
+                <p>{{user.email}}</p>
+              </div>
+              <div>
+                <a href="#" class="btn">View profile</a>
+              </div>
+            </div>
+        
+          </div>
 
     </div>
 
