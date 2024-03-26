@@ -27,7 +27,7 @@
         <h2>comments:</h2>
         <div class="col-8 d-flex flex-column gap-4"> 
             {% for comment in comments %} 
-            <div class="border border-1 p-4" >
+            <div class="border border-1 p-4 " >
                 <h4>{{comment.full_name}}</h4>
                 <p>{{comment.content}}</p>
             </div>
@@ -38,7 +38,7 @@
     <div class="row mt-4">
         <h2>Add comment:</h2>
         <div class="col-8"> 
-           <form action= {% url "main:plant_comment" plant.id %}  method="POST" class="d-flex flex-column form-control gap-2">
+           <form id="c" action= {% url "main:plant_comment" plant.id %}  method="POST" class="d-flex flex-column form-control gap-2">
             {% csrf_token %}
             <input type="text" name="full_name" placeholder ="Full Name">
             <textarea name="content" placeholder="Write your comment.."></textarea>
