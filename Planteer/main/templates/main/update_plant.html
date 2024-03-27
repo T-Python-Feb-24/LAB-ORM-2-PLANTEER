@@ -1,0 +1,51 @@
+{% extends "main/base.html" %}
+
+{% block title %}Update Plant{% endblock  %}
+
+{% block content %}
+
+    <h1 class="mb-4 mt-4">Update Plant</h1>
+<form action="{% url "main:update_plant" plant.id %}" method="POST" enctype="multipart/form-data" class="d-flex flex-column gap-1">
+    {% csrf_token %}
+    <!--name -->
+    <div class="row">
+        <div class="col-7 d-flex flex-column gap-4">
+            <!--name-->
+            <input name="name" type="text" placeholder="name" class="form-control" value="{{plant.name}}">
+            <!--about-->
+            <textarea name="about" placeholder = "about" class="form-control">{{plant.about}}</textarea>
+            <!--used for-->
+            <textarea name="used_for" placeholder="used for" class="form-control">{{plant.used_for}}</textarea>
+            <!--category-->
+        <div class="m-0">
+            <h5>Category</h5>
+            <select name="category" class="form-select" required>
+                {% for val, cat in categories %}
+                    <option value="{{val}}">{{cat}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!--is edible-->
+        <div class="m-0">
+            <h5>Edible Plant </h5>
+            <input type="radio" name="is_edible" value="True" {% if plant.is_edible == "True" %} selected {% endif  %}>
+            <label for="html">Yes</label><br>
+            <input type="radio" name="is_edible" value="False" {% if plant.is_edible == "False" %} selected {% endif  %}>
+            <label for="css">No</label><br>
+        </div>
+
+        <!--imaeg-->
+        <div class="m-0">
+            <img src="{{plant.image.url}}" class="w-50 mb-2">
+            <h5>Choose image:</h5>
+            <input type="file" name ="image" accept="image/*" class="form-control">
+        </div>
+
+        <!--submit-->
+        <input type="submit" value="submit" class="btn btn-primary">
+    </div>    
+    </div>
+</form>
+
+{% endblock  %}

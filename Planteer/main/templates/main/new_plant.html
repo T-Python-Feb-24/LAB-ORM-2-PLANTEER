@@ -1,0 +1,51 @@
+{% extends "main/base.html" %}
+
+{% block title %}Add New Plant{% endblock  %}
+
+{% block content %}
+
+    <h1 class="mb-4 mt-4">Add New Plant</h1>
+<form action="{% url "main:new_plant" %}" method="POST" enctype="multipart/form-data" class="d-flex flex-column gap-1">
+    {% csrf_token %}
+
+    <!--name -->
+    <div class="row">
+        <div class="col-7 d-flex flex-column gap-4">
+            <!--name-->
+            <input name="name" type="text" placeholder="name" class="form-control">
+            <!--about-->
+            <textarea name="about" placeholder = "about" class="form-control"></textarea>
+            <!--used for-->
+            <textarea name="used_for" placeholder="used for" class="form-control"></textarea>
+            <!--category-->
+        <div class="m-0">
+            <h5>Category</h5>
+            <select name="category" class="form-select" required>
+                {% for cat,val in categories %}
+                    <option value="{{val}}">{{cat}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!--is edible-->
+        <div class="m-0">
+            <h5>Edible Plant </h5>
+            <input type="radio" name="is_edible" value="True">
+            <label for="html">Yes</label><br>
+            <input type="radio" name="is_edible" value="False">
+            <label for="css">No</label><br>
+        </div>
+
+        <!--imaeg-->
+        <div class="m-0">
+            <h5>Choose image:</h5>
+            <input type="file" name ="image" accept="image/*" required class="form-control">
+        </div>
+
+        <!--submit-->
+        <input type="submit" value="submit" class="btn btn-primary">
+    </div>    
+    </div>
+</form>
+
+{% endblock  %}
