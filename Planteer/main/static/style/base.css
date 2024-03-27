@@ -108,3 +108,16 @@ width: 100%;
  .info {
     font-size: 40px;
 }
+
+.xx{
+    color: #fdf0ea;
+    background-color: #fdf0ea;
+}
+
+
+.thumb {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 15px;
+}

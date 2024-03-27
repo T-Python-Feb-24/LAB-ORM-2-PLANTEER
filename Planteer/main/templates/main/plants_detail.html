@@ -7,8 +7,10 @@
         <div class="d-flex flex-column gap-2">
         <img src="{{ plant.image.url }}"  class="w-100 rounded-4"/>
         <div class="d-flex justify-left">
+        {% if request.user.is_staff %}
             <a href="{% url 'main:update_page' plant.id %}" class="btn btn-primary">update</a>
             <a href="{% url 'main:delete_view' plant.id %}" class="btn btn-danger">Delete</a>
+             {% endif %}
         </div>
         </div>
         </div>
@@ -61,7 +63,7 @@
      <div class="col d-flex flex-column gap-2">    
       {% for comment in comments %}
         <div class=" comment d-flex flex-column gap-2 border border-1 p-3 rounded-3">
-        <h4>{{ comment.name }}</h4>
+        <a href="{% url 'accounts:user_info_view' comment.user.username %}" class="text-decoration-none"><h4>{{ comment.user.username }}</h4></a>
         <p>{{ comment.content }}</p>
         <p>{{ comment.created_at }}</p>
         </div>
@@ -76,14 +78,17 @@
 <div class="row mt-4">
 <div class="col">
 
+    {% if request.user.is_authenticated %}
+
  <form action="{% url 'main:comments_view' plant.id %}" method="post" class="d-flex flex-column gap-2">
     {% csrf_token %}
-    <input type="text" name="name"  placeholder="ex:Ahamd"  class="form-control"/>
     <textarea name="content"  placeholder="text your comment here"  class="form-control" required></textarea>
 
     <input type="submit" value="Add Comment" class="btn btn-primary"/>
     </form>
-
+    {% else %}
+         <div class="alert alert-warning">You must <a href="{% url 'accounts:login_user_view' %}">Sign in</a> to comment.</div>
+    {% endif %}
         
     </div>
     </div>

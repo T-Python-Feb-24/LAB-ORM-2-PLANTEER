@@ -1,6 +1,7 @@
 from django.shortcuts import render ,redirect
 from django.http import HttpRequest, HttpResponse
-from .models import Plant , Contact , Comment
+from .models import Plant , Contact , Comment 
+
 # Create your views here.
 
 
@@ -25,6 +26,9 @@ def all_plants(request: HttpRequest):
     return render(request,"main/all_plants.html" , {"plants" : plants , "category" : Plant.categories.choices})
 
 def add(request: HttpRequest):
+    if not request.user.is_staff:
+      return render(request, "main/no_permission.html")
+    
     if request.method =="POST":
         try:
             new_plant=Plant(
@@ -61,6 +65,8 @@ def detail(request: HttpRequest ,plant_id):
 
 
 def update(request: HttpRequest , plant_id):
+    if not request.user.is_staff:
+      return render(request, "main/no_permission.html")
 
     plant=Plant.objects.get(pk=plant_id)
 
@@ -84,6 +90,8 @@ def update(request: HttpRequest , plant_id):
 
 
 def delete(request: HttpRequest , plant_id):
+    if not request.user.is_staff:
+      return render(request, "main/no_permission.html")
 
     try:
         plant=Plant.objects.get(pk=plant_id)
@@ -119,16 +127,23 @@ def info(request: HttpRequest):
 
 
 def user_message(request: HttpRequest):
+    if not request.user.is_superuser:
+        return render(request, "main/no_permission.html")
+    
     con=Contact.objects.all()
 
     return render(request,"main/message.html", {"con" : con})
 
 
 def comment(request: HttpRequest , plant_id):
+
+    if not request.user.is_authenticated:
+        return redirect('accounts/login_user_view')
+
     if request.method == "POST":
         plant_ob=Plant.objects.get(pk=plant_id)
         comments=Comment(plant=plant_ob,
-        name=request.POST["name"],
+        user=request.user,
         content=request.POST["content"],
         )
         comments.save()

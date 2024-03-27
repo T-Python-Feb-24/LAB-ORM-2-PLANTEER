@@ -1,13 +1,13 @@
 {% extends 'main/base.html' %}
 
-{% block title %}User information{% endblock %}
+{% block title %} {{user.username}} Profile information{% endblock %}
 
 {% block content %}
 
  <div class="row">
  <div class="col">
  <div class="d-flex flex-column gap-2">
-      <img src="/static/images/flower2.jpeg" class="w-100 rounded-4" />
+      <img src="{{user.profile.avatar.url}}" class="w-100 rounded-4" />
 
 
  </div>
@@ -16,11 +16,36 @@
          <div class="user-info d-flex flex-column gap-2">
          <div class="info">
         <h4 class="info"> Username :{{user.username}}</h4>
-        <p>First name :{{user.first_name}}</p>
-        <p>Last name: {{user.last_name}}</p>
-        <p>Email : {{user.email}}</p>
+        <p>Name :{{user.first_name}} {{user.last_name}}</p>
+        <p>Email</p><a href="mailto:{{user.email}}">{{ user.email }}</a>
+        <p class="mt-2">Bio : <br>{{ user.profile.about }}</p>
+                <div class="d-flex gap-2">
+                
+                    <a href="{{user.profile.instagram}}" target="_blank"><i class=" xx bi bi-instagram"></i></a>
+                    <a href="{{user.profile.linkedin}}" target="_blank"><i class=" xx bi bi-linkedin"></i></a>
+                </div>
+                <a href="{% url 'accounts:update_info' user.id %}" class="btn btn-primary">update</a>
+                </div>
+           
         </div>
 </div>
+
+{% if user.comment_set.all.count != 0%}
+<h2>{{user.username}} Comments</h2>
+{% endif %}
+
+     <div class=" d-flex flex-column gap-2">    
+      {% for comment in user.comment_set.all %}
+        <div class=" comment d-flex flex-column gap-2 border border-1 p-3 rounded-3">
+        <h4>{{ comment.user.username }}</h4>
+        <a href="{% url 'main:detail_page' comment.plant.id %}#commentsDiv"><h6 class="text-muted">{{comment.post.title}}</h6></a>
+        <p>{{ comment.content }}</p>
+        <p>{{ comment.created_at }}</p>
+        </div>
+        {% endfor %}
+
+     </div> 
+     </div>  
 </div>
-</div>
+
   {% endblock %}

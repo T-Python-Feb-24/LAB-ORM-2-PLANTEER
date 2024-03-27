@@ -1,0 +1,43 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+   <div class="row">
+        <h1>Update info</h1>
+        <div class="col">
+
+            <form action="{% url 'accounts:update_info' acc.id %}" method="post" class="d-flex flex-column gap-2" enctype="multipart/form-data">
+                {% csrf_token %}
+                 <label for="html">username:</label>
+                <input name="username" class="form-control" type="text" minlength="3" required value="{{ acc.username }}"  />
+                 <label for="html">first name:</label>
+                <input name="first_name" class="form-control" type="text" minlength="3"  value="{{ acc.first_name }}"  />
+                 <label for="html">last name:</label>
+                <input name="last_name" class="form-control" type="text" minlength="3" value="{{ acc.last_name }}"  />
+                 <label for="html">Email :</label>
+                <input name="email" class="form-control" type="email" minlength="3"  value="{{ acc.email }}"  />
+            
+                <label for="html">Bio :</label>
+                <textarea name="about" class="form-control" > {{ info.about }} </textarea>
+                <label for="html">instagram link :</label>
+                <input name="instagram" class="form-control" type="text"   value="{{info.instagram }}"  />
+                <label for="html">linkedin link :</label>
+                <input name="linkedin" class="form-control" type="text"  value="{{ info.linkedin }}"  />
+
+                 <h5>Choose avatar:</h5>
+                <img src="{{ info.avatar.url }}" class="thumb" />
+                <input name="avatar"  type="file"  accept="image/*" class="form-control"  />
+                <label for="html">password  :</label>
+                <input name="password" class="form-control" type="password" minlength="1"  />
+                <input type="submit" class="btn btn-primary" value="Update" />
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+
+{% endblock %}
