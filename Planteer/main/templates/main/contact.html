@@ -1,0 +1,46 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Contact Us - Planteer{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Contact Us</h2>
+    <p>Please fill out the form below and we will get back to you as soon as possible.</p>
+    <form method="post" action="{% url 'main:contact' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="first_name">First Name</label>
+            <input type="text" class="form-control" id="first_name" name="first_name" required>
+            <div class="invalid-feedback">
+                Please enter your first name.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="last_name">Last Name</label>
+            <input type="text" class="form-control" id="last_name" name="last_name" required>
+            <div class="invalid-feedback">
+                Please enter your last name.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+            <div class="invalid-feedback">
+                Please enter a valid email address.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="message">Message</label>
+            <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+            <div class="invalid-feedback">
+                Please enter your message.
+            </div>
+        </div>
+        <button type="submit" class="btn-2 btn-primary">Submit</button>
+       
+    </form>
+    {% if request.user.is_staff %}
+    <a href="{% url 'main:message_view'  %}" class=""> View messages</a> 
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Planteer | add {% endblock %}
+
+{% block content %}
+
+<div class="row mb-4">
+    <div class="col-6">
+        <h2>All Plants</h2>
+    
+        <span class="badge bg-secondary">{{ plants.count }}</span>
+    </div>
+</div>
+
+<div class="row mb-4  text-center">
+    <div class="col">
+        <div class="btn-group" role="group">
+            <a href="{% url 'main:all_plants_view' %}" class="btn btn-outline-secondary">All</a>
+            {% for val, key in categories %}
+                <a href="?cat={{ val }}" class="btn btn-outline-secondary">{{ val }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="row g-5">
+    {% for plant in plants %}
+    <div class="col-4">
+        <div class="card d-flex flex-column gap-2 border border-1 shadow p-2 rounded-4 h-100">
+            <img src="{{ plant.image.url }}" class="card-img-top  plant-image " alt="{{ plant.name }}">
+            <div class="card-body">
+                <h5 class="card-title-all">{{ plant.name }}</h5>
+                
+                <p class="card-text"><small class="text-muted">Category: {{ plant.get_category_display }}</small></p>
+                <p class="card-text"><small class="text-muted">Created at: {{ plant.created_at }}</small></p>
+                <a href="{% url 'main:plant_detail' plant.id %}" class="btn btn-primary">View Details</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+{% endblock %}

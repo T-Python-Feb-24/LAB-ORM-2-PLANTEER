@@ -1,0 +1,103 @@
+
+{% extends 'main/base.html' %}
+
+{% block title %} Plant Details {% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-custom gradient-custom text-white">
+                <img src="{{ plant.image.url }}" class="card-img-top img-fluid w-100" alt="{{ plant.name }}">
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card card-custom text-dark">
+                <div class="card-body">
+                    
+                    <h3 class="card-title">{{ plant.name }}</h3>
+                    <p class="card-text"><strong>About:</strong> {{ plant.about }}</p>
+                    <p class="card-text"><strong>Used For:</strong> {{ plant.used_for }}</p>
+                    <p class="card-text"><strong>Category:</strong> {{ plant.get_category_display }}</p>
+                    <p class="card-text"><strong>Edible:</strong> {% if plant.is_edible %} Yes {% else %} No {% endif %}</p>
+                    <p class="card-text"><strong>Created At:</strong> {{ plant.created_at }}</p>
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'favorites:add_remove_favorites_view' plant.id %}" {% if not request.user.is_authenticated %} data-bs-toggle="modal" data-bs-target="#favoriteModal" {% endif %} class="text-decoration-none"><i class="bi {% if is_favored %} bi-heart-fill {% else %} bi-heart {% endif %} favorite"></i></a>
+
+                        {% if request.user.is_staff %}
+                        <a href="{% url 'main:update_plant' plant.id %}" class="btn btn-outline-success">Update</a>
+                        <a href="{% url 'main:delete_plant' plant.id %}" class="btn btn-outline-danger">Delete</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <p>{{ plant.content }}</p>
+            </div>
+            
+        </div>
+        <hr/>
+
+    <h2> Comments ({{ comments.count }}): </h2>
+        
+        <div class="row">
+            <div class="col d-flex flex-column gap-3">
+        
+                {% for comment in comments %}
+                    <div class="shadow-sm p-3 mb-3 bg-body rounded">
+                        <a href="{% url 'accounts:user_detail' comment.user.username %}" class="text-decoration-none"><h4>{{ comment.user.username }}</h4></a>
+
+                        <p>{{ comment.content }}</p>
+                        <small class="text-muted">Posted on {{ comment.created_at|date:"M d, Y" }}</small>
+                    </div>
+                {% endfor %}
+        
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+
+            <div class="col">
+                {% if request.user.is_authenticated %}
+                <form action="{% url 'main:add_comment' plant.id %}" method="post" class="p-3 bg-light border rounded">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Comment</label>
+                        <textarea name="content" class="form-control" id="content"></textarea>
+                    </div>
+        
+                    <div class="d-grid">
+                        <input type="submit" value="Add Comment" class="btn btn-primary"/>
+                    </div>
+                </form>
+                {% else %}
+            <div class="alert alert-warning">You must <a href="{% url 'accounts:login_user' %}">Sign in</a> to comment.</div>
+            {% endif %}
+
+            </div>
+        </div>
+        
+    </div>
+    
+        <h2>Related Plants</h2>
+<div class="row">
+  {% for related_plant in related_plants %}
+  <div class="col-md-4">
+    <div class="card">
+      <img src="{{ related_plant.image.url }}" class="card-img-top" alt="{{ related_plant.name }}">
+      <div class="card-body">
+        <h5 class="card-title-all">{{ related_plant.name }}</h5>
+        
+        <a href="{% url 'main:plant_detail' related_plant.id %}" class="btn btn-primary">View details</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+    </div>
+</div>
+
+
+
+{% endblock %}
