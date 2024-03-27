@@ -1,0 +1,48 @@
+{% extends 'main/base.html' %}
+
+
+
+
+{% block content %}
+ <div class="container mt-5 w-50">
+    <form action="{% url 'main:update_plant_view' plant.id %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+          <legend>update plant</legend>
+          <div class="mb-3">
+            <label for="name" class="form-label mt-3">Plant name:</label>
+            <input type="text" name="name" id="name" class="form-control" placeholder="Enter" value="{{plant.name}}">
+          </div>
+          <img class="w-25-1 border " src="{{plant.image.url}}" alt="">
+
+          <h6>Update Image:</h6>
+          <input name="image"  type="file" accept="image/*" class="form-control"/>
+
+          </p> 
+          <div class="mb-3">
+            <label class="form-label" for="About">About:</label><br>
+            <textarea class="form-control" id="about" name="about" value="{{ plant.about }}" required>{{ plant.about }}</textarea>
+            </div>
+          <div class="mb-3">
+            <label class="form-label" for="used">Used for:</label><br>
+            <textarea class="form-control" id="used_for" name="used_for" class="form-control"  required> {{plant.used_for}}</textarea>
+          </div>
+          <div class="form-check">
+          
+            <input name="is_edible" value="True" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" {% if plant.is_edible %} checked {% endif %}>
+            <label class="form-check-label" for="flexSwitchCheckDefault">is edible?</label>
+        </div>
+          <div class="mb-3">
+            <label for="category" class="form-label mt-3">type:</label>
+            <select name="categore" class="form-select" required>
+                {% for val, cat in categories %}
+                    <option value="{{val}}" {% if plant.categore == val %} selected {% endif %}>{{cat}}</option>
+                {% endfor %}
+            </select>
+          </div>
+          <div class="mb-3">
+          
+          </div>
+          <button type="submit" class="btn bg-success text-white">Update</button>
+      </form>
+ </div>
+{% endblock %}

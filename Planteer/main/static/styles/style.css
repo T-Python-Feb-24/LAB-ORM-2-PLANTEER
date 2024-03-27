@@ -1,0 +1,32 @@
+*{
+    padding: 0%;
+}
+.bg-img{
+
+ background-image: url("/static/images/plants.png");
+ background-size: cover;
+
+}
+
+.container .bg-img .search-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.img-thumbnail{
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    padding: 0%;
+}
+
+.w-25-1{
+    width: 23%;
+}
+.form-check-input:checked {
+    background-color: rgba(25, 135, 84, 1);
+    border-color:  rgba(25, 135, 84, 1);
+  }
+

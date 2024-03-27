@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+  
+    <div class="d-flex justify-content-center">
+    <form method="GET" class="ms-5 mt-4 ms-5 me-5 w-50 ">
+        {% csrf_token %}
+        <div class="form-group">
+          <input type="text" class="form-control" name="query" placeholder="Search">
+        </div>
+        <div class="d-flex justify-content-center align-items-center column-gap-3"> 
+        <select name="category" class="rounded-3 form-control mt-2 w-auto text-center ">
+          <option value="">All Categories</option>
+          <option value="General" {% if request.GET.category == 'General' %}selected{% endif %}>General</option>
+          <option value="Flowering" {% if request.GET.category == 'Flowering' %}selected{% endif %}>Flowering</option>
+          <option value="Conifers" {% if request.GET.category == 'Conifers' %}selected{% endif %}>Conifers</option>
+          <option value="Mosses" {% if request.GET.category == 'Mosses' %}selected{% endif %}>Mosses</option>
+          <option value="Carnivorous" {% if request.GET.category == 'Carnivorous' %}selected{% endif %}>Carnivorous</option>
+        </select>
+        <label class="text-white">
+          <input type="checkbox" name="is_edible" value="1" class="form-check-input "{% if request.GET.is_edible %}checked{% endif %}>
+    
+          Is Edible
+        </label>
+        </div>
+        <div class="d-flex justify-content-center">
+        <button type="submit" class="btn bg-success text-white mt-3">Search</button>
+        </div>
+      </form>
+    </div>
+<h1 class="ms-5">Search Results:  ({{ count }})</h1>
+
+  <ul>
+    <div class="d-flex flex-wrap justify-content-start column-gap-3 row-gap-4 mt-5">
+        {% for plant in plants %}
+        
+        <div class="d-flex flex-column gap-2 border border-1 shadow p-3 rounded-4 w-25      rounded-4 " style="padding: 15px;   ">
+            <div class="align-items-center  " >
+                <img class="img-thumbnail rounded-4 align-items-center" src="{{ plant.image.url }}" />
+            </div>
+            <h2><a href="{% url 'main:plants_details' plant.id  %}" class="text-decoration-none text-black">{{plant.name}}</a></h2>
+            <h6 class="cat rounded-pill {{ plant.categore }} ">categore: {{ plant.categore }}</h6>
+            <h6>Created at: {{ plant.created_at }}</h6>
+            
+        </div>
+    {% empty %}
+      <li>No plants found.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
