@@ -3,6 +3,8 @@ from django.shortcuts import redirect, render
 from django.http import HttpRequest,HttpResponse
 from .models import Plant,Contact,Comment
 from datetime import datetime
+from favorites.models import Favorite
+
 
 # Create your views here.
 def index_page(request:HttpRequest):
@@ -23,7 +25,8 @@ def add_plants(request:HttpRequest):
     return render(request, "main/add_plants.html", {"categories": Plant.categories.choices})
 
 def add_plants_view(request: HttpRequest):
-
+    if not request.user.is_staff:
+        return render(request, "main/home.html")
     if request.method == 'POST':
         try:
             new_plant = Plant(name=request.POST["name"], about=request.POST["about"], categore=request.POST["categore"], used_for=request.POST["used_for"], image=request.FILES["image"], is_edible=request.POST.get("is_edible", False))         
@@ -46,19 +49,21 @@ def all_plants(request:HttpRequest):
 def plant_detail(request ,plant_id):
     
     try:
-        #getting a  post detail
         plant = Plant.objects.get(pk=plant_id)
         comments=Comment.objects.filter(plant=plant)
         count = comments.count()
-
-  
+        related_plants = Plant.objects.filter(categore=plant.categore).exclude(id=plant.id) 
+        is_favored = request.user.is_authenticated and  Favorite.objects.filter(user=request.user, plant=plant).exists()
+    except Plant.DoesNotExist:
+        return render(request, "main/not_found.html")
     except Exception as e:
         print(e)
     
-    return render(request,"main/plant_details.html",{"plant" : plant,"comments":comments,"count":count})
+    return render(request,"main/plant_details.html",{"plant" : plant,"comments":comments,"count":count, "related_plants" : related_plants , "is_favored" : is_favored})
 
 def delete_plant_view(request:HttpRequest, plant_id):
-
+    if not request.user.is_staff:
+        return render(request, "main/home.html")
     try:
         plant = Plant.objects.get(pk=plant_id)        
         plant.delete()
@@ -70,7 +75,8 @@ def delete_plant_view(request:HttpRequest, plant_id):
 
 
 def update_plant_view(request:HttpRequest, plant_id):
-
+    if not request.user.is_staff:
+        return render(request, "main/home.html")
     plant = Plant.objects.get(pk=plant_id)
 
     if request.method == "POST":
@@ -139,9 +145,12 @@ def show_message_page(request):
 
 
 def add_comment_view(request: HttpRequest ,plant_id):
+    if not request.user.is_authenticated:
+        return redirect("accounts:login_page")
+    
     if request.method == "POST":
         plant= Plant.objects.get(pk=plant_id)
-        new_comment = Comment(plant=plant,full_name=request.POST["full_name"], content=request.POST["content"])
+        new_comment = Comment(plant=plant,user=request.user, content=request.POST["content"])
         new_comment.save()
     
     
