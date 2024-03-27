@@ -76,8 +76,8 @@ def update_plant(request :HttpRequest,plant_id):
         plant.category = request.POST.get("category","Tree")
         plant.is_edible = request.POST.get("is_edible",False)
         plant.save()
-        return redirect("main:home_page")
-      
+        return redirect("main:plant_detail",plant_id)
+
     return render(request,"main/update_plant.html",{"plant":plant ,"categories":Plant.categories.choices})
 
 
@@ -87,7 +87,7 @@ def delete_plant(request :HttpRequest,plant_id):
     plant = Plant.objects.get(pk=plant_id)
     plant.delete()
     
-    return redirect("home_page.html")
+    return redirect("main:home_page")
 
 
 

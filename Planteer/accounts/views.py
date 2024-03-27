@@ -2,11 +2,13 @@ from django.shortcuts import render,redirect
 from django.http import HttpRequest,HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate , login,logout
-
+from django.db import IntegrityError
 # Create your views here.
 
 
 def create_account (request :HttpRequest):
+    # in case if we don't have exeption, it will be empty 
+    msg=''
     
     if request.method == "POST":
         try:
@@ -17,11 +19,15 @@ def create_account (request :HttpRequest):
                 last_name=request.POST["last_name"],
                 password = request.POST["password"]
             )
-        except Exception : 
-            pass
-     
+            user.save()
             return redirect("accounts:user_login")
-    return render(request,"accounts/create_account.html")
+
+        except IntegrityError:
+            msg = "username already exists! Try with different username!"
+        except Exception as e:
+            print(e)
+     
+    return render(request,"accounts/create_account.html" ,{"msg":msg})
 
 
 def user_login (request : HttpRequest):
@@ -45,7 +51,8 @@ def user_logout(request : HttpRequest):
         logout(request)
     return redirect("main:home_page")
 
+
 def user_profile (request: HttpRequest):
-    
+    # create object , get with username + <> 
     return render(request,"accounts/user_profile.html")
 
