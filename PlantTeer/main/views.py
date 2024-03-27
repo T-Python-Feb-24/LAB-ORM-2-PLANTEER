@@ -8,7 +8,7 @@ def home_page(requset:HttpRequest):
     plants=Plant.objects.all().order_by('-created_at')[0:3]
     comments=Comment.objects.all()
     if requset.user.is_authenticated:
-        print(requset.user.first_name)
+      print(requset.user.first_name)
 
     
     return render(requset,"main/home_page.html",{"plants":plants,"comments": comments })
@@ -103,15 +103,15 @@ def contact(requset:HttpRequest):
             contact =Contact(
                 first_name=requset.POST["first_name"], 
                 last_name=requset.POST["last_name"],
-                message=requset.POST[" message"],  
-                email=requset.POST["email"],
+                message=requset.POST["message"],  
+                email=requset.POST["email"]
             )
             contact.save()
             return redirect("main:contact_messages")
         except Exception as e:
             print(e)
 
-    return render(requset, "main/contact.html",{"contact":contact} )
+    return render(requset, "main/contact.html" )
 
 def contact_messages(requset:HttpRequest):
     try:
@@ -122,11 +122,13 @@ def contact_messages(requset:HttpRequest):
 
 
 def add_comment(request:HttpRequest, plant_id):
-
+    if not request.user.is_authenticated:
+        return redirect("accounts:login_user")
+    
     if request.method == "POST":
         try:
             plant_object = Plant.objects.get(pk=plant_id)
-            new_comment = Comment(plant=plant_object,full_name=request.POST["full_name"], content=request.POST["content"])
+            new_comment = Comment(plant=plant_object,uesr=request.user, content=request.POST["content"])
             new_comment.save()
         except Exception as e:
                 print(e)

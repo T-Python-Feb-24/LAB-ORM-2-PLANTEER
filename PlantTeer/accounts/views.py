@@ -8,15 +8,15 @@ def register_user(request:HttpRequest):
 
     if request.method == "POST":
         
-        try:
-            #create new user
-            new_user = User.objects.create_user(username=request.POST["username"], email=request.POST["email"], first_name=request.POST["first_name"], last_name=request.POST["last_name"], password=request.POST["password"])
-            new_user.save()
+     try:
+      #create new user
+         new_user = User.objects.create_user(username=request.POST["username"], email=request.POST["email"], first_name=request.POST["first_name"], last_name=request.POST["last_name"], password=request.POST["password"])
+         new_user.save()
 
             #redirect to login page
-            return redirect("accounts:login_user")
+         return redirect("accounts:login_user")
 
-        except Exception as e:
+     except Exception as e:
             print(e)
     
 
@@ -47,5 +47,9 @@ def logout_user(request:HttpRequest):
     
     return redirect('accounts:login_user')
 
-def profile(request:HttpRequest):
-    return render("accounts:profile")
+
+def profile(request:HttpRequest,user_id):
+   
+  profile=User.objects.get(pk=user_id)
+    
+  return render(request,"accounts/profile.html",{'profile':profile})

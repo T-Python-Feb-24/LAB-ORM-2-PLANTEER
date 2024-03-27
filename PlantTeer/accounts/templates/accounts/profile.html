@@ -3,6 +3,19 @@
 {% block title %}{% endblock %}
 
 {% block content %}
+<h2>Your Profil</h2>
+    <div class="row">
+        <div class="col d-flex flex-column gap-2">
 
+         
+            <h4>{{ profil.username }}</h4>
+            <h5>{{ profil.first_name }}</h5>
+            <h5>{{profil.last_name}}</h5>
+            <h5>{{profil.email}}</h5>
+            <h5>{{profil.password}}</h5>
+    
+
+        </div>
+    </div>
 
 {% endblock %}

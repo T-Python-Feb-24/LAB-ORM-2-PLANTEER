@@ -1,39 +1,40 @@
 {% extends 'main/base.html' %}
-{% block title %}{% endblock %}
+{% block title %}all plants{% endblock %}
 
 {% block content %}
-<div class="row g-4">
+<section >
+    <div class="container">
+        <div class="row g-4">
 
-    <div class="d-flex justify-content-between align-items-center" style="padding-left: 20px;">
-        <h2>All Plants</h2>
-        <div class="d-flex gap-0.1">
-            <a href="{% url 'main:all_plants' %}" class="p-2 ps-3 pe-3 rounded-pill cat  text-decoration-none">All</a>
-            
-            {% for val, key in Category %}
-                <a href="?cat={{val}}" class="p-2 ps-3 pe-3 rounded-pill cat {% if request.GET.cat == val %} {{ val }} {% endif %} text-decoration-none">{{val}}</a>
+            <div class="d-flex justify-content-between align-items-center" style="padding-left: 20px;">
+                <h2>All Plants</h2>
+                <div class="d-flex gap-0.1">
+                    <a href="{% url 'main:all_plants' %}" class="p-2 ps-3 pe-3 rounded-pill cat  text-decoration-none">All</a>
+                    
+                    {% for val, key in Category %}
+                        <a href="?cat={{val}}" class="p-2 ps-3 pe-3 rounded-pill cat {% if request.GET.cat == val %} {{ val }} {% endif %} text-decoration-none">{{val}}</a>
+                    {% endfor %}
+                    
+                </div>
+            </div>
+
+        </div>
+    
+        <div class="row mt-2 g-5">
+            {% for plant in plants %}
+                <div class="col-4">
+                    <div class="d-flex flex-column gap-2 border border-1 shadow p-3 rounded-4 h-100">
+                        <img src="{{ plant.image.url }}"  class="w-100 rounded-4"/>
+                        <h2><a href="{% url 'main:detail_plants' plant.id  %}" class="text-decoration-none">{{plant.name}}</a></h2>
+                        <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{plant.categroy}} ">{{plant.categroy}}</h6>
+                        <h6 class="text-muted">{{ plant.created_at }}</h6>
+                        
+                    </div>
+                </div>
+                
             {% endfor %}
-            
+                
         </div>
     </div>
-
-</div>
-
-<div class="row mt-2 g-5">
-        {% for plant in plants %}
-        <div class="col-4">
-            <div class="d-flex flex-column gap-2 border border-1 shadow p-3 rounded-4 h-100">
-                <img src="{{ plant.image.url }}"  class="w-100 rounded-4"/>
-                <h2><a href="{% url 'main:detail_plants' plant.id  %}" class="text-decoration-none">{{plant.name}}</a></h2>
-                <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{plant.categroy}} ">{{plant.categroy}}</h6>
-                <h6 class="text-muted">{{ plant.created_at }}</h6>
-                
-            </div>
-        </div>
-        
-        {% endfor %}
-        
-
-</div>
-
-
+</section>
 {% endblock content %}
