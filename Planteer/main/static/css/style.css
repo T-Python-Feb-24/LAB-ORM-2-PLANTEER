@@ -1,0 +1,57 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    font-family: "Numans", sans-serif;
+    font-size: 20px;
+}
+.hero {
+    height: 200px;
+    object-fit: cover;
+}
+
+p {
+    white-space: pre-line;
+}
+
+.cat {
+    background-color: rgb(135, 135, 135);
+    color:white;
+    align-self: flex-start;
+}
+
+.All {
+    background-color: rgb(39, 38, 39);
+}
+
+.General {
+    background-color: rgb(21, 124, 155);
+}
+
+.Tech {
+    background-color: orangered;
+}
+
+.Fashion {
+    background-color: purple;
+}
+
+.Science {
+    background-color: darkolivegreen;
+}
+
+.thumb {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+.col-1 {
+    background-image: url("/static/images/plant1.jpg");
+    background-size: cover;
+    background-position: 50;
+    width: 100%;
+    height: 60vh;
+    border-radius: 25px;
+    border-bottom-style: groove;
+
+}

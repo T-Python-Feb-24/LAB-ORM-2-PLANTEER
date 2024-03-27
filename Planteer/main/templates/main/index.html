@@ -1,0 +1,70 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Planteer Website {% endblock %}
+
+{% block content %}
+
+    <div class="row g-4">
+        <div class="col-1">
+            <div class="row">
+            <div class="d-flex align-items-baseline gap-2">
+                <div>
+                <h1>Planteer
+                <small class="text-body-secondary">Plant Database For Plants Lover</small>
+                </h1>
+                </div>
+            </div>
+
+    <form class="d-flex gap-5" method="get" action="{% url 'main:plants_search_view' %}">
+        <input name="search_query" class="form-control" placeholder="Search For Plant" type="search">
+        <button class="btn btn-outline-success" type="submit">search</button>
+    </form>
+            </div>
+        </div>
+    </div>
+<!---------------------------->
+<div class="row">
+    <div class="col">
+        <div class="d-flex justify-content-between align-items-center">
+            
+            <h1>Plants
+                <small class="text-body-secondary">Learn more about plants</small>
+            </h1>
+            <p><a href="{% url 'main:all_plants_view' %}">More</a></p>
+            
+        </div>
+    </div>
+</div>
+    
+
+    <!------------------------->
+
+    <!------------------------->
+    <div class="row">
+
+        {% for plant in plants %}
+            <div class="col-4">
+                <div class="d-flex flex-column gap-2 border border-1 shadow p-3 rounded-4 h-100">
+                    <img src="{{ plant.image.url }}"  class="w-100 rounded-4"/>
+                    <a href="{% url 'main:plant_detail_view' plant.id %}">{{plant.name}}</a>
+                    <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill">{{ plant.category }}</h6>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+   {% for comment in lastest_comments %}
+
+<div class="card p-3 mb-2 overflow-x-hidden w-100 ms-5 mb-2 me-5 ">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="user d-flex flex-row align-items-center">
+        <span><small class="font-weight-bold text-primary">{{ comment.full_name }}</small> <small class="font-weight-bold">{{ comment.content }}</small></span>
+    <small>{{comment.created_at}} </small>
+        </div>
+    </div>
+</div>
+                {% endfor %}
+
+{% endblock %}
+
+ 

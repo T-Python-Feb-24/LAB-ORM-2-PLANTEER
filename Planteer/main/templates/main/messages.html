@@ -1,0 +1,22 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h1>Messages</h1>
+
+    {% if messages %}
+      <div class="mt-3">
+        {% for message in messages %}
+          <div class="border border-1 border-dark rounded-3 p-3 mt-3">
+            <strong>Name:</strong> {{ message.first_name }} {{ message.last_name }}<br>
+            <strong>Email:</strong> {{ message.email }}<br>
+            <strong>Message:</strong> {{ message.message }}
+          </div>
+          {% endfor %}
+        </div>
+
+    {% else %}
+      <p>No messages found.</p>
+    {% endif %}
+  </div>
+{% endblock %}

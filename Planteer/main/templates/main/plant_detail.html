@@ -1,0 +1,81 @@
+{% extends "main/base.html" %}
+{% block title %}{% endblock title %}
+
+{% block content %}
+    <main class="m-5">
+        <div class="row">
+            <div class="m-3 d-flex gap-2">
+                <a href="{% url 'main:update_plant_view' plant.id %}" class="btn btn-outline-secondary">update</a>
+                <a href="{% url 'main:delete_view' plant.id %}" class="btn btn-outline-danger">delete</a>
+
+            </div>
+
+            <div class="col-6">
+                <img class="mb-1 border  img-thumbnail" src="{{ plant.image.url }}" alt="plant-image">
+
+            </div>
+            <div class="col-6">
+                <h2>{{plant.name}}</h2>
+                <h6>Category: {{plant.category}}</h6>
+                <h6>About: </h6>
+                <p class="about-plant">{{plant.about}}</p>
+                <h6>
+                    Is Edible: {% if plant.is_edible == True %} Yes
+                    {% else %} No
+                    {% endif %}
+                </h6>
+                <h6>Used For:</h6>
+                <p>{{plant.used_for}}</p>
+            </div>
+        </div>
+
+
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col">
+                    <form action="{% url 'main:plant_detail_view' plant.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="text" name="full_name" placeholder="Full Name" class="form-control mb-3">
+                        <textarea name="content" class="form-control mb-3"></textarea>
+                        <input type="submit" value="Add Comment"placeholder="Add Comment" class="btn bg-success text-white">
+                    </form>
+                </div>
+            </div>
+        </div>
+            <div class="row  d-flex justify-content-center">
+    
+                <div class="col-md-8">
+    
+                    <div class="headings d-flex justify-content-between align-items-center mb-3">
+                        <h5>comments({{comments.count}})</h5>
+    
+    
+                    </div>
+    
+
+<div class="row">
+            <h2>Comments:</h2>
+    
+    
+    <div class="col d-flex flex-column gap-2">
+    
+            {% if comments %}
+
+            {% for comment in comments %}
+
+            <div class="d-flex flex-column gap-2 border border-1 p-3 rounded-3">
+
+                <h4>{{ comment.full_name }}</h4>
+
+                <p>{{ comment.content }}</p>
+
+            </div>
+
+            {% endfor %}
+            {% else %}
+            <p>No comments yet.</p>
+        {% endif %}
+    </div>
+</div>
+    </main>
+{% endblock content %} 
