@@ -14,7 +14,9 @@ def home_view(request:HttpRequest):
     return render(request, "main/home.html", {"plants" : plants,"comments":comments })
 
 def add_plants_view(request:HttpRequest):
-     
+
+    if not request.user.is_staff:
+        return render(request, "main/not_found.html")
     if request.method == 'POST':
         try:
             new_plant = Plants(
@@ -59,13 +61,15 @@ def detail_view(request:HttpRequest ,plant_id):
     return render(request, "main/plants_detail.html", {"plant" : plant ,"comments":comments ,"related":related})
 
 def add_comment_view(request:HttpRequest, plant_id):
-
+    if not request.user.is_authenticated:
+        return redirect("accounts:login_view")
+ 
     if request.method == "POST":
-        #add new comment
+        
         plant_object = Plants.objects.get(pk=plant_id)
         new_comment = Comment(
             plant=plant_object,
-            full_name=request.POST["full_name"],
+            user=request.user,
             message=request.POST["message"]
               )
         new_comment.save()
@@ -74,6 +78,9 @@ def add_comment_view(request:HttpRequest, plant_id):
     return redirect("main:detail_view", plant_id=plant_object.id)
 
 def update_plants_view(request:HttpRequest, plant_id):
+
+    if not request.user.is_staff:
+        return render(request, "main/not_found.html")
 
     plant = Plants.objects.get(pk=plant_id)
 
@@ -93,7 +100,8 @@ def update_plants_view(request:HttpRequest, plant_id):
 
 
 def delete_plants_view(request:HttpRequest, plant_id):
-
+    if not request.user.is_staff:
+        return render(request, "main/not_found.html")
     try:
         plant = Plants.objects.get(pk=plant_id)
         plant.delete()
@@ -126,6 +134,8 @@ def contact_view(request:HttpRequest):
 
     
 def message_view(request:HttpRequest):
+    if not request.user.is_superuser:
+        return render(request, "main/not_found.html")
     contacts = Contact.objects.all()
     return render(request, "main/message.html", {"contacts" : contacts })
 
@@ -138,8 +148,4 @@ def search_view(request:HttpRequest):
 
      if "category" in request.GET:
         plants = Plants.objects.filter(category__contains=request.GET["category"])
-
-        
-
-
      return render(request, "main/plants_search.html", {"plants" : plants})

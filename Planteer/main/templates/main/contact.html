@@ -32,8 +32,9 @@
     </div>
     <div class="col-md-6">
         <img src="{% static 'images/ser.jpg' %}" alt="Contact Image" class="img-fluid rounded-5" />
-    
-    <a class="text-dark text-decoration-none p-5" href="{% url 'main:message_view' %}">show message -></a>
-</div>
+        {% if request.user.is_superuser %}
+          <a class="text-dark text-decoration-none p-5" href="{% url 'main:message_view' %}">show message -></a>
+        {%endif%}
+    </div>
 </div>
 {% endblock %}

@@ -22,13 +22,20 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="{% url 'main:contact_view'%}">Contact us</a>
               </li>
+              <li class="nav-item">
+              {% if request.user.is_superuser %}
+                <a class="nav-link active" aria-current="page" href="{% url 'main:message_view'%}">Message</a>
+              {%endif%}
+              </li>
               <li class="nav-item ">
+              {% if request.user.is_staff %}
                 <a class="nav-link active " href="{% url 'main:add_plants_view'%}">Add Plant</a>
+               {%endif%} 
               </li>
               <li class="nav-item ">
                 {% if request.user.is_authenticated %} 
               <div class="d-flex gap-1">
-                <a class="nav-link" href="{% url 'accounts:profile_view' %}">welcome, {{request.user.first_name }} {{request.user.last_name }}</a>
+                <a class="nav-link" href="{% url 'accounts:profile_view' request.user.username %}">welcome, {{request.user.first_name }} {{request.user.last_name }}</a>
                 <a class="nav-link" href="{% url 'accounts:logout_view' %}">Logout</a>
               </div>
                {% else %}
@@ -47,7 +54,7 @@
       
       {% block content %}
       {% endblock %}
-      <footer class="bg-body-tertiary py-5 mt-5  ">
+      <footer class="bd-footer">
         <div class="container text-dark justify-content-between align-items-center">
           <p class="display-5 mb-3 ">planteer</p>
 

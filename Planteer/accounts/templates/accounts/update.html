@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+{% block title%} update plants {% endblock %}
+
+{% block content %}
+    <div class="row ">
+        
+        
+        <div class="col add">
+            <h1>Edit Profile</h1>
+           <form action="{% url 'accounts:update_profile' user  %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                {% csrf_token %}
+                <h4>Username:</h4>
+                <input name="username" class="form-control" type="text" minlength="3" required placeholder="Enter Ur Username" value="{{user.username}}" />
+                 <h4>First Name:</h4>
+                <input name="first_name" class="form-control" type="text" minlength="3" required placeholder="First Name" value="{{user.first_name}}" />
+                 <h4>Last Name:</h4>
+                <input name="last_name" class="form-control" type="text" minlength="3" required placeholder="Last Name"  value="{{user.last_name}}"/>
+                 <h4>Email:</h4>
+                <input name="email" class="form-control" type="email" minlength="3" required placeholder="Email" value="{{user.email}}"  />
+                 <h4>Linkedin:</h4>
+                <input name="linkedin_link" class="form-control" type="text"  placeholder="@linkedin link" value="{{user.profile.linkedin_link}}" />
+                 
+                <h4>Choose Avatar:</h4>
+                <input type="file" class="form-control" name="avatar" />
+                 <h4>Password:</h4>
+                <input name="password" class="form-control" type="password" minlength="6" required placeholder="Password" />
+               
+                <input type="submit" class="btn btn-dark" value="Update" />
+                
+               
+            </form> 
+          
+
+    </div>
+{% endblock %}
