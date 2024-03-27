@@ -2,69 +2,78 @@
 {% extends "main/base.html" %}
 {% load static %}
 {% block title %}
-PLANTEER
+   PLANTEER
 {% endblock title %}
 {% block content %}
-<div class="head">
-  <div class="hero-img">
-    {% comment %} <img src="{% static "images/planteer-logo.jpg" %}" class="w-100 hero rounded-4" /> {% endcomment %}
-    <div>
-      <h1 class="fw-bold">Planteer</h1>
-      <h3 class="fw-bold">Plant Database For Plants Lovers</h3>
-    </div>
-    <form class="d-flex" role="search" action="{% url "main:search_plants_view" %}">
-      <input name="name" class="form-control me-2" type="search" placeholder="Search for Plant.." aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
-  </div>
-</div>
-<div class="head">
-  <div class="d-flex mt-4 justify-content-between align-items-center">
-    <div class="d-flex flex-column">
-      <h2 class="fw-semibold">Plants</h2>
-      <span class="fs-5 opacity-25 ">Learn more about plants</span>
-    </div>
-    <div class="d-flex align-content-center more-btn">
-      <a href="{% url 'main:all_plants_view' %}">More</a>
-      <span class="material-symbols-outlined">arrow_right_alt</span>
-    </div>
-  </div>
-  <div class="cards">
-    {% for plant in plants %}
-    <a href="{% url "main:plant_detail_view" plant.id %}">
-      <div class="card card-plant">
-        <div class="plant-img">
-          <img src="{{ plant.image.url }}" class="card-img-top" height="100%" alt="{{ plant.image.name }}">
-        </div>
-        <div class="card-body">
-          <div class="plant-info">
-            <h4>{{ plant.name }}</h4>
-            <p class="card-text fw-semibold">{{ plant.about }}</p>
-            <h5>{{ plant.category }}</h5>
-          </div>
-        </div>
+   <div class="head">
+      <div class="hero-img">
+         {% comment %} <img src="{% static "images/planteer-logo.jpg" %}" class="w-100 hero rounded-4" /> {% endcomment %}
+         <div>
+            <h1 class="fw-bold">Planteer</h1>
+            <h3 class="fw-bold">Plant Database For Plants Lovers</h3>
+         </div>
+         <form class="d-flex"
+               role="search"
+               action="{% url "main:search_plants_view" %}">
+            <input name="name"
+                   class="form-control me-2"
+                   type="search"
+                   placeholder="Search for Plant.."
+                   aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+         </form>
       </div>
-    </a>
-    {% endfor %}
-  </div>
-  <h2 class="fw-semibold">Comments</h2>
-  <div id="line"></div>
-  <div class="cards cards-comments">
-    {% if posts.count == 0 %}
-    <h2>No posts Found</h2>
-    {% else %}
-    {% for comment in comments %}
-    <a href="{% url "main:plant_detail_view" comment.plant.pk %}">
-      <div class="card card-comment">
-        <div class="card-body">
-          <h4>{{ comment.user_name }}</h4>
-          <span>{{ comment.comment_date }}</span>
-          <p class="card-text border rounded-2 mt-3 commnt_p">{{ comment.content }}</p>
-        </div>
+   </div>
+   <div class="head">
+      <div class="d-flex mt-4 justify-content-between align-items-center">
+         <div class="d-flex flex-column">
+            <h2 class="fw-semibold">Plants</h2>
+            <span class="fs-5 opacity-25 ">Learn more about plants</span>
+         </div>
+         <div class="d-flex align-content-center more-btn">
+            <a href="{% url 'main:all_plants_view' %}">More</a>
+            <span class="material-symbols-outlined">arrow_right_alt</span>
+         </div>
       </div>
-    </a>
-    {% endfor %}
-    {% endif %}
-  </div>
-</div>
+      <div class="cards">
+         {% for plant in plants %}
+            <a href="{% url "main:plant_detail_view" plant.id %}">
+               <div class="card card-plant">
+                  <div class="plant-img">
+                     <img src="{{ plant.image.url }}"
+                          class="card-img-top"
+                          height="100%"
+                          alt="{{ plant.image.name }}">
+                  </div>
+                  <div class="card-body">
+                     <div class="plant-info">
+                        <h4>{{ plant.name }}</h4>
+                        <p class="card-text fw-semibold">{{ plant.about }}</p>
+                        <h5>{{ plant.category }}</h5>
+                     </div>
+                  </div>
+               </div>
+            </a>
+         {% endfor %}
+      </div>
+      <h2 class="fw-semibold">Comments</h2>
+      <div id="line"></div>
+      <div class="cards cards-comments">
+         {% if posts.count == 0 %}
+            <h2>No posts Found</h2>
+         {% else %}
+            {% for comment in comments %}
+               <a href="{% url "main:plant_detail_view" comment.plant.pk %}">
+                  <div class="card card-comment">
+                     <div class="card-body">
+                        <h4>{{ comment.user_name }}</h4>
+                        <span>{{ comment.comment_date }}</span>
+                        <p class="card-text border rounded-2 mt-3 commnt_p">{{ comment.content }}</p>
+                     </div>
+                  </div>
+               </a>
+            {% endfor %}
+         {% endif %}
+      </div>
+   </div>
 {% endblock content %}

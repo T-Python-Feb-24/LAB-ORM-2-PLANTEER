@@ -241,6 +241,7 @@ section {
   align-self: center !important
 }
 
+
 input[type="text"]:focus::placeholder,
 textarea:focus::placeholder {
   opacity: .1 !important;
@@ -271,4 +272,32 @@ textarea:focus::placeholder {
   height: 1rem;
   width: 1rem;
   fill: #58151c;
+}
+
+.update-profile {
+  display: grid;
+
+}
+
+.update-profile div {
+  width: 90%;
+  place-self: end;
+}
+
+.profile-about {
+  display: grid;
+  grid-template-columns: 6% auto;
+  align-items: center;
+
+
+}
+
+.profile-about div {
+  justify-self: center;
+  width: 85%;
+  margin-bottom: 0;
+  min-height: 5rem;
+  border-radius: 3px;
+  box-shadow: 0px 0px 1px 2px rgba(0, 0, 0, 0.445);
+
 }

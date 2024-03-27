@@ -1,48 +1,59 @@
 {% extends "main/base.html" %}
 {% load static %}
 {% block title %}
-add plants
+   add plants
 {% endblock title %}
 {% block content %}
-<div class="form-container">
-    <form action="{% url "main:new_plant_view" %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <!-- Title input -->
-        <div data-mdb-input-init class="form-outline mb-4">
+   <div class="form-container">
+      <form action="{% url "main:new_plant_view" %}"
+            method="post"
+            enctype="multipart/form-data">
+         {% csrf_token %}
+         <!-- Title input -->
+         <div data-mdb-input-init class="form-outline mb-4">
             <h5>Name:</h5>
             <input type="text" id="name" name="name" class="form-control mt-1" required />
-        </div>
-        <!-- catagory input -->
-        <div class="form-outline mb-4">
+         </div>
+         <!-- catagory input -->
+         <div class="form-outline mb-4">
             <h5>Category:</h5>
             <select id="category" name="category" class="form-select mt-1">
-                {% for val,cat in categories %}<option value="{{ val }}">{{ cat }}</option>{% endfor %}
+               {% for val,cat in categories %}<option value="{{ val }}">{{ cat }}</option>{% endfor %}
             </select>
-        </div>
-        <!-- about input -->
-        <div data-mdb-input-init class="form-outline mb-4">
+         </div>
+         <!-- about input -->
+         <div data-mdb-input-init class="form-outline mb-4">
             <h5>About:</h5>
             <textarea class="form-control" name="about" id="about" rows="4" required></textarea>
-        </div>
-        <!-- used_for input -->
-        <div data-mdb-input-init class="form-outline mb-4">
+         </div>
+         <!-- used_for input -->
+         <div data-mdb-input-init class="form-outline mb-4">
             <h5>Used for:</h5>
             <textarea class="form-control" name="used_for" id="used_for" rows="4" required></textarea>
-        </div>
-        <!-- plant image -->
-        <div class="form-outline mb-4">
+         </div>
+         <!-- plant image -->
+         <div class="form-outline mb-4">
             <h5>Plant Image:</h5>
-            <input name="image" type="file" accept=".jpg, .jpeg, .png, .jpeg" class="form-control" />
-        </div>
-        <!-- Checkbox -->
-        <div class="form-switch d-flex justify-content-center align-items-center fs-5 mb-4">
+            <input name="image"
+                   type="file"
+                   accept=".jpg, .jpeg, .png, .jpeg"
+                   class="form-control" />
+         </div>
+         <!-- Checkbox -->
+         <div class="form-switch d-flex justify-content-center align-items-center fs-5 mb-4">
             <label class="form-check-label me-2" for="is_edible">Is it edible?</label>
-            <input class="form-check-input fs-2 ms-1" type="checkbox" role="switch" value="True" id="is_edible"
-                name="is_edible" />
-
-        </div>
-        <!-- Submit button -->
-        <button id="submit" data-mdb-ripple-init type="submit" class="btn btn-primary w-100">Add</button>
-    </form>
-</div>
+            <input class="form-check-input fs-2 ms-1"
+                   type="checkbox"
+                   role="switch"
+                   value="True"
+                   id="is_edible"
+                   name="is_edible" />
+         </div>
+         <!-- Submit button -->
+         <button id="submit"
+                 data-mdb-ripple-init
+                 type="submit"
+                 class="btn btn-primary w-100">Add</button>
+      </form>
+   </div>
 {% endblock content %}

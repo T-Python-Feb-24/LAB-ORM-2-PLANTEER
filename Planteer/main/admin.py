@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Plant, Contact
+from account.models import Profile
 
 
 class PlantAdmin(admin.ModelAdmin):
@@ -19,3 +20,4 @@ class ContactAdmin(admin.ModelAdmin):
 
 admin.site.register(Plant, PlantAdmin)
 admin.site.register(Contact, ContactAdmin)
+admin.site.register(Profile)

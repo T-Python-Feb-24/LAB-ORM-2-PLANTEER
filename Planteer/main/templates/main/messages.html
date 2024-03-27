@@ -2,50 +2,49 @@
 {% extends "main/base.html" %}
 {% load tags %}
 {% block title %}
-Messages
+   Messages
 {% endblock title %}
 {% block content %}
-<div class="head">
-  <h1>Messages from Users</h1>
-</div>
-<div class="cards card-message">
-  {% if messages.count == 0 %}
-  <h2>No posts Found</h2>
-  {% else %}
-  {% for message in messages %}
-  <div class="card w-100">
-    <div class="card-body">
-      <span class="material-symbols-outlined">
-        account_circle
-      </span>
-      <h5>{{ message }}</h5>
-      <a class="my-2" href="mailto:{{ message.email }}">{{ message.email }}</a>
-      <p class="my-2 opacity-50">{{ message.message }}</p>
-    </div>
-  </div>
-  {% endfor %}
-  {% endif %}
-</div>
-<nav aria-label="Page navigation">
-  <ul class="pagination d-flex justify-content-center">
-    <li class="page-item">
-      <a class="page-link bg-gray"
-        href="?page={% if request.GET.page > "1" %}{{ request.GET.page|add:"-1" }}{% endif %}" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    {% for page in 1|range:pages.num_pages %}
-    <li class="page-item bg-gray">
-      <a class="page-link bg-gray" href="?page={{ page }}">{{ page }}</a>
-    </li>
-    {% endfor %}
-    <li class="page-item ">
-      <a class="page-link bg-gray"
-        href="?page={% if request.GET.page < pages.num_pages %}{{ request.GET.page|add:"1" }}{% else %}{{ pages.num_pages }}{% endif %}"
-        aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>
+   <div class="head">
+      <h1>Messages from Users</h1>
+   </div>
+   <div class="cards card-message">
+      {% if messages.count == 0 %}
+         <h2>No posts Found</h2>
+      {% else %}
+         {% for message in messages %}
+            <div class="card w-100">
+               <div class="card-body">
+                  <span class="material-symbols-outlined">account_circle</span>
+                  <h5>{{ message }}</h5>
+                  <a class="my-2" href="mailto:{{ message.email }}">{{ message.email }}</a>
+                  <p class="my-2 opacity-50">{{ message.message }}</p>
+               </div>
+            </div>
+         {% endfor %}
+      {% endif %}
+   </div>
+   <nav aria-label="Page navigation">
+      <ul class="pagination d-flex justify-content-center">
+         <li class="page-item">
+            <a class="page-link bg-gray"
+               href="?page={% if request.GET.page > "1" %}{{ request.GET.page|add:"-1" }}{% endif %}"
+               aria-label="Previous">
+               <span aria-hidden="true">&laquo;</span>
+            </a>
+         </li>
+         {% for page in 1|range:pages.num_pages %}
+            <li class="page-item bg-gray">
+               <a class="page-link bg-gray" href="?page={{ page }}">{{ page }}</a>
+            </li>
+         {% endfor %}
+         <li class="page-item ">
+            <a class="page-link bg-gray"
+               href="?page={% if request.GET.page < pages.num_pages %}{{ request.GET.page|add:"1" }}{% else %}{{ pages.num_pages }}{% endif %}"
+               aria-label="Next">
+               <span aria-hidden="true">&raquo;</span>
+            </a>
+         </li>
+      </ul>
+   </nav>
 {% endblock content %}
