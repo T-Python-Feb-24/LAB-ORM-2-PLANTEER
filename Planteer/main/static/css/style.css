@@ -439,3 +439,11 @@ h1 {
     font-size: 1.5em;
     color: #fcfbfb; 
 }
+.avatar {
+  height: 200px;
+  object-fit: cover;
+}
+
+.bi.heart-fill {
+  color: red; /* Change to the desired color */
+}

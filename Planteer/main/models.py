@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Plant(models.Model):
@@ -28,8 +29,8 @@ class Contact(models.Model):
         return f"{self.first_name} {self.last_name} - {self.email}"
 
 class Comment(models.Model):
-    
     plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=20)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

@@ -18,8 +18,8 @@ class ContactAdmin(admin.ModelAdmin):
     
 admin.site.register(Contact, ContactAdmin)
 
-class CommentAdmin(admin.ModelAdmin):
-    list_display = ['full_name', 'content', 'created_at']  # Correct field names used here
-    list_filter = ['created_at']  # Assuming you might want to filter by creation date
+# class CommentAdmin(admin.ModelAdmin):
+#     list_display = ['full_name', 'content', 'created_at']  # Correct field names used here
+#     list_filter = ['created_at']  # Assuming you might want to filter by creation date
 
-admin.site.register(Comment, CommentAdmin)
+# admin.site.register(Comment, CommentAdmin)

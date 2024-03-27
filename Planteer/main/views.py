@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect,get_object_or_404
 from django.core.paginator import Paginator
 from .models import  Plant 
 from .models import Contact, Comment
+from favorites.models import Favorite
 
 def home(request):
     print(request.GET)
@@ -24,6 +25,10 @@ def home(request):
 
 
 def add_plant(request):
+    if not request.user.is_staff:
+        # Render home template for non-staff users
+        return render(request, "main/home.html")
+
     if request.method == 'POST':
         try:
             new_plant = Plant(name=request.POST["name"], about=request.POST["about"],used_for = request.POST["used_for"], created_at=request.POST.get("created_at", False), category= request.POST["category"],  image=request.FILES["image"],is_edible = request.POST.get('is_edible') == 'True')
@@ -40,6 +45,7 @@ def plant_detail(request, plant_id):
     try:
         plant = Plant.objects.get(pk=plant_id)
         related_plants = Plant.objects.filter(category=plant.category).exclude(pk=plant_id)[:3]
+        is_favored = request.user.is_authenticated and  Favorite.objects.filter(user=request.user, plant=plant).exists()
         plant = Plant.objects.get(pk=plant_id)
         comments = Comment.objects.filter(plant=plant)
         
@@ -48,6 +54,9 @@ def plant_detail(request, plant_id):
         return HttpResponseNotFound('Plant not found')
     
 def update_plant(request, plant_id):
+    if not request.user.is_staff:
+        return render(request, "main/home.html")
+
     plant = get_object_or_404(Plant, pk=plant_id)
 
     if request.method == "POST":
@@ -69,10 +78,19 @@ def update_plant(request, plant_id):
 
 
 def delete_plant(request, plant_id):
-    plant = get_object_or_404(Plant, pk=plant_id)
-    plant.delete()
-    return redirect('main:home') 
+    # Check if the user is staff
+    if not request.user.is_staff:
+        # Render home template for non-staff users
+        return render(request, "main/home.html")
 
+    # Retrieve the plant object
+    plant = get_object_or_404(Plant, pk=plant_id)
+    
+    # Delete the plant
+    plant.delete()
+
+    # Redirect to the home page after successful deletion
+    return redirect('main:home')
 
 
 def all_plants_view(request):
@@ -123,10 +141,20 @@ def contact_success(request):
      return render(request, 'main/contact_success.html')
  
 def add_comment(request: HttpRequest , plant_id):
-    
+    if not request.user.is_authenticated:
+        return redirect("accounts:login_user")
+
     if request.method == "POST":
         plant_object = Plant.objects.get(pk=plant_id)
-        new_comment = Comment(plant=plant_object,full_name=request.POST["full_name"],content=request.POST["content"])
+        new_comment = Comment(plant=plant_object,user=request.user,content=request.POST["content"])
         new_comment.save()
         
     return redirect("main:plant_detail", plant_id=plant_object.id)
+
+def message_view(request:HttpRequest):
+    if not request.user.is_staff:
+        return render(request, "main/home.html")
+
+    messages = Contact.objects.all()
+
+    return render(request, "main/message.html", {"messages" : messages})

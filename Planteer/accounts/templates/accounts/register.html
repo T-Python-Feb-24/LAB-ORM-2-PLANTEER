@@ -4,48 +4,76 @@
 
 {% block content %}
 <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow">
-                <div class="card-header">
-                    <h3 class="text-center">Register New User</h3>
+    <h1>Register New User</h1>
+    {% if msg %}
+    <div class="alert alert-danger">{{msg}}</div>
+    {% endif %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <form action="{% url 'accounts:register_user' %}" method="post" class="needs-validation" novalidate enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input id="username" name="username" class="form-control" type="text" minlength="3" required placeholder="Username" />
+                    <div class="invalid-feedback">
+                        Please enter a valid username (minimum 3 characters).
+                    </div>
                 </div>
-                <div class="card-body">
-                    
-                    {% if error_message %}
-                        <div class="alert alert-danger" role="alert">
-                            {{ error_message }}
-                        </div>
-                    {% endif %}
-                    
-                    <form action="{% url 'accounts:register_user' %}" method="post">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input name="username" class="form-control" type="text" minlength="3" required placeholder="Username" id="username">
-                        </div>
-                        <div class="mb-3">
-                            <label for="first_name" class="form-label">First Name</label>
-                            <input name="first_name" class="form-control" type="text" minlength="3" required placeholder="First Name" id="first_name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="last_name" class="form-label">Last Name</label>
-                            <input name="last_name" class="form-control" type="text" minlength="3" required placeholder="Last Name" id="last_name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input name="email" class="form-control" type="email" minlength="3" required placeholder="Email" id="email">
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input name="password" class="form-control" type="password" minlength="6" required placeholder="Password" id="password">
-                        </div>
-                        <div class="d-grid">
-                            <input type="submit" class="btn btn-primary" value="Sign Up">
-                        </div>
-                    </form>
+
+                <div class="mb-3">
+                    <label for="first_name" class="form-label">First Name</label>
+                    <input id="first_name" name="first_name" class="form-control" type="text" minlength="3" required placeholder="First Name" />
+                    <div class="invalid-feedback">
+                        Please enter a valid first name (minimum 3 characters).
+                    </div>
                 </div>
-            </div>
+
+                <div class="mb-3">
+                    <label for="last_name" class="form-label">Last Name</label>
+                    <input id="last_name" name="last_name" class="form-control" type="text" minlength="3" required placeholder="Last Name" />
+                    <div class="invalid-feedback">
+                        Please enter a valid last name (minimum 3 characters).
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input id="email" name="email" class="form-control" type="email" required placeholder="Email" />
+                    <div class="invalid-feedback">
+                        Please enter a valid email address.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="about" class="form-label">About</label>
+                    <textarea id="about" name="about" class="form-control" placeholder="About yourself"></textarea>
+                    <input name="instagram_link" class="form-control" type="text" placeholder="Instagram Link" />
+                    <input name="linkedin_link" class="form-control" type="text" placeholder="LinkedIn Link" />
+
+                </div>
+
+                <div class="mb-3">
+                    <label for="avatar" class="form-label">Choose Avatar</label>
+                    <input id="avatar" type="file" class="form-control" name="avatar" accept="image/*" required />
+                    <div class="invalid-feedback">
+                        Please select a valid image file.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input id="password" name="password" class="form-control" type="password" minlength="6" required placeholder="Password" />
+                    <div class="invalid-feedback">
+                        Please enter a valid password (minimum 6 characters).
+                    </div>
+                </div>
+
+               
+
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+
+            </form>
         </div>
     </div>
 </div>
