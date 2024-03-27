@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="/static/css/style.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary ">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'main:home_view' %}">PLANTEER</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'main:all_plants_view'%}">All plants</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'main:contact_view'%}">Contact us</a>
+              </li>
+              <li class="nav-item">
+              {% if request.user.is_superuser %}
+                <a class="nav-link active" aria-current="page" href="{% url 'main:message_view'%}">Message</a>
+              {%endif%}
+              </li>
+              <li class="nav-item ">
+              {% if request.user.is_staff %}
+                <a class="nav-link active " href="{% url 'main:add_plants_view'%}">Add Plant</a>
+               {%endif%} 
+              </li>
+              <li class="nav-item ">
+                {% if request.user.is_authenticated %} 
+              <div class="d-flex gap-1">
+                <a class="nav-link" href="{% url 'accounts:profile_view' request.user.username %}">welcome, {{request.user.first_name }} {{request.user.last_name }}</a>
+                <a class="nav-link" href="{% url 'accounts:logout_view' %}">Logout</a>
+              </div>
+               {% else %}
+               
+                  <li><a class="dropdown-item" href="{% url 'accounts:register_view' %}">Sign up</a></li>
+                  <li><a class="dropdown-item" href="{% url 'accounts:login_view' %}">Login</a></li>
+               
+              </div>
+              {% endif %}
+              </li>
+            </ul>
+            
+          </div>
+        </div>
+      </nav>
+      
+      {% block content %}
+      {% endblock %}
+      <footer class="bd-footer">
+        <div class="container text-dark justify-content-between align-items-center">
+          <p class="display-5 mb-3 ">planteer</p>
+
+          <small class="text-dark-50">Plants are essential to life on Earth, providing oxygen for respiration and serving as a source of food and beauty in nature.</small>
+
+        </div>
+      </footer>

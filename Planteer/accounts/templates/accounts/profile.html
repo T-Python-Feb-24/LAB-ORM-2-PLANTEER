@@ -1,0 +1,55 @@
+{% extends 'main/base.html' %}
+
+{% block title %} {{user.username}} profile{% endblock %}
+{% load static %}
+{% block content%}
+<div class="container">
+
+  <div class="row mt-4">
+    <div class="col-md-4">
+      <img src="{% static 'images/ava.png' %}" alt="Contact Image" class="img-fluid rounded-5 " />
+      <h2>@ {{user.username}}</h2>
+    </div>
+
+    <div class="col-md-8">
+      <div class="card shadow" style="width: 45rem; text-align: center; height: 100%;">
+          <div class="card-body ">
+              <h5 class="card-title">Profile</h5>
+              <h6 class="card-title">User Information:</h6>
+              <h6 class="card-title">Username:</h6>
+              <p class="card-text">{{user.username}}</p>
+              <h6 class="card-title">First Name:</h6>
+              <p class="card-text">{{user.first_name}}</p>
+              <h6 class="card-title">Last Name:</h6>
+              <p class="card-text">{{user.last_name}}</p>
+              <h6 class="card-title">Email:</h6>
+              <a href="mailto:{{user.email}}" class="text-decoration-none text-dark p-0 "><p class="card-text">{{user.email}}</p></a>
+              <h6 class="card-title">Linkedin Accounts:</h6>
+              <p class="card-text">{{ user.profile.linkedin_link }}</p>
+              <a href="{% url 'main:home_view'  %}" class="card-link btn btn-dark text-decoration-none ">Home Page</a>
+              {% if request.user.is_authenticated %}
+              <a href="{% url 'accounts:update_profile' user %}" class="btn btn-dark">update</a>
+              {%endif%}
+            </div>
+
+      </div>
+    </div>
+
+      <hr>
+  <div class="row g-3">
+    
+      <h4>{{user.username}} comments:</h4>
+      {% for comment in user.comment_set.all %}
+        <div class="col-4">
+            <div class="d-flex flex-column gap-2 border border-1 shadow p-2 rounded-3 h-100">
+                <h4>{{ comment.user.username }}</h4>
+                <a href="{% url 'main:detail_view' comment.plant.id %}#comments"><h6 class="text-muted">{{comment.plant.name}}</h6></a>
+                <p>{{ comment.message }}</p>
+            </div>
+        </div>
+        {% endfor %}
+  
+    </div>
+    </div>
+</div>
+{% endblock %}

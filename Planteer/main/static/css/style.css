@@ -1,0 +1,62 @@
+*{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.search{
+    margin-top: 33px;
+    position: relative;
+    width: 410px;
+    height: 445px;
+    overflow:hidden; /*تصير الصورة تنعرض برون ماتتمدد*/
+    background-image: url("/static/images/add.jpg");
+    background-size: cover;
+    justify-items: center;
+
+}
+.search h1,h2{
+    margin-top:40px;
+    text-align: center;
+}
+.search .form{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  
+}
+/* اشوف حل للصورة حق صفحة الاضافه */
+.add{
+    padding-top: 30px;
+    padding-bottom: 44px;
+    position: relative;
+    width: 400px;
+    height: 800px;
+    overflow:hidden;
+    background-image: url("/static/images/p.jpg"); 
+    background-size: cover;
+    justify-items: center;
+}
+
+.pec_update {
+    width: 100px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.cat {
+    background-color: rgb(210, 208, 205);
+    color:rgb(6, 6, 6);
+    align-self: flex-start;
+   
+    
+}
+.PL{
+    height: 50%;
+    margin-top: 10px;
+}
+
+h3{
+    background-color: rgb(230, 228, 226);
+    color:rgb(7, 7, 7);
+}
