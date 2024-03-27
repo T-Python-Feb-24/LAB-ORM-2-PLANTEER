@@ -8,9 +8,9 @@
             <form action="{% url 'main:add_plant_view' %}" method="post" enctype="multipart/form-data" class="d-flex flex-column align-items-center gap-4">
             {% csrf_token %}
 
-                <input class="form-control w-50" name="name" type="text" placeholder="Enter the name of the plant..." required minlength="4">
-                <textarea class="form-control w-50" name="about" required minlength="20" placeholder="Write about the plant"></textarea>
-                <textarea class="form-control w-50" name="used_for" required minlength="10" placeholder="Used For?"></textarea>
+                <input class="form-control w-50" name="name" type="text" placeholder="Name of the plant" required minlength="4">
+                <textarea class="form-control w-50" name="about" required minlength="20" placeholder="About the plant"></textarea>
+                <textarea class="form-control w-50" name="used_for" required minlength="10" placeholder="Used For what?"></textarea>
 
                 <h5>Category:</h5>
                 <select name="category" class="form-select w-50" required>

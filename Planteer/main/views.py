@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
-from .models import Plant
+from .models import Plant, Contact, Comment
 
 def index_view(request: HttpRequest):
     print(request.GET)
@@ -10,13 +10,25 @@ def index_view(request: HttpRequest):
     return render(request, "main/index.html", {"plants" : plants})
 
 def contact_view(request:HttpRequest):
-    
-    return render(request, "main/contact.html") 
 
+    if request.method == 'POST':
+        try:
+            new_message = Contact(
+                first_name = request.POST['first_name'],
+                last_name = request.POST['last_name'],
+                email = request.POST['email'],
+                message = request.POST['message']
+            )
+            new_message.save()
+            return redirect("main:all_messages_view")
+        except Exception as e:
+            print(e)
+    return render(request, "main/contact.html")
 def all_plants_view(request: HttpRequest):
     plants = Plant.objects.all()
     return render(request,"main/all_plants.html", { 'plants' : plants })
    
+
 
 def add_plant_view(request:HttpRequest):
 
@@ -36,16 +48,16 @@ def add_plant_view(request:HttpRequest):
             print(e)
     return render(request, "main/add_plant.html", {"categories" : Plant.categories.choices})
 
-def plant_detail_view(request:HttpRequest, plant_id):
-
+def plant_detail_view(request: HttpRequest, plant_id):
     try:
         plant = Plant.objects.get(pk=plant_id)
+        comments = Comment.objects.filter(plant=plant)
         plants_with_same_cat = Plant.objects.filter(category=plant.category).exclude(pk=plant_id)
     except Plant.DoesNotExist:
         return render(request, "main/not_exist.html")
     except Exception as e:
         print(e)
-    return render(request, "main/plant_detail.html", {"plant": plant, "plants_with_same_cat":plants_with_same_cat})  
+    return render(request, "main/plant_detail.html", {"plant": plant, "Comment": comments, "plants_with_same_cat": plants_with_same_cat})
 
 def update_plant_view(request:HttpRequest, plant_id):
 
@@ -66,14 +78,14 @@ def update_plant_view(request:HttpRequest, plant_id):
     return render(request, "main/update_plant.html", {"plant" : plant, "categories": Plant.categories.choices})
 
 
-def delete_view(request:HttpRequest, Plant_id):
-
+def delete_view(request: HttpRequest, plant_id: int):
     try:
-        Plant = Plant.objects.get(pk=Plant_id)
-        Plant.delete()
+        plant = Plant.objects.get(pk=plant_id)
+        plant.delete()
+    except Plant.DoesNotExist:
+        pass
     except Exception as e:
         print(e)
-    
 
     return redirect("main:index_view")
 
@@ -99,4 +111,15 @@ def plants_search_view(request:HttpRequest):
 
     return render(request, "main/plants_search.html", {"plants":plants, "search_query": search_query, "categories" : Plant.categories.choices})
 
+def messages_view (request):
+    messages = Contact.objects.all().order_by('created_at')
+    return render(request, "main/messages.html", {'messages': messages})
 
+def add_comment_view(request: HttpRequest ,plant_id):
+    if request.method == "POST":
+        plant= Plant.objects.get(pk=plant_id)
+        new_comment = Comment(plant=plant,full_name=request.POST["full_name"], content=request.POST["content"])
+        new_comment.save()
+
+
+    return redirect("main:plants_details",plant_id=plant.id)

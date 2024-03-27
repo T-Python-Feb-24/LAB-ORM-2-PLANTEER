@@ -15,9 +15,12 @@
             </h2>
             <div class="d-flex gap-2">
                 <a href="{% url 'main:all_plants_view' %}" class="p-2 ps-3 pe-3 rounded-pill cat  text-decoration-none  {% if 'cat' not in request.GET %} All  {% endif %}">All</a>
+                
                 {% for val, key in categories %}
-                    <a href="?cat={{val}}" class="p-2 ps-3 pe-3 rounded-pill cat {% if request.GET.cat == val %} {{ val }}{% endif %} text-decoration-none">{{val}}</a>
+                <option value="{{val}}">{{cat}}</option>
                 {% endfor %}
+
+
             </div>
         </div>
     </div>

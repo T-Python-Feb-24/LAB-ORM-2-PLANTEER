@@ -13,5 +13,6 @@ urlpatterns  = [
     path("plants/all/", views.all_plants_view, name="all_plants_view"),
     path("plants/search/", views.plants_search_view, name="plants_search_view"),
     path("plants/contact/", views.contact_view, name="contact_view"),
-
+    path("contact/messages/",views.messages_view,name="messages_view"),
+    path("comment/add/", views.add_comment_view, name="add_comment_view")
 ]

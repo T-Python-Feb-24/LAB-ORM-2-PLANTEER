@@ -22,6 +22,20 @@ class Contact(models.Model):
     email = models.EmailField(max_length=200)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
     
+    def __str__(self):
+        return self.title
     
+
+
+class Comment(models.Model):
+
+    plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=2084)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f"{self.full_name} - {self.plant.name}"
 

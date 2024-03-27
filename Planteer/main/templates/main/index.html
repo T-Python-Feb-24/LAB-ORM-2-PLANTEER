@@ -16,7 +16,7 @@
             </div>
 
     <form class="d-flex gap-5" method="get" action="{% url 'main:plants_search_view' %}">
-        <input name="search_query" class="form-control" placeholder="Search For Plant..." type="search">
+        <input name="search_query" class="form-control" placeholder="Search For Plant" type="search">
         <button class="btn btn-outline-success" type="submit">search</button>
     </form>
             </div>
@@ -51,8 +51,19 @@
                 </div>
             </div>
         {% endfor %}
-
     </div>
+
+   {% for comment in lastest_comments %}
+
+<div class="card p-3 mb-2 overflow-x-hidden w-100 ms-5 mb-2 me-5 ">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="user d-flex flex-row align-items-center">
+        <span><small class="font-weight-bold text-primary">{{ comment.full_name }}</small> <small class="font-weight-bold">{{ comment.content }}</small></span>
+    <small>{{comment.created_at}} </small>
+        </div>
+    </div>
+</div>
+                {% endfor %}
 
 {% endblock %}
 
