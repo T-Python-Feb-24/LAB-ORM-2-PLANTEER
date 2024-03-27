@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+    
+    {% block title %} PLANTEER | SEARCH RESULT {% endblock %}
+    
+    
+    {% block content %}
+    <div class="container">
+        <div class="row" style="margin-top: 100px;">
+            <div class="d-flex flex-column gap-2">
+                    
+                <h1>Search</h1>
+                <form action="{% url 'main:search' %}"  method="get" class="d-flex gap-2">
+                    <input type="search" class="form-control" name="search" value="{{request.GET.search}}" placeholder="Search..."/>
+                    <!-- <input type="date" class="form-control" style="width: 200px;" name="date" value="{{request.GET.date}}"/> -->
+                    <input type="submit" value="Search" class="btn btn-outline-dark" />
+                </form> 
+        
+                <h2>Search results for {{ request.GET.search }} ({{ plants.count }}) </h2>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% for plant in plants %}
+            <div class="col-4">
+                <div class="d-flex flex-column gap-1 border border-1 shadow p-3 rounded-4 h-100">
+                    <img src="{{ plant.image.url }}"  class="w-100 rounded-4"/>
+                    <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{plant.category}} ">{{ plant.category }}</h6>
+                    <h3><a href="{% url 'main:plant_detail' plant.id %}" class="text-decoration-none" style="color: rgba(0, 0, 0, 0.582);">{{plant.name}}</a></h3>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+    </div>
+    {% endblock %}
+    
+    
+    
+    
+   
+    

@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+
+{% block title %} {{user_info.username }} profile {% endblock %}
+
+{% block content %}
+
+    <h1>{{user_info.username }} Profile</h1>
+
+    <div class="row">
+        <div class="col-3">
+
+            <img src="/static/images/avatar.png" class="avatar w-100" />
+            <h5>@{{user_info.username}}</h5>
+
+        </div>
+
+        <div class="col">
+
+            <div class="d-flex flex-column">
+                <h3>{{user_info.first_name}} {{ user_info.last_name}}</h3>
+                <a href="mailto:{{user_info.email}}">{{ user_info.email }}</a>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
