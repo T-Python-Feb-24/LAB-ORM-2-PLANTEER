@@ -17,7 +17,7 @@ def register_user(request:HttpRequest):
         except Exception as e:
             print(e)
 
-    return render(request, "accounts/register.html")
+    return render(request, "register.html")
 
 
 
@@ -33,7 +33,7 @@ def login_user(request:HttpRequest):
         else:
             message = "Username or Password is wrong. Please try again."
 
-    return render(request, "accounts/login.html", {"message" : message})
+    return render(request, "login.html", {"message" : message})
 
 
 

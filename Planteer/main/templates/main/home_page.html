@@ -55,7 +55,8 @@
 
         {% for comment in comments %}
             <div class="d-flex flex-column gap-2 border border-1 p-3 rounded-3">
-                <h4>{{ comment.full_name }}</h4>
+                <h4 class="text-success">{{ comment.full_name }}</h4>
+                <hr>
                 <p>{{ comment.content }}</p>
             </div>
         {% endfor %}

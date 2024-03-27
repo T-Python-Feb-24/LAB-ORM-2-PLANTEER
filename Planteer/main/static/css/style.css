@@ -200,6 +200,11 @@ section .card{
   .nore{
     padding-left: 130px ;
   }
+footer{
+    flex-shrink: 0;
+}
+
+
 
 .footer-icon img{
     border-radius: 10px;
