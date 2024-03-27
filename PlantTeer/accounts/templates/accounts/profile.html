@@ -1,21 +1,29 @@
 {% extends 'main/base.html' %}
 
-{% block title %}{% endblock %}
+{% block title %} {{profil.username}} profile {% endblock %}
 
 {% block content %}
-<h2>Your Profil</h2>
-    <div class="row">
-        <div class="col d-flex flex-column gap-2">
+<section>
+    <div class="container">
+        <h1>{{profil.username}} Profile</h1>
 
-         
-            <h4>{{ profil.username }}</h4>
-            <h5>{{ profil.first_name }}</h5>
-            <h5>{{profil.last_name}}</h5>
-            <h5>{{profil.email}}</h5>
-            <h5>{{profil.password}}</h5>
-    
+            <div class="row">
+                <div class="col-3">
 
-        </div>
-    </div>
+                    <img src="" class="avatar w-100" />
+                    <h5>@{{profil.username}}</h5>
 
+                </div>
+
+                <div class="col">
+
+                    <div class="d-flex flex-column">
+                        <h3>{{profil.first_name}} {{profil.last_name}}</h3>
+                        <a href="mailto:{{profil.email}}">{{ profil.email }}</a>
+                    </div>
+
+                </div>
+            </div>
+    </div>        
+</section>
 {% endblock %}
