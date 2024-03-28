@@ -43,8 +43,11 @@
                         </div>
                         <div class="row my-3">
                             <div class="col-12 d-flex gap-2">
+                                {% if request.user.is_staff %}
                                 <a href="{% url 'plants:update_plant_view' plant.id %}" class="btn btn-warning w-100 ">Update</a>
-                                <a href="{% url 'plants:delete_plant_view' plant.id %}" class="btn btn-danger w-100 ">Delete</a>                                
+                                <a href="{% url 'plants:delete_plant_view' plant.id %}" class="btn btn-danger w-100 ">Delete</a>      
+                                {% endif %}
+                          
                             </div>
                         </div>
                     </div>
@@ -58,15 +61,15 @@
     <div class="container  mt-5 px-5">
         <div class="row">
             <hr/>
-            <h2>Comments</h2>
-            <div class="col-12 col-md-8 all-comments mb-3">
+            <h2>Comments  ({{ comments.count }})</h2>
+            <div class="col-12 col-md-8 all-comments mb-3" id="commentDetail">
               
                     {% for comment in comments %}
                        
                             <div class="border rounded-4 mt-2 mb-3 d-flex flex-column p-3">
-                                <div class="d-flex align-items-center gap-2" id="commentDetail">
+                                <div class="d-flex align-items-center gap-2">
                                     <img src="{% static 'images/user.png' %}" alt="" width="40" height="40">
-                                    <h4 class="pt-3">{{ comment.full_name }}</h4>
+                                    <h4 class="pt-3">{{ comment.user.username}}</h4>
                                 </div>
                                 <p class="com-date">{{comment.comment_date}}</p>
                                 <p class="com-p">{{ comment.content }}</p>
@@ -76,22 +79,24 @@
             </div>
 
             <div class="col-12 col-md-4 mt-2 gap-2 new-com p-5 rounded-4">
-                <form action="{% url 'plants:add_comment_view' plant.id %}" method="POST" id="commentDetail" >
-                    {% csrf_token %}
+                {% if request.user.is_authenticated %}
 
-                    <div class="d-flex flex-column">
-                        <h4 class="text-center mb-3">Share your comment</h4>
-                        <label for="name">Name</label>
-                        <input name="full_name" id="fullname" type="text" class="form-control mt-1"/>
-                    </div>
-                    <div class="mt-3">
-                        <label for="message">Message</label>
-                        <textarea name="content" class="form-control mt-1 "></textarea>
-                    </div>
-                    <div class="mt-4">
-                        <input type="submit" class="btn btn-warning w-100" value="Post Comment" />
-                    </div>
-                </form>         
+                    <form action="{% url 'plants:add_comment_view' plant.id %}" method="POST" id="commentDetail" >
+                        {% csrf_token %}
+
+                        <div class="d-flex flex-column">
+                            <h4 class="text-center mb-3">Share your comment</h4>
+                            <label for="message">Message</label>
+                            <textarea name="content" class="form-control mt-1 "></textarea>   
+                        </div>
+                        <div class="mt-4">
+                            <input type="submit" class="btn btn-warning w-100" value="Post Comment" />
+                        </div>
+                    </form> 
+                {% else %}
+                        <div class="alert alert-warning">You must <a href="{% url 'accounts:login_user_view' %}">Sign in</a> to comment.</div>       
+                {% endif %}
+ 
             </div>
         </div>
     </div>
@@ -99,27 +104,31 @@
 
 
 <section>
-    <div class="container mt-5 px-5">
-        <div class="row g-5">
-            <hr/>
-            <h2>Related Plants</h2>
-            {% for plant in related_plants %}
-                <div class="col-12 col-md-4">
-                    <div class="card rounded-4">
-                        <div class="card_image">
-                        <span class="note rounded-pill {{plant.category}}">{{ plant.category }}</span>
-                        <img src="{{ plant.image.url }}" alt="plant image" />
-                        <span class="card_price rounded-pill {{plant.is_edible}}">{% if plant.is_edible == True %} Edible {% else %} Not Edible {% endif %}</span>
-                        </div>
-                        <div class="card_content mt-3">
-                            <h2 class="card_title">{{plant.name}}</h2>
-                            <p class="card_text">{{ plant.about }}</p>
-                            <p><a href="{% url 'plants:plant_detail_view' plant.id  %}" class="text-decoration-none know-more">Know more...</a></p>
+    {% if related_posts.count > 0 %}
+
+        <div class="container mt-5 px-5">
+            <div class="row g-5">
+                <hr/>
+                <h2>Related Plants</h2>
+                {% for plant in related_plants %}
+                    <div class="col-12 col-md-4">
+                        <div class="card rounded-4">
+                            <div class="card_image">
+                            <span class="note rounded-pill {{plant.category}}">{{ plant.category }}</span>
+                            <img src="{{ plant.image.url }}" alt="plant image" />
+                            <span class="card_price rounded-pill {{plant.is_edible}}">{% if plant.is_edible == True %} Edible {% else %} Not Edible {% endif %}</span>
+                            </div>
+                            <div class="card_content mt-3">
+                                <h2 class="card_title">{{plant.name}}</h2>
+                                <p class="card_text">{{ plant.about }}</p>
+                                <p><a href="{% url 'plants:plant_detail_view' plant.id  %}" class="text-decoration-none know-more">Know more...</a></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
-    </div>
+    {% endif %}
+
 </section>
 {% endblock %}

@@ -55,7 +55,23 @@
 
 <section>
    <!-- Latest Comments -->
-      
+    <div class="container">
+        
+        <div class="row">
+            <h2>Latest Comments</h2>
+
+            {% for comment in comments %}
+                <div class="col">
+                    <div class="d-flex flex-column gap-1 p-3 shadow">
+                        <h4 class="pt-3">{{ comment.user.username}}</h4>
+                        <a href="{% url 'plants:plant_detail_view' comment.plant.id %}#commentsDiv"><h6 class="text-muted">{{comment.plant.name}}</h6></a>
+                        <p>{{comment.content }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+    
+        </div>
+    </div>
 </section>
 
 {% endblock %}

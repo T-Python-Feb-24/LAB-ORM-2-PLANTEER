@@ -13,11 +13,18 @@ def index_view(request: HttpRequest):
         
     #limiting the result using slicing
     plants = Plant.objects.all().order_by('-created_at')[0:3]
-    return render(request, "plants/index.html", {"plants" : plants})
+    comments = Comment.objects.all().order_by('-comment_date')[0:5]
+
+    return render(request, "plants/index.html", {"plants" : plants, "comments" : comments})
 
 
 # page 2: Add new plant page
 def add_plant_view(request:HttpRequest):
+
+    #limit access to this view for only staff
+    if not request.user.is_staff:
+        return render(request, "plants/no_permission.html") # no permission page
+
     if request.method == 'POST':
         try:    
             plant = Plant(
@@ -38,6 +45,11 @@ def add_plant_view(request:HttpRequest):
 
 # page 3: Update plant page
 def update_plant_view(request:HttpRequest, plant_id):
+    
+    #limit access to this view for only staff
+    if not request.user.is_staff:
+        return render(request, "plants/no_permission.html") # no permission page
+
     
     plant = Plant.objects.get(pk=plant_id)
     if request.method == "POST":
@@ -72,13 +84,23 @@ def plant_detail_view(request:HttpRequest, plant_id):
 # page 5: Plant Search Page
 def plant_search_view(request:HttpRequest):
     plants=[]
+
     if "search" in request.GET:
         plants = Plant.objects.filter(name__contains=request.GET["search"])
-    
-    if 'cat' in request.GET:
-        posts = Plant.objects.filter(category = request.GET['cat'])
 
-    return render(request, "plants/plant_search.html",{"plants" : plants, 'categories': Plant.categories.choices} )
+    return render(request, "plants/plant_search.html",{"plants" : plants} )
+
+# def plant_search_view(request:HttpRequest):
+#     plants=[]
+
+#     if "search" in request.GET:
+#         plants = Plant.objects.filter(name__contains=request.GET["search"])
+    
+#     if "cat" in request.GET:
+#         plants = Plant.objects.filter(category=request.GET["cat"])
+
+#     return render(request, "plants/plant_search.html",{"plants" : plants, "categories" : Plant.categories.choices} )
+
 
 # page 6: All Plants page
 def all_plants_view(request:HttpRequest):
@@ -88,6 +110,12 @@ def all_plants_view(request:HttpRequest):
 # function 7: Delete Plant
 
 def delete_plant_view(request:HttpRequest, plant_id):
+    
+    #limit access to this view for only staff
+    if not request.user.is_staff:
+        return render(request, "plants/no_permission.html") # no permission page
+
+
     try:
         plant = Plant.objects.get(pk=plant_id)
         plant.delete()
@@ -102,8 +130,8 @@ def add_comment_view(request:HttpRequest, plant_id):
 
         plant_key = Plant.objects.get(pk=plant_id)
         comment = Comment(
-            plant=plant_key, 
-            full_name=request.POST["full_name"], 
+            plant=plant_key,
+            user=request.user,
             content=request.POST["content"],
         )
         comment.save()

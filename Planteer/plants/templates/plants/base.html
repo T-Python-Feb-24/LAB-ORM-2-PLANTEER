@@ -31,23 +31,27 @@
             <li class="nav-item px-1">
               <a class="nav-link" aria-current="page" href="/">Home</a>
             </li>
-            <li class="nav-item px-1">
+
+            <!-- <li class="nav-item px-1">
               <a class="nav-link" href="{% url 'plants:all_plants_view' %}">All Plants</a>
-            </li>
+            </li> -->
             <li class="nav-item px-1">
               <a class="nav-link" href="#">Contact Us</a>
             </li>
             <li class="nav-item px-1">
               <a class="nav-link" href="{% url 'plants:plant_search_view' %}">Search plant</a>
             </li>
+           
             <li class="nav-item px-1">
+              {% if request.user.is_staff %}
               <a class="nav-link" href="{% url 'plants:add_plant_view' %}">Add Plant</a>
+              {% endif %}
             </li>
 
             <li class="nav-item">
               {% if request.user.is_authenticated %} 
               <div class="d-flex gap-1">
-                <a class="nav-link" >welcome, {{request.user.username }}</a>
+                <a class="nav-link" href="{% url 'accounts:user_profile_view' request.user.username %}">welcome, {{request.user.username }}</a>
                 <a class="nav-link" href="{% url 'accounts:logout_user_view' %}">Logout</a>
               </div>
 
