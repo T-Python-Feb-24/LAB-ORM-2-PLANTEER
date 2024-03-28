@@ -18,7 +18,6 @@ def _range(_min, args=None):
 
 @register.filter(name="random")
 def random_int(a):
-   print(plant_count())
    return random.choice(plant_count())[0]
 
 

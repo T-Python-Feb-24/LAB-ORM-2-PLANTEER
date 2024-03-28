@@ -4,7 +4,7 @@ User._meta.get_field('email')._unique = True
 
 
 def group_based_upload_to(instance, filename):
-   return "image/{}/{}".format(instance.user.id, filename)
+   return "images/{}/{}".format(instance.user.id, filename)
 
 
 class Profile(models.Model):
