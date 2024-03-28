@@ -8,7 +8,7 @@
 
             <div class="upper-container">
               <div class="image-container">
-                <img src=" {% static 'image/profile.png' %}"/>
+                <img src=" {{ user.profile.avatar.url }}" />
               </div>
             </div>
         
@@ -18,10 +18,11 @@
                 <h4>{{user.first_name}} - {{ user.last_name }}</h4>
               </div>
               <div>
-                <p>{{user.email}}</p>
+                <h6>{{user.email}}</h6>
+                <p>{{ user.profile.about }}</p>
               </div>
               <div>
-                <!-- <a href="#" class="btn">View profile</a> -->
+                 <a href="{% url 'accounts:update_profile_view' %}" class="btn">Edit profile</a>
               </div>
             </div>
         

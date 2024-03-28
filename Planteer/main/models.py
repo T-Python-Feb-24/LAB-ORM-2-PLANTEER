@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 # Create your models here.
-
+from django.contrib.auth.models import User
 
 class Plant(models.Model):
 
@@ -28,7 +28,7 @@ class Contact(models.Model):
 class Comment(models.Model):
 
     plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
-    full_name = models.CharField(max_length=2048)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 

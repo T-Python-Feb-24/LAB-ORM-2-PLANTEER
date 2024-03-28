@@ -11,6 +11,9 @@ def home_view(request: HttpRequest):
     return render(request, "main/index.html", {"plants" : plants, "comments" : comments})
 
 def add_plant_view(request: HttpRequest):
+    if not request.user.is_staff:
+        # Render index template for non-staff users
+        return render(request, "main/index.html")
 
     if request.method == 'POST':
         try:
@@ -40,6 +43,9 @@ def plant_detail_view(request:HttpRequest, plant_id):
     return render(request, "main/detail.html", {"plant" : plant, "comments" : comments})
 
 def update_plant_view(request:HttpRequest, plant_id):
+    if not request.user.is_staff:
+        # Render index template for non-staff users
+        return render(request, "main/index.html")
 
     plant = Plant.objects.get(pk=plant_id)
 
@@ -60,6 +66,9 @@ def update_plant_view(request:HttpRequest, plant_id):
     return render(request, 'main/update.html', {"plant" : plant, "categories" : Plant.categories.choices})
 
 def delete_plant_view(request:HttpRequest, plant_id):
+    if not request.user.is_staff:
+        # Render index template for non-staff users
+        return render(request, "main/index.html")
 
     try:
         plant = Plant.objects.get(pk=plant_id)
@@ -70,7 +79,7 @@ def delete_plant_view(request:HttpRequest, plant_id):
         print(e)
     
 
-    return redirect("main:home_view")
+    return redirect("main:index_view")
 
 
 def all_plant_view(request: HttpRequest):
@@ -111,6 +120,9 @@ def contact_view(request:HttpRequest):
     return render(request, "main/contact.html")
 
 def message_view(request:HttpRequest):
+    if not request.user.is_superuser:
+        # Render index template for non-staff users
+        return render(request, "main/index.html")
 
     messages = Contact.objects.all()
     
@@ -119,7 +131,7 @@ def message_view(request:HttpRequest):
 def add_comment_view(request:HttpRequest, plant_id):
     if request.method == "POST":
         plant_object = Plant.objects.get(pk=plant_id)
-        new_comment = Comment(plant=plant_object,full_name=request.POST["full_name"],
+        new_comment = Comment(plant=plant_object,user=request.user,
                               content=request.POST["content"])
         
         new_comment.save()

@@ -2,7 +2,9 @@
 
 {% block content %} 
 <h1>Contact us</h1>
+{% if request.user.is_superuser %}
 <h2><a href="{% url 'main:message_view' %}" class="text-decoration-none">Guests messages</a></h2>
+{% endif %}
 <div class="row align-items-center">
     <div class="col">
 

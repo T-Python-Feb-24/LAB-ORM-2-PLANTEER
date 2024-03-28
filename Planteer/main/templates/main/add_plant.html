@@ -26,8 +26,9 @@
                     {% endfor %}
                 </select>
 
-
+                {% if request.user.is_staff %}
                 <input type="submit" class="btn btn-primary" value="Add Post" />
+                {% endif %}
             </form>
 
         </div>

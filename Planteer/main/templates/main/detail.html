@@ -9,10 +9,12 @@
                 <img src="{{ plant.poster.url }}"  class="w-100 rounded-4"/>
                 <div class="d-flex justify-content-between">
                     <h6>{{plant.published_at}}</h6>
+                    {% if request.user.is_staff %}
                     <div class="d-flex gap-2">
                         <a href="{% url 'main:update_plant_view' plant.id %}" class="btn btn-primary">Update</a>
                         <a href="{% url 'main:delete_plant_view' plant.id %}" class="btn btn-danger">Delete</a>
                     </div>
+                    {% endif %}
                     
                 </div>
                 <h6>Is Edible: {{plant.is_edible}}</h6>
@@ -29,28 +31,27 @@
 
     <div class="row">
         <div class="col d-flex flex-column gap-2">
-
-            {% for comment in comments %}
-                <div class="d-flex flex-column gap-2 border border-1 p-3 rounded-3">
-                    <h4>{{ comment.full_name }}</h4>
-                    <p>{{ comment.content }}</p>
-                </div>
-            {% endfor %}
-
+                {% for comment in comments %}
+                    <div class="d-flex flex-column gap-2 border border-1 p-3 rounded-3">
+                        <a href="{% url 'accounts:user_detail_view' comment.user.id %} " class="text-decoration-none"><h4>{{ comment.user.username }}</h4></a>
+                        <p>{{ comment.content }}</p>
+                    </div>
+                {% endfor %}
         </div>
     </div>
 
     <div class="row mt-4">
         <div class="col">
-
+            {% if request.user.is_authenticated %}
             <form action="{% url 'main:add_comment_view' plant.id %}" method="post" class="d-flex flex-column gap-2">
                 {% csrf_token %}
-                <input type="text" name="full_name" class="form-control"/>
                 <textarea name="content" class="form-control"></textarea>
 
                 <input type="submit" value="Add Comment" class="btn btn-primary"/>
             </form>
-
+            {% else %}
+            <div class="alert alert-warning">You must <a href="{% url 'accounts:login_user_view' %}">Sign in</a> to comment.</div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
