@@ -1,3 +1,4 @@
+from ast import main
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Plant ,Comment
 from django.http import HttpRequest, HttpResponse
@@ -97,7 +98,7 @@ def plant_update(request: HttpRequest, pk):
 
 def plant_delete(request, pk):
 
-    if not request.user.is_staff:
+    if not (request.user.is_staff or request.user.has_perm(main.change_plant)):
         return render(request, "main/no_access.html")  
     
       

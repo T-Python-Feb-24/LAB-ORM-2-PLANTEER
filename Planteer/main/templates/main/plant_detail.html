@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="container mt-3">
-        {% if request.user.is_staff %}
+        {% if request.user.is_staff or perms.main.change_plant%}
         <a href="{% url 'plant_update' plant.pk %}" class="btn btn-primary">Update</a>
         <form method="post" action="{% url 'plant_delete' plant.pk %}" class="d-inline">
             {% csrf_token %}
