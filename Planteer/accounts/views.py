@@ -19,20 +19,6 @@ def register_user_view(request:HttpRequest):
         try:
 
             with transaction.atomic():
-                new_user = User.objects.create_user(username=request.POST["username"], 
-                                                    email=request.POST["email"], 
-                                                    first_name=request.POST["first_name"], 
-                                                    last_name=request.POST["last_name"], 
-                                                    password=request.POST["password"])
-                new_user.save()
-
-                return redirect("accounts:login_user_view")
-        except IntegrityError:
-                return render(request, "accounts/register.html", {'msg': msg})
-        except Exception as e:
-            print(e)
-
-            with transaction.atomic():
                 #create new user
                 new_user = User.objects.create_user(username=request.POST["username"], email=request.POST["email"], first_name=request.POST["first_name"], last_name=request.POST["last_name"], password=request.POST["password"])
                 new_user.save()
@@ -42,7 +28,7 @@ def register_user_view(request:HttpRequest):
                 profile.save()
 
                 #redirect to login page
-                return redirect("accounts:login_user")
+                return redirect("accounts:login_user_view")
 
         except IntegrityError as e:
             msg = "Username already exists. Please choose a different username."

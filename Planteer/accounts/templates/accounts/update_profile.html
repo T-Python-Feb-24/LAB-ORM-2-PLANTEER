@@ -11,8 +11,6 @@
             <form action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input name="email" class="form-control" type="email" required placeholder="Email" />
                     <label for="about" class="form-label">About</label>
                     <textarea class="form-control" id="about" name="about">{{ request.user.profile.about }}</textarea>
                 </div>
