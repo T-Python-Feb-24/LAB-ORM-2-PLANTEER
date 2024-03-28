@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add New Plant</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+    <header class="my-header">
+        <h1>Add New Plant</h1>
+    </header>
+    
+    <div class="container">
+        <form method="post" action="{% url 'add_plant' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" name="name" class="form-control" id="name" placeholder="Enter name">
+            </div>
+            <div class="mb-3">
+                <label for="about" class="form-label">About</label>
+                <textarea name="about" class="form-control" id="about" placeholder="Enter about"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="user_for" class="form-label">User For</label>
+                <textarea name="user_for" class="form-control" id="user_for" placeholder="Enter user for"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <select name="category" class="form-select" id="category">
+                    {% for choice in CATEGORY_CHOICES %}
+                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Image</label>
+                <input type="file" name="image" class="form-control" id="image" accept="image/*">
+            </div>
+            
+            <div class="mb-3 form-check">
+                <input type="checkbox" name="is_edible" class="form-check-input" id="is_edible" value="true">
+                <label for="is_edible" class="form-check-label">Edible</label>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+        </form>
+    </div>
+    
+    <footer class="my-footer">
+        &copy; 2024  Blog. All rights reserved.
+    </footer>
+</body>
+</html>
