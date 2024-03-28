@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <h1>Contact Us</h1>
+        <div class="row">
+            <div class="col">
+                <form action="{% url 'main:contact' %}" method="POST" class="action d-flex flex-column gap-2">
+                    {% csrf_token %}
+
+                    <input name="first_name" type="text" placeholder="first name" class="form-control" required>
+                    <input name="last_name" type="text" placeholder="last name" class="form-control" required>
+                    
+                    <input name="email" type="email" placeholder="email@example.com" class="form-control" required minlength="5" />
+                    <textarea name="message" type="text" placeholder="message" class="form-control" required></textarea>
+
+                    <input type="submit" class="btn btn-primary" value="Sent Message" />
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

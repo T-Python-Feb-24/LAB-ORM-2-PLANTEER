@@ -1,0 +1,44 @@
+{% extends 'main/base.html' %}
+{% block title %}{% endblock %}
+
+{% block style %}
+
+
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form action="{% url 'main:add_plants' %}" method="POST" enctype="multipart/form-data" class="action d-flex flex-column gap-2">
+                
+                    {% csrf_token %}
+                    <h1>Add Plants</h1>
+                    
+                    <input name="name" type="text" placeholder="name" class="form-control" required>
+                    <textarea name="about" type="text" placeholder="about" class="form-control" required></textarea>
+                    <textarea name="used_for" type="text" placeholder="used for" class="form-control" required></textarea>
+
+                    <h5>Choose Image:</h5>
+                    <input name="image"  type="file"  accept="image/*" class="form-control" required />
+
+                    
+                    <div class="form-check form-switch">
+                        <input name="is_edibl" value="True" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Is Edible</label>
+                    </div>
+                    <h5>Category</h5>
+                        <select name="category" class="form-select" required >
+                            {% for val, cat in Category %}
+                                <option value="{{val}}">{{cat}}</option>
+                            {% endfor %}
+                        </select>
+
+                    <input type="submit" class="btn btn-primary" value="Add Plant" />
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

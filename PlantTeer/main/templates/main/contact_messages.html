@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+{% block title %} Messages user{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <h1>Messages from users</h1>
+        <div class="row">
+            {% for contacts in contact %}
+            <div class="col d-flex flex-column gap-2 border border-1 shadow p-3 rounded-4 h-100">
+                
+                <h2>{{contacts.first_name}} {{contacts.last_name}}</h2>
+                <a href="mailto:{{contacts.email}}">{{contacts.email}}</a>
+                <p> {{contacts.message}}</p>
+                <p>{{contacts.created_at}}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock content %}
