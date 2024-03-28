@@ -1,0 +1,44 @@
+{% extends 'plants/base.html' %}
+{% load static %}
+{% block title %} {{user_key.username}} {% endblock %}
+
+{% block content %}
+    <section>
+        <div class="container mt-5 mb-5">
+
+            <h2>{{user_key.username}} Profile</h2>
+            <div class="row">
+                <div class="col-2">
+                    <img src="{{user_key.profile.avatar.url}}" alt="avatar" class=" w-100 rounded-4" style="height: 300px;">
+                    <h5>@{{user_key.username}}</h5>
+                </div>
+                <div class="col">
+                    <div class="d-flex flex-column">
+                        <h3>{{user_key.first_name}}  {{user_key.last_name}}</h3>
+                        <a href="mailto:{{user_key.email}}">{{user_key.email}}</a>
+                        <p class="mt-2">{{user_key.profile.about}}</p>
+
+                        <div class="d-flex gap-2">
+                            <a href="{{user_key.profile.instagram_link}}" target="_blank"><i class="bi bi-instagram"></i></a>
+                            <a href="{{user_key.profile.linked_link}}" target="_blank"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+
+                    <hr/>
+                    <h2>{{user_key.username}} Comments</h2>
+                    <div class="d-flex flex-column gap-4">
+                        {% for comment in user_key.comment_set.all %}
+                            <div class="d-flex flex-column gap-1 p-3 shadow">
+                                <h5>{{comment.user.username}}</h5>
+                                <a href="{% url 'plants:plant_detail_view' comment.plant.id %}#commentDetail"><h6 class="text-muted">{{comment.plant.name}}</h6></a>
+                                <p>{{comment.content }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+        

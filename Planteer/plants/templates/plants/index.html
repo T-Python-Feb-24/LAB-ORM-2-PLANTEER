@@ -1,0 +1,77 @@
+{% extends 'plants/base.html' %}
+{% load static %}
+{% block title %} Planteer Website {% endblock %}
+
+{% block content %}
+
+<section class="bg-img hero-section">
+    <div class="container text-white">
+        <div class="row">
+            <div class="col-12 ">
+                <div class="overlay"></div>
+                <div class="d-flex  flex-column align-items-center">
+                    <h1 class="hero-h1 mb-1">Planteer</h1>
+                    <p class="hero-p mt-1 mb-3">Plant Database For Plants Lovers</p>
+                    <form action="{% url 'plants:plant_search_view' %}" class="d-flex w-50" role="search" method="get">
+                        <input class="form-control me-2 rounded-pill p-2" type="search" placeholder="Search" aria-label="Search" name="search" required>
+                        <button class="btn btn-success rounded-pill" type="submit">Search</button>
+                    </form>
+                </div>  
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section>
+    <div class="container mt-5 mb-5">
+        <div class="d-flex justify-content-between align-items-center">
+
+            <div>
+                <h2>Plants</h2>
+                <p style="font-size: 18px;">Learn more about plants</p>
+            </div>
+            <a class="btn btn-outline-warning rounded-pill" href="{% url 'plants:all_plants_view' %}">More</a>
+        </div>
+        <div class="row g-4">
+            {% for plant in plants %}
+
+            <div class="col-12 col-md-4">
+                <div class="card rounded-4">
+                    <div class="card_image">
+                      <span class="note rounded-pill {{plant.category}}">{{ plant.category }}</span>
+                      <img src="{{ plant.image.url }}" alt="plant image" />
+                      <span class="card_price rounded-pill {{plant.is_edible}}">{% if plant.is_edible == True %} Edible {% else %} Not Edible {% endif %}</span>
+                    </div>
+                    <div class="card_content mt-3">
+                        <h2 class="card_title">{{plant.name}}</h2>
+                        <p class="card_text">{{ plant.about }}</p>
+                        <p><a href="{% url 'plants:plant_detail_view' plant.id  %}" class="text-decoration-none know-more">Know more...</a></p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+</section>
+
+<section>
+   <!-- Latest Comments -->
+    <div class="container">
+        
+        <div class="row">
+            <h2>Latest Comments</h2>
+
+            {% for comment in comments %}
+                <div class="col">
+                    <div class="d-flex flex-column gap-1 p-3 shadow">
+                        <h4 class="pt-3">{{ comment.user.username}}</h4>
+                        <a href="{% url 'plants:plant_detail_view' comment.plant.id %}#commentsDiv"><h6 class="text-muted">{{comment.plant.name}}</h6></a>
+                        <p>{{comment.content }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+    
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'plants/base.html' %}
+{% load static %}
+{% block title %} All Plants {% endblock %}
+
+{% block content %}
+<section>
+    <div class="container mt-5">
+        <div class="row g-4">
+            <h2>All Plants</h2>
+            {% for plant in plants %}
+            <div class="col-12 col-md-4">
+                <div class="card rounded-4">
+                    <div class="card_image">
+                      <span class="note rounded-pill {{plant.category}}">{{ plant.category }}</span>
+                      <img src="{{ plant.image.url }}" alt="plant image" />
+                      <span class="card_price rounded-pill {{plant.is_edible}}">{% if plant.is_edible == True %} Edible {% else %} Not Edible {% endif %}</span>
+                    </div>
+                    <div class="card_content mt-3">
+                        <h2 class="card_title">{{plant.name}}</h2>
+                        <p class="card_text">{{ plant.about }}</p>
+                        <p><a href="{% url 'plants:plant_detail_view' plant.id  %}" class="text-decoration-none know-more">Know more...</a></p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %} 
