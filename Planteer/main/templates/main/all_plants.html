@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+{% block title %} Plants {% endblock %}
+{% load static %}
+{% block content %}
+
+<section>
+<h1 class="text-center mt-5">ALL PLANTS</h1>
+  <div class="row g-4">
+    <div class="col">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex gap-2">
+          <!-- <a href="{% url 'main:all_plants' %}" class="p-2 ps-3 pe-3 rounded-pill categories text-decoration-none {% if 'categories' not in request.GET %} All {% endif %}">All</a> -->
+          {% for val, key in category %}
+            <a href="?categories={{val}}" class="p-2 ps-3 pe-3 rounded-pill categories {% if request.GET.categories == val %} {{ val }} {% endif %} text-decoration-none">{{val}}</a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-2 g-5 plant-name">
+    {% for plant in plants %}
+      <div class="col-md-4">
+        <div class="card rounded-3 shadow">
+          <img src="{{ plant.image.url }}" class="card-img-top" alt="{{ plant.name }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ plant.name }}</h5>
+            <p class="card-text">{{ plant.category }}</p>
+          </div>
+          <div class="card-footer bg-light d-flex justify-content-center">
+            <h6 class="card-text">{{ plant.created_at }}</h6>
+            <a href="{% url 'main:plant_detail' plant.id  %}" class="btn btn-warning m-2">Read More</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+</section>
+
+{% endblock content %}

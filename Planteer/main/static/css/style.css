@@ -1,0 +1,221 @@
+*{
+    font-family: sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+  }
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+#section3{
+    background-color: rgb(50, 52, 47);
+}
+
+.navbar{
+    background-color: #46255c;
+    color: rgb(193, 140, 236);
+    padding: 20px;
+}
+
+.btn {
+    background-color: rgb(18, 82, 60) ;
+    color: #faf7f7;
+}
+
+.btn a { 
+    text-decoration: none;
+    color: rgb(241, 236, 236);
+}
+
+.nav-item{
+    color: #DEDEDE;
+}
+
+.btn a:hover{
+    color: rgb(18, 82, 60) ;
+}
+
+.navbar-brand{
+    font-weight: 100;
+}
+
+.more{
+    text-decoration: none;
+    color: rgb(30, 29, 29);
+}
+
+.learn{
+    color: rgba(17, 19, 18, 0.451);
+}
+
+
+/* main section  */
+section{
+    padding: 100px 100px;
+} 
+
+.main{
+    display: flex;
+    align-items: center;
+    font-family: "Angkor" , sans-serif;
+    background-color: rgb(60, 18, 18);
+    background: url(../images/florist.jpeg) no-repeat;
+    flex-direction: column;
+    row-gap: 1px;
+    background-size: cover;
+    background-position: center;
+    /* effect for the main section image to be fixid  */
+    background-attachment: fixed;
+
+}
+
+.main h2{
+    color: rgb(28, 33, 25);
+    font-family: "Oi", sans-serif;
+    font-size: 30px;
+    font-weight: 500 ;
+    margin: 50px;
+}
+
+.main h2 span{
+    margin-top: 50px;
+    color: #DEDEDE;
+    font-family: "Crimson Text", sans-serif;
+    /* responsive size  */
+    font-size: 130px;
+    font-weight: 600;
+}
+
+.logo-text{
+    font-size: 25px;
+    font-weight: 400px;
+    color: #DEDEDE;
+
+}
+
+.card-img-top{
+    width: 100%;
+}
+
+.card{
+    margin: 80px;
+    padding: 10px;
+}
+
+section .card{
+    margin: 80px;
+    padding: 10px;
+}
+
+.plants-more{
+    margin-left: 30px;
+    margin-right: 30px;
+    padding-top: 20px;
+}
+
+.nav-link{
+    color: #DEDEDE;
+}
+
+.search-bar{
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: rgb(173, 63, 188);
+    border-radius: 10px;
+    border: none;
+}
+
+.search-bar a {
+    text-decoration: none;
+    color: rgb(231, 224, 235);
+}
+
+.search-bar a:hover{
+    color: rgb(165, 114, 212);
+}
+
+
+.search-page{
+    margin: 100px;
+}
+
+
+.card-container {
+    display: flex;
+    justify-content: center;
+  }
+
+.card {
+    position: relative;
+    flex-direction: column;
+    row-gap: 20px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card img {
+    width: 100%;
+    height: 200px; 
+    object-fit: cover;
+      }
+
+  .card-content h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .card-content p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 15px;
+  }
+
+  .card-content {
+    padding: 20px;
+  }
+  
+  .card-content a {
+    position: absolute;
+    bottom: 20px;
+    left: 30px; 
+    padding: 8px 12px;
+    background-color: #555;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 3px;
+  }
+
+  .nore{
+    padding-left: 130px ;
+  }
+footer{
+    flex-shrink: 0;
+}
+
+
+
+.footer-icon img{
+    border-radius: 10px;
+}
+
+.plant-name{
+    text-decoration: none;
+    color: #603979;
+}
+
+.image-container {
+  height: 200px; 
+  overflow: hidden;
+}

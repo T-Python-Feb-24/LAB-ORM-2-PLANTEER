@@ -6,7 +6,8 @@
 - Plant Detail Page : `plants/<plant_id>/detail/`
 - Plant Search Page (by `name`) : `plants/search/`
 - Add new plant page : `plants/new/`
-- Update plant page : `plants/<plant_id>/update/`,  Delete Plant : `plants/<plant_id>/delete/` . 
+- Update plant page : `plants/<plant_id>/update/`,  
+      Delete Plant : `plants/<plant_id>/delete/` . 
 - Contact Us page : `contact/` **(Bonus)**
 - Contact Us Messages page : `contact/messages/` **(Bonus)**
 - Add search by `category`, and `is_edible` in the Plant Search Page **(Bonus)**

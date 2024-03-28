@@ -1,0 +1,73 @@
+{% extends 'main/base.html' %}
+{% block title %} Planteer {% endblock %}
+{% block content %}
+
+<section class="main">
+  <div >
+    <h2><span> Experience the Magic of Nature's Tapestry !</span><br></h2>
+  </div>
+
+  <form class="d-flex" role="search">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="search-bar btn-outline-success" type="submit"><a href="{% url 'main:plant_search' %}"> Search</a></button>
+  </form>
+</section>
+
+  <div class=" plants-more d-flex justify-content-between align-items-center ">
+    <div>
+      <h2>Plants</h2>
+      <h5 class=" learn ">Learn more about plants</h5>
+    </div>
+    <div >
+      <a class="more" href="{% url 'main:all_plants' %}">More →</a>
+    </div>
+  </div>
+  <hr>
+  
+  <div class="row g-4">
+    {% for plant in plants %}
+      <div class="col-md-4">
+        <div class="card rounded-3 shadow col-md-4">
+          <img src="{{ plant.image.url }}" class="card-img-top" alt="{{ plant.name }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ plant.name }}</h5>
+            <p class="card-text">{{ plant.description }}</p>
+            <p class="card-text">{{ plant.category }}</p>
+
+          </div>
+          <div class="card-footer bg-light d-flex justify-content-between align-items-center">
+            <div>
+              <small class="text-muted">{{ plant.created_at }}</small>
+            </div>
+            <a href="{% url 'main:plant_detail' plant.id %}" class="btn btn-warning m-1">Learn More</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+
+  <hr>
+  <section> 
+  <h2>• Lastest Comments </h2><br>
+  <div class="row">
+    <div class="col d-flex flex-column gap-3">
+
+        {% for comment in comments %}
+            <div class="d-flex flex-column gap-2 border border-1 p-3 rounded-3">                
+              <h4 class="text-success text-decoration-none">{{ comment.full_name }}</h4>
+              <a href="{% url 'main:plant_detail' comment.plant.id %}#comment" class="text-warning text-decoration-none m-1"> ➢ {{ comment.plant.name }}</a>
+
+              <hr>
+              <p>{{ comment.content }}</p>
+
+
+            </div>
+        {% endfor %}
+
+    </div>
+  </section>
+</div>
+
+
+{% endblock %}
