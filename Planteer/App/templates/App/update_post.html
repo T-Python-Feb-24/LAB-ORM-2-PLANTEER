@@ -1,0 +1,41 @@
+{% extends 'App/base.html' %}
+
+{% block content %}
+    <div class="row">
+        <h1>Update plant</h1>
+        <div class="col">
+
+            <form action="{% url 'App:update_post_view' post.id %}" method="post" class="d-flex flex-column gap-2" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <input name="Name" type="text" placeholder="Name" class="form-control" required minlength="5" />
+                <input name="category" type="text" placeholder="category" class="form-control" required minlength="5" />
+                <input name="used_for" type="text" placeholder="used_for" class="form-control" required minlength="5" />
+
+
+                <textarea name="about" class="form-control" required minlength="20"></textarea>
+
+                <div class="form-check form-switch">
+                    <input name="eidble" value="True" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" {% if post.eidble %} checked {% endif %}>
+                    <label class="form-check-label" for="flexSwitchCheckDefault">eidble</label>
+                </div>
+
+                <h5>Choose Image:</h5>
+                <img src="{{ post.image.url }}" class="thumb" />
+                <input name="image"  type="file"  accept="image/*" class="form-control"  />
+
+                <h5>Category</h5>
+                <select name="category" class="form-select" required>
+                    {% for val, cat in categories %}
+                        <option value="{{val}}" {% if post.category == val %} selected {% endif %}>{{cat}}</option>
+                    {% endfor %}
+                </select>
+
+                <input type="submit" class="btn btn-primary" value="Update" />
+            </form>
+
+        </div>
+
+
+    </div>
+{% endblock %}
