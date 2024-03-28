@@ -39,8 +39,8 @@
 
         {% for comment in comments %}
             <div class="d-flex flex-column gap-2 border border-1 p-3 rounded-3">
-                <h4>{{ comment.full_name }}</h4>
-                <p>{{ comment.content }}</p>
+                    <a href="{% url 'account:user_profile_view' comment.user.username %}" class="text-decoration-none"><h4>{{ comment.user.username }}</h4></a>
+                    <p>{{ comment.content }}</p>
             </div>
         {% endfor %}
 
@@ -49,15 +49,15 @@
 
 <div class="row mt-4">
     <div class="col">
-
+{% if request.user.is_authenticated%}
         <form action="{% url 'main:add_comment' plant.id %}" method="post" class="d-flex flex-column gap-2" id="commentPost">
             {% csrf_token %}
-            <input type="text" name="full_name" class="form-control" placeholder="Full name"/>
             <textarea name="content" class="form-control" placeholder="Write comment ..."></textarea>
-
             <input type="submit" value="Add Comment" class="btn btn-primary"/>
         </form>
-
+{% else %}
+<div class="alert alert-warning">You must <a href="{% url 'account:login_user_view' %}">Sign in</a> to comment.</div>
+            {% endif %}
     </div>
 </div>
 

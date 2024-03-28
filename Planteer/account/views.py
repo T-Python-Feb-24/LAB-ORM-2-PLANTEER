@@ -5,6 +5,11 @@ from django.contrib.auth.models import User
 #import login, logout, authenticate
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
+from main.models import Comment
+from .models import Profile
+#import transaction
+from django.db import transaction, IntegrityError
+
 
 # Create your views here.
 
@@ -14,13 +19,18 @@ def register_user_view(request:HttpRequest):
     if request.method == "POST":
         try:
 
+            #using transaction to ensure all operations are successfull
+            with transaction.atomic():
+                #create new user
+                new_user = User.objects.create_user(username=request.POST["username"], email=request.POST["email"], first_name=request.POST["first_name"], last_name=request.POST["last_name"], password=request.POST["password"])
+                new_user.save()
 
-            #create new user
-            new_user = User.objects.create_user(username=request.POST["username"], email=request.POST["email"], first_name=request.POST["first_name"], last_name=request.POST["last_name"], password=request.POST["password"])
-            new_user.save()
+                #create profile for user
+                profile = Profile(user=new_user, about=request.POST["about"], instagram_link=request.POST["instagram_link"], linked_link=request.POST["linked_link"], avatar=request.FILES.get("avatar", Profile.avatar.field.get_default()))
+                profile.save()
 
-            #redirect to login page
-            return redirect("accounts:login_user_view")
+                #redirect to login page
+                return redirect("account:login_user_view")
         
         except IntegrityError as e:
             msg = "Username already exists. Please choose a different username."
@@ -63,8 +73,11 @@ def logout_user_view(request:HttpRequest):
 def user_profile_view(request:HttpRequest, user_name):
 
     try:
-        user_info = User.objects.get(username=user_name)
+        user_object = User.objects.get(username=user_name)
+        #comment by this user
+        #user_comments = Comment.objects.filter(user=user_object)
+        #user_comments = user_object.comment_set.all() #using set
     except:
         return render(request, "main/not_found.html")
 
-    return render(request, "account/profile.html", {"user_info":user_info})
+    return render(request, "account/profile.html", {"user_object":user_object})

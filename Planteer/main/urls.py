@@ -29,4 +29,6 @@ urlpatterns = [
     path('plants/<plant_id>/delete/', views.delete_plant, name='delete_plant'),
     path('plants/search/', views.search, name='search'),
     path("comments/add/<plant_id>/", views.add_comment, name="add_comment"),
+    path("plants/contact/",views.contact_us,name="contact_page"),
+   path("users/message/",views.user_message,name="message_page"),
 ]

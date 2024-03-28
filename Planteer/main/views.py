@@ -3,20 +3,19 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 from .models import Plant,Comment
-#from datetime import date, timedelta
 # Create your views here.
+from .models import Plant, Comment, Contact
+# from favorites.models import Favorite
 
-# Create your views here.
 
-# Create your views here.
 
 def home(request:HttpRequest):
-    comments=Comment.objects.all()[0:3]
-    plants = Plant.objects.all()[0:3]
-
     #get user info
     if request.user.is_authenticated:
         print(request.user.first_name)
+    comments=Comment.objects.all()[0:3]
+    plants = Plant.objects.all()[0:3]
+
    
 
     return render(request,'main/index.html', {'plants' : plants ,'comments' : comments})
@@ -63,18 +62,19 @@ def all_plant(request:HttpRequest):
     return render(request, "main/all_plants.html", {"plants" : plants, "category" : Plant.Categories.choices, "pages_count":pages_count})
 
 def  plant_detail(request:HttpRequest, plant_id):
-        try:
-            #getting a  post detail
-            plant = Plant.objects.get(pk=plant_id)
-            related = Plant.objects.all()
-            comments = Comment.objects.filter(plant= plant).exclude(id=plant.id) #this is to get the comments on the above post using filter
-        except Plant.DoesNotExist:
-            return render(request, "404.html")
-        except Exception as e:
-            print(e)
-        
+    try:
+        #getting a  post detail
+        plant = Plant.objects.get(pk=plant_id)
+        comments = Comment.objects.filter(plant=plant) #this is to get the comments on the above post using filter
+        related_posts = Plant.objects.filter(category=plant.category).exclude(id=plant.id) #get related posts
+        # is_favored = request.user.is_authenticated and  Favorite.objects.filter(user=request.user, post=plant).exists()
+    except Plant.DoesNotExist:
+        return render(request, "main/not_found.html")
+    except Exception as e:
+        print(e)
 
-        return render(request, "main/post_detail.html", {"plant" : plant, "related": related, "comments": comments})
+
+    return render(request, "main/post_detail.html", {"plant" : plant, "comments" : comments , "related" : related_posts  })
 
 def update_plant(request:HttpRequest, plant_id):
         try:
@@ -132,13 +132,38 @@ def search(request: HttpRequest):
 
 def add_comment(request:HttpRequest, plant_id):
 
+    object = Plant.objects.get(pk=plant_id)
     if request.method == "POST":
         #add new comment
-        object = Plant.objects.get(pk=plant_id)
-        new_comment = Comment(plant=object,full_name=request.POST["full_name"], content=request.POST["content"])
+        print(object)
+        new_comment = Comment(plant=object,user=request.user, content=request.POST["content"])
         new_comment.save()
-
-        
     
     return redirect("main:plant_detail", plant_id=object.id)
+
+
+# هذا contact
+
+def user_message(request: HttpRequest):
+    if not request.user.is_superuser:
+        return render(request, "main/no_permission.html")
+    
+    con=Contact.objects.all()
+
+    return render(request,"main/message.html", {"con" : con})
+
+def contact_us(request: HttpRequest):
+ if request.method=="POST":
+        try:
+            info=Contact(
+            f_name=request.POST["f_name"],
+            l_name=request.POST["l_name"],
+            email=request.POST["email"],
+            message=request.POST["message"],
+            )
+            info.save()
+            return redirect('main:home')
+        except Exception as e :
+            print(e)
+ return render(request,"main/contact.html")
     
