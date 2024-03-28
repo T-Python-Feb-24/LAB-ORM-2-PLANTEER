@@ -63,7 +63,7 @@
      <div class="col d-flex flex-column gap-2">    
       {% for comment in comments %}
         <div class=" comment d-flex flex-column gap-2 border border-1 p-3 rounded-3">
-        <a href="{% url 'accounts:user_info_view' comment.user.username %}" class="text-decoration-none"><h4>{{ comment.user.username }}</h4></a>
+        <a href="{% url 'accounts:user_info_view' comment.user.id %}" class="text-decoration-none"><h4>{{ comment.user.username }}</h4></a>
         <p>{{ comment.content }}</p>
         <p>{{ comment.created_at }}</p>
         </div>

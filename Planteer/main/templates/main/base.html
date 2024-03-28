@@ -44,7 +44,7 @@
             <li class="nav-item">
               {% if request.user.is_authenticated %} 
               <div class="d-flex gap-1">
-                <a class="nav-link" href="{% url 'accounts:user_info_view' user.id %} ">welcome, {{request.user.username }}</a>
+                <a class="nav-link" href="{% url 'accounts:user_info_view' request.user.id  %} ">welcome, {{ request.user.username }}</a>
                 <a class="nav-link" href="{% url 'accounts:logout_user_view' %}">Logout</a>
               </div>
 

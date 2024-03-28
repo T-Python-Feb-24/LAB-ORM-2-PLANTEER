@@ -69,9 +69,9 @@ def logout_user_view(request:HttpRequest ):
     return redirect('accounts:login_user_view')
 
 
-def user_info(request:HttpRequest , username):
+def user_info(request:HttpRequest , user_id):
     try:
-        user=User.objects.get(pk=username)
+        user=User.objects.get(id=user_id)
         #user_comment=user.objects.comment_set.all()
         #user_comment=Comment.objects.filter(user=user)
         #user_information=User.objects.all()
@@ -82,25 +82,25 @@ def user_info(request:HttpRequest , username):
 
 
 
-def update_info(request:HttpRequest , username):
+def update_info(request:HttpRequest , user_id):
+    if not request.user.is_authenticated:
+        return redirect('accounts:login_user_view')
 
-    acc=User.objects.get(pk=username)
+    acc=User.objects.get(id=user_id)
     info=Profile.objects.get(user=acc)
     if request.method == "POST":
         try:
             with transaction.atomic():
-                acc.username=request.POST["username"]
                 acc.first_name=request.POST["first_name"]
                 acc.last_name=request.POST["last_name"]
                 acc.email=request.POST["email"]
-                acc.password=request.POST["password"]
                 acc.save()
                 info.about=request.POST["about"]
                 info.instagram=request.POST["instagram"]
                 info.linkedin=request.POST["linkedin"]
                 info.avatar=request.FILES.get("avatar", info.avatar)
                 info.save()
-                return redirect("accounts:user_info_view", username=acc.id )
+                return redirect("accounts:user_info_view", user_id=acc.id )
         except Exception as e:
             print(e)
 

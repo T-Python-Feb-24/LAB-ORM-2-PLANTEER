@@ -15,7 +15,7 @@
         <div class="col">
          <div class="user-info d-flex flex-column gap-2">
          <div class="info">
-        <h4 class="info"> Username :{{user.username}}</h4>
+        <h4 class="info"> Username:{{user.username}}</h4>
         <p>Name :{{user.first_name}} {{user.last_name}}</p>
         <p>Email</p><a href="mailto:{{user.email}}">{{ user.email }}</a>
         <p class="mt-2">Bio : <br>{{ user.profile.about }}</p>
@@ -24,7 +24,9 @@
                     <a href="{{user.profile.instagram}}" target="_blank"><i class=" xx bi bi-instagram"></i></a>
                     <a href="{{user.profile.linkedin}}" target="_blank"><i class=" xx bi bi-linkedin"></i></a>
                 </div>
-                <a href="{% url 'accounts:update_info' user.id %}" class="btn btn-primary">update</a>
+                {% if request.user.id == user.id %}
+                    <a href="{% url 'accounts:update_info' user.id  %}" class="btn btn-primary">update</a>
+                {% endif %}
                 </div>
            
         </div>
