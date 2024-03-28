@@ -27,6 +27,7 @@ def sign_up_view(request: HttpRequest):
                                   "avatar", Profile.avatar.field.get_default()),
                               nationality=request.POST.get("nationality"))
             profile.save()
+         redirect("account:login_view")
 
    except IntegrityError as e:
       msg = msg = "Username or Email already exist. Try again..."
