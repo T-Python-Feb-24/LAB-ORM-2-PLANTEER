@@ -13,7 +13,7 @@
                 <h1 >planteer</h1>
                 <h4>plant Database For Plants Lovers</h4>
             </div>
-            <img src="{% static '/images/fd9a7d636d175a04cf145f73c5606d84.jpg' %}" class="w-100 hero rounded-4" />
+            <img src="{% static '/images/e6.jpg' %}" class="w-100 hero rounded-4" />
         </div>
     </div>
 
@@ -36,6 +36,22 @@
             </div>
             
         {% endfor %}    
+
+    </div>
+    
+    <hr/>
+    <h2>Latest Comments</h2>
+    <div class="row">
+
+        {% for comment in comments %}
+            <div class="col">
+                <div class="d-flex flex-column gap-1 p-3 shadow">
+                    <h5>{{comment.full_name}}</h5>
+                    <a href="{% url 'App:post_detail_view' comment.post.id %}#commentsDiv"><h6 class="text-muted">{{comment.post.Name}}</h6></a>
+                    <p>{{comment.content }}</p>
+                </div>
+            </div>
+        {% endfor %}
 
     </div>
 

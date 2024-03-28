@@ -1,12 +1,14 @@
 {% extends 'App/base.html' %}
 
-{% block content %}
+{% block content %}  
     <div class="row">
         
         <div class="col">
             <div class="d-flex flex-column gap-2">
                 <h1>{{ post.Name}}</h1>
-                <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{post.category}}">{{ post.category }}</h6>
+                <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{post.category}}">{{ post.category }} </h6>
+                <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{post.created_at}}">{{ post.created_at }}</h6>
+
                 <img src="{{ post.image.url }}"  class="w-100 rounded-4"/>
                 <div class="d-flex justify-content-between">
                     <h6>{{post.creatad}}</h6>
@@ -21,28 +23,39 @@
             </div>
         </div>
 
-
     </div>
     <h2>Comments:</h2>
 
-    <
+    {% endblock %}
+
 
             {% for comment in comments %}
+            <div class="d-flex flex-column gap-2 shadow p-3">
+                <a href="{% url 'user_name:user_profile_view' comment.user.username %}"
+            
                     <h4>{{ comment.full_name }}</h4>
                     <p>{{ comment.content }}</p>
+                    </div>
             {% endfor %}
+
 
     <div class="row mt-4">
         <div class="col">
-
+            {% if request.user.is_authenticated %}
             <form action="{% url 'App:add_comment_view' post.id %}" method="post" class="d-flex flex-column gap-2">
                 {% csrf_token %}
-                <input type="text" name="full_name" class="form-control"/>
+                <h3> to send comments:</h3>
+                <input type="text" name="full_name" class="form-control" placeholder="comments"/>
+                <textarea name="message" class=""form-control></textarea>
+                <input type="submit" value="add comment" class="btn btn-dark"/>
 
             </form>
 
+{% else %}
+        <div class="alert alert-warning">You must <a href="{% url 'user_name:login_user_view' %}">Sign in</a> to comment.</div>
+        {% endif %}
         </div>
     </div>
 
 
-{% endblock %}
+    

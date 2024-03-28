@@ -1,0 +1,45 @@
+{% extends 'App/base.html' %}
+
+{% block title %} {{user_info.username }} profile {% endblock %}
+
+{% block content %}
+
+    <h1>{{user_info.username }} Profile</h1>
+
+    
+
+    <div class="row">
+        <div class="col-3">
+
+            <img src="/images/avatar.webp" class="avatar w-100" />
+            <h5>@{{user_info.username}}</h5>
+
+        </div>
+
+        <div class="col">
+
+            <div class="d-flex flex-column">
+                <h3>{{user_info.first_name}} {{ user_info.last_name}}</h3>
+                <a href="mailto:{{user_info.email}}">{{ user_info.email }}</a>
+                <div class="d-flex gap-2">
+                    <a href="{{user_object.profile.instagram_link}}" target="_blank"><i class="bi bi-instagram"></i></a>
+                    <a href="{{user_object.profile.linked_link}}" target="_blank"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+
+            <hr/>
+            <h2>{{user_object.username}} Comments</h2>
+            <div class="d-flex flex-column gap-4">
+                {% for comment in user_object.comment_set.all %}
+                    <div class="d-flex flex-column gap-1 p-3 shadow">
+                        <h5>{{comment.user.username}}</h5>
+                        <a href="{% url 'App:post_detail_view' comment.post.id %}#commentsDiv"><h6 class="text-muted">{{comment.post.title}}</h6></a>
+                        <p>{{comment.content }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

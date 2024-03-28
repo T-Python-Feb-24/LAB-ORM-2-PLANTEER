@@ -9,7 +9,7 @@
   </head>
   <body>
 
-    NAVBAR 
+  
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">All plants</a>
@@ -24,7 +24,34 @@
             <li class="nav-item">
               <a class="nav-link btn btn-primary" href="{% url 'App:add_post_view' %}">Add Post</a>
             </li>
-          </ul>
+          
+
+
+
+          
+          <li class="nav-item">
+            {% if request.user.is_authenticated %} 
+            <div class="d-flex gap-1">
+              <a class="nav-link" href = "{% url 'user_name:user_profile_view' request.user.username %}">welcome, {{request.user.username }}</a>
+              <a class="nav-link" href="{% url 'user_name:logout_user_view' %}">Logout</a>
+              <a class="nav-link" href="{% url 'favorites:user_favorites_view' %}">Favorites</a>
+             
+            </div>
+
+            {% else %}
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Sign up</button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'user_name:register_user_view' %}">Sign up</a></li>
+                  <li><a class="dropdown-item" href="{% url 'user_name:login_user_view' %}">Login</a></li>
+                </ul>
+              </div>
+            {% endif %}
+          </li>
+        </ul>
+         
+          
+        
           <form action="{% url 'App:posts_search_view' %}" class="d-flex  " role="search" method="get">
             <input class="form-control me-4" type="search" placeholder="Search" aria-label="Search" name="search" >
             <button class="btn btn-outline-success" type="submit">Search</button>

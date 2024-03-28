@@ -1,49 +1,86 @@
-from telnetlib import LOGOUT
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib import messages
-from django.shortcuts import redirect
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login
+from django.http import HttpRequest, HttpResponse
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.db import IntegrityError
+from App.models import Comment
 
-
-def register_user_view(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            messages.success(request, f'Account created for {username}!')
-            return redirect('home_page')  # Redirect to the home page after successful registration
-    else:
-        form = UserCreationForm()
-    return render(request, 'App/register.html', {'form': form})
+from django.contrib.auth.decorators import login_required
+from .models import Profile
+from django.db import transaction, IntegrityError
 
 
 
 
-def login_user_view(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(request, request.POST)
-        if form.is_valid():
-            user = form.get_user()
+def register_user_view(request:HttpRequest):
+    msg = None
+
+    if request.method == "POST":
+        
+        try:
+            with transaction.atomic():
+
+                 new_user = User.objects.create_user(username=request.POST["username"], email=request.POST["email"], first_name=request.POST["first_name"],
+                 last_name=request.POST["last_name"], password=request.POST["password"])
+                 new_user.save()
+
+
+                 profile = Profile(user=new_user, about=request.POST["about"], instagram_link=request.POST["instagram_link"], linked_link=request.POST["linked_link"], avatar=request.FILES.get("avatar", Profile.avatar.field.get_default(), birth_date = redirect.POST["birth_date"]))
+                 profile.save()
+                                               
+
+
+            
+
+        
+            return redirect("user_name:login_user_view")
+
+        except Exception as e:
+            msg ="USERNAME ALREADY EXISTS.PLEASE CHOOSE A DIFFERENT USERNAME"
+            print(e)
+        except Exception as e:
+            msg ="SOMETHING WENT WRONG .PLEASE TRY AGAIN"
+    
+
+    return render(request, "user_name/register.html")
+
+
+def login_user_view(request:HttpRequest):
+    msg = None
+
+    if request.method == "POST":
+        
+        user = authenticate(request, username=request.POST["username"], password=request.POST["password"])
+
+        if user:
+        
             login(request, user)
-            return redirect('home_page')  # Redirect to the home page after successful login
-    else:
-        form = AuthenticationForm()
-    return render(request, 'App/login.html', {'form': form})
+            return redirect("App:home_page")
+        else:
+            msg = "Username or Password is wrong. Try again..."
+    
+
+    return render(request, "user_name/login.html", {"msg" : msg})
+
+
+def logout_user_view(request:HttpRequest):
+    if request.user.is_authenticated:
+        logout(request)
+    
+    return redirect('user_name:login_user_view')
+
+
+def user_profile_view(request:HttpRequest, user_name):
+
+    try:
+        user_info = User.objects.get(username=user_name)
+        user_comments = user_info.comment_set.all() 
+
+
+    except:
+        return render(request, "App/not_found.html")
+
+    return render(request, "user_name/profile.html", {"user_info":user_info})
 
 
 
-def logout_user_view(request):
-    (request)
-    return redirect('home_page')  # Redirect to the home page after logout
-
-
-
-
-
-def user_detail_view(request, username):
-    user = User.objects.get(username=username)
-    return render(request, 'App/user_detail.html', {'user': user})

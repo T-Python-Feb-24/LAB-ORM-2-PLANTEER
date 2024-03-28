@@ -3,8 +3,8 @@ from django.shortcuts import render,redirect
 from django.http import HttpRequest,HttpResponse
 from datetime import date,timedelta
 import math
-from .models import Post
-from .models import Comment
+from .models import Post, Comment
+from django.contrib.auth.models import User
 
 def home_page(request: HttpRequest):
 
@@ -23,6 +23,8 @@ def add_post_view(request:HttpRequest):
                         image = request.FILES.get('image', Post.image.field.default),
                         eidble = request.POST.get("eidble", False),
                         category= request.POST["category"]
+                         #created_at = request.POST[""]
+
                     )
             new_post.save()
             return redirect('App:home_page')
@@ -40,17 +42,21 @@ def add_post_view(request:HttpRequest):
 
 
 def post_detail_view(request:HttpRequest, post_id):
-
+    comments=[]
+    related_posts=[]
     try:
         post = Post.objects.get(pk=post_id)
-        #comments = comments.objects.filter(post=post)
+        comments = Comment.objects.filter(post=post)
+        print(comments)
+        related_posts = Post.objects.filter(category=post.category).exclude(id=post.id)
     except Post.DoesNotExist:
         return render(request, "App/not_found.html")
     except Exception as e:
         print(e)
 
 
-    return render(request, "App/post_detail.html", {"post" : post})
+    return render(request, "App/post_detail.html", {"post" : post ,"comments": comments, "related_posts": related_posts})
+
 
 
 
@@ -69,7 +75,7 @@ def update_post_view(request:HttpRequest, post_id):
             post.about= request.POST["about"]
             post.used_for= request.POST["used_for"]
             post.category = request.POST["category"]
-            post.poster = request.FILES.get("poster", post.poster)
+            post.image = request.FILES.get("image", post.image)
             post.save()
             return redirect("App:post_detail_view", post_id=post.id)
         except Exception as e:
@@ -108,33 +114,6 @@ def posts_search_view(request):
     else:
         posts = Post.objects.all()
     return render(request, 'App/posts_search.html', {'posts': posts})
-
-
-
-
-
-
-
-
-
-
-
-
-
-def add_comment_view(request:HttpRequest, post_id):
-
-    if request.method == "POST":
-        #add new comment
-        post_object = Post.objects.get(pk=post_id)
-        new_comment = Comment(post=post_object,full_name=request.POST["full_name"], content=request.POST["content"])
-        new_comment.save()
-
-    
-    return redirect("App:post_detail_view", post_id=post_id)
-    
-
-
-
 
 
 
