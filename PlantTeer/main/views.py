@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 from .models import Plant,Contact,Comment
+from django.contrib.auth.models import User
 # Create your views here.
 
 def home_page(requset:HttpRequest):
@@ -114,6 +115,8 @@ def contact(requset:HttpRequest):
     return render(requset, "main/contact.html" )
 
 def contact_messages(requset:HttpRequest):
+    if not requset.user.is_superuser:
+     return redirect("main:contact")
     try:
         contact= Contact.objects.all()
     except Exception as e:

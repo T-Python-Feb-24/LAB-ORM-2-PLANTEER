@@ -20,9 +20,12 @@
                     <p>{{ plant.about }}</p>
                     <p> Is edible :{% if plant.is_edible == False %} No {% else %} Yes {% endif %}</p>
                     <div class="d-flex gap-2">
-                        <a href="{% url 'main:update_plants' plant.id %}" class="btn btn-primary mt-3 mp-5">update</a>
-                        <a href="{% url 'main:delete_plants' plant.id %}" class="btn btn-danger mt-3 mp-5">Delete</a>
+                        {% if request.user.is_staff %} 
+                            <a href="{% url 'main:update_plants' plant.id %}" class="btn btn-primary mt-3 mp-5">update</a>
+                            <a href="{% url 'main:delete_plants' plant.id %}" class="btn btn-danger mt-3 mp-5">Delete</a>
+                        {% endif %}
                     </div>
+                    
                 </div>
             </div>
 
@@ -33,7 +36,7 @@
 
                     {% for comment in comments %}
                         <div class="d-flex flex-column gap-2 border border-1 p-3 rounded-3">
-                            <h4>{{ comment.full_name }}</h4>
+                            <a href="{% url 'accounts:profile' comment.user.username %}" class="text-decoration-none"><h4>{{ comment.user.username }}</h4></a>
                             <p>{{ comment.content }}</p>
                         </div>
                     {% endfor %}

@@ -27,7 +27,7 @@
               <li class="nav-item">
                   {% if request.user.is_authenticated %} 
                   <div class="d-flex gap-1">
-                    <a class="nav-link href={% url 'accounts:profile' request.user.username %}" >welcome {{request.user.username }}</a>
+                    <a class="nav-link" href="{% url 'accounts:profile' request.user.username %}">welcome {{request.user.username }}</a>
                     <a class="nav-link" href="{% url 'accounts:logout_user' %}">Logout</a>
                   </div>
                   {% else %}
@@ -37,7 +37,9 @@
                   {% endif %}
               
             </ul>
+            {% if request.user.is_staff %} 
             <a href="{% url 'main:add_plants' %}"><button type="button" class="btn btn-secondary btn-sm" >Add Plant</button></a>
+            {% endif %}
             
           </div>
         </div>
