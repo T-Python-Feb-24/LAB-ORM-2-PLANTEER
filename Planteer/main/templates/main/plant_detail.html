@@ -1,0 +1,110 @@
+{# djlint:off H013,H006,H021 #}
+{% extends "main/base.html" %}
+{% block title %}
+   Plant Detail
+{% endblock title %}
+{% block content %}
+   <div class="plant-detail">
+      <div class="d-flex flex-column justify-content-around g-2">
+         <img src="{{ plant.image.url }}" alt="">
+         {% if plant.is_edible %}
+            <div class="edible-div bg-success bg-opacity-25 rounded-3">
+               <span class="text-success">It Edible</span>
+            {% else %}
+               <div class="edible-div bg-danger bg-opacity-25 rounded-3">
+                  <span class="text-danger">It Not Edible</span>
+               {% endif %}
+            </div>
+         </div>
+         <div class="d-flex flex-column plant-detail-info">
+            <div class="d-flex justify-content-between plant-title-info">
+               <div id="name-flex" class="d-flex flex-column">
+                  <h2>{{ plant.name }}</h2>
+                  <span>{{ plant.created_at|date:"d/m/Y h:m" }}</span>
+               </div>
+               {% if request.user.is_superuser or request.user.is_staff %}
+                  <div class="d-flex h-80 gap-2">
+                     <a href="{% url 'main:update_plant_view' plant.id %}"
+                        class="btn btn-primary">update</a>
+                     <button class="btn btn-danger" onclick="myconfirm()">Delete</button>
+                     <a id="delete"
+                        hidden
+                        href="{% url 'main:delete_plant_view' plant.id %}"
+                        class="btn btn-danger">Delete</a>
+                  </div>
+               {% endif %}
+            </div>
+            <span class="fs-5 mt-1 opacity-25">{{ plant.category }}</span>
+            <p class="fs-6 mt-1 opacity-75">{{ plant.about }}</p>
+            <span>
+               <br>
+               <br>
+            Used For:</span>
+            <p class="fs-6 mt-1 opacity-75">{{ plant.used_for }}</p>
+         </div>
+      </div>
+      {% if not relateds.count == 0 %}
+         <div class="d-flex flex-column mt-4 f">
+            <h4 class="fw-semibold">Related Plants</h4>
+            <div class="cards">
+               {% for related in relateds %}
+                  <a href="{% url "main:plant_detail_view" related.id %}">
+                     <div class="card card-plant">
+                        <div class="plant-img">
+                           <img src="{{ related.image.url }}"
+                                class="card-img-top"
+                                height="100%"
+                                alt="{{ related.image.name }}">
+                        </div>
+                        <div class="card-body">
+                           <div class="plant-info">
+                              <h4>{{ plant.name }}</h4>
+                              <p class="card-text fw-semibold">{{ related.about }}</p>
+                              <h5>{{ related.category }}</h5>
+                           </div>
+                        </div>
+                     </div>
+                  </a>
+               {% endfor %}
+            </div>
+         </div>
+      {% endif %}
+      <h2>Comment({{ comments.count }})</h2>
+      {% for comment in comments %}
+         <div class="d-flex flex-column border w-100 p-4">
+            <h3 id="comment-user-name">{{ comment.user.username }}</h3>
+            <span>{{ comment.comment_date }}</span>
+            <p class="border mb-4 rounded-2">{{ comment.content }}</p>
+         </div>
+      {% endfor %}
+      <h2 class="mt-5">Add comment:</h2>
+      <div class="d-flex my-4 justify-self-center justify-content-center w-75">
+         {% if request.user.is_authenticated %}
+            <form action="{% url 'main:add_comment_view' plant.id %}"
+                  method="post"
+                  class="d-flex flex-column w-100 gap-2">
+               {% csrf_token %}
+               <label for="user_name" class="form-label">Name:</label>
+               <input type="text"
+                      disabled
+                      value="{{ request.user.username }}"
+                      name="user_name"
+                      class="form-control" />
+               <label for="content" class="form-label m-0">Content:</label>
+               <textarea name="content"
+                         rows="3"
+                         class="form-control"
+                         placeholder="Put your comment here"></textarea>
+               <input type="submit" value="Add Comment" class="btn btn-dark my-2" />
+            </form>
+         {% else %}
+            <div class="d-flex justify-content-center">
+               <a href="{% url "account:login_view" %}?next={{ request.path }}"
+                  class="btn me-2 btn-dark">Sign In</a>
+               <a href="{% url "account:sign_up_view" %}?next={{ request.path }}"
+                  class="btn me-2 btn-dark">Sign UP</a>
+            </div>
+         {% endif %}
+      </div>
+   </div>
+{% endblock content %}

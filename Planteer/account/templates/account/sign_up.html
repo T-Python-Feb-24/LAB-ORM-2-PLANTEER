@@ -1,0 +1,81 @@
+{% extends "main/base.html" %}
+{% block title %}
+   Sign UP
+{% endblock title %}
+{% block content %}
+   <div class="d-flex flex-column justify-self-center align-self-center w-50">
+      <h1>Sign UP</h1>
+      {% if msg %}
+         <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+            <symbol id="exclamation-triangle-fill" viewBox="0 0 16 16">
+            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+            </symbol>
+         </svg>
+         <div class="alert alert-danger d-flex align-items-center"
+              id="login_alert"
+              role="alert">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:">
+               <use xlink:href="#exclamation-triangle-fill" />
+            </svg>
+            <div>
+               <div>{{ msg }}</div>
+            </div>
+         </div>
+      {% endif %}
+      <div class="row mt-2 mb-5">
+         <div class="d-flex flex-column">
+            <form action="{% url 'account:sign_up_view' %}"
+                  method="post"
+                  class="d-flex flex-column gap-2"
+                  enctype="multipart/form-data">
+               {% csrf_token %}
+               <label class="form-label mb-0 ms-1 mt-2">User Name:</label>
+               <input name="username"
+                      class="form-control"
+                      type="text"
+                      minlength="3"
+                      required
+                      placeholder="Username" />
+               <label class="form-label mb-0 ms-1 mt-2">First Name:</label>
+               <input name="first_name"
+                      class="form-control"
+                      type="text"
+                      minlength="3"
+                      required
+                      placeholder="First Name" />
+               <label class="form-label mb-0 ms-1 mt-2">Last Name</label>
+               <input name="last_name"
+                      class="form-control"
+                      type="text"
+                      minlength="3"
+                      required
+                      placeholder="Last Name" />
+               <label class="form-label mb-0 ms-1 mt-2">Email:</label>
+               <input name="email"
+                      class="form-control"
+                      type="email"
+                      minlength="3"
+                      required
+                      placeholder="Email" />
+               <label class="form-label mb-0 ms-1 mt-2">About yourself:</label>
+               <textarea name="about" class="form-control" placeholder="about yourself"></textarea>
+               <div class="form-outline mb-4">
+                  <label class="form-label mb-0 ms-1 mt-2">Nationality:</label>
+                  <select id="nationality" name="nationality" class="form-select">
+                     {% for val,nationality in nationality %}<option value="{{ val }}">{{ val }}</option>{% endfor %}
+                  </select>
+                  <label class="form-label mb-0 ms-1 mt-2">Upload Avatar:</label>
+                  <input type="file" class="form-control" name="avatar" />
+               </div>
+               <input name="password"
+                      class="form-control"
+                      type="password"
+                      minlength="6"
+                      required
+                      placeholder="Password" />
+               <input type="submit" class="btn btn-dark mt-3" value="Sign Up" />
+            </form>
+         </div>
+      </div>
+   </div>
+{% endblock content %}

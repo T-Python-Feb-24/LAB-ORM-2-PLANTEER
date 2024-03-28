@@ -1,0 +1,68 @@
+{% extends "main/base.html" %}
+{% block title %}
+   Update MyPofile
+{% endblock title %}
+{% block content %}
+   <div class="d-flex flex-column justify-self-center align-self-center w-50">
+      <h1>Update Profile</h1>
+      <div class="row mt-2 mb-5">
+         <div class="d-flex flex-column">
+            <form action="{% url 'account:update_profile_view' user.username %}"
+                  method="post"
+                  class="d-flex flex-column gap-2"
+                  enctype="multipart/form-data">
+               {% csrf_token %}
+               <label class="form-label mb-0 ms-1 mt-2">User Name:</label>
+               <input name="username"
+                      class="form-control"
+                      type="text"
+                      disabled
+                      minlength="3"
+                      required
+                      value="{{ request.user.username }}" />
+               <label class="form-label mb-0 ms-1 mt-2">First Name:</label>
+               <input name="first_name"
+                      class="form-control"
+                      type="text"
+                      minlength="3"
+                      required
+                      value="{{ request.user.first_name }}" />
+               <label class="form-label mb-0 ms-1 mt-2">Last Name</label>
+               <input name="last_name"
+                      class="form-control"
+                      type="text"
+                      minlength="3"
+                      required
+                      value="{{ request.user.last_name }}" />
+               <label class="form-label mb-0 ms-1 mt-2">Email:</label>
+               <input name="email"
+                      class="form-control"
+                      type="email"
+                      minlength="3"
+                      disabled
+                      required
+                      value="{{ user.email }}" />
+               <label class="form-label mb-0 ms-1 mt-2">About yourself:</label>
+               <textarea name="about" class="form-control">{{ user.profile.about }}</textarea>
+               <div class="form-outline mb-4">
+                  <label class="form-label mb-0 ms-1 mt-2">Nationality:</label>
+                  <select id="nationality" name="nationality" class="form-select">
+                     {% for val,n in nationality %}
+                        <option {% if val == user.profile.nationality %}selected{% endif %}
+                                value="{{ val }}">{{ val }}</option>
+                     {% endfor %}
+                  </select>
+                  <label class="form-label mb-0 ms-1 mt-2">Upload Avatar:</label>
+                  <img src="{{ user.profile.avatar.url }}"
+                       height="110px"
+                       width="100px"
+                       class="ms-3"
+                       alt="">
+                  <input type="file" class="form-control" name="avatar" />
+               </div>
+               <input type="submit" class="btn btn-dark mt-3" value="Sign Up" />
+            </form>
+         </div>
+      </div>
+   </div>
+{% endblock content %}

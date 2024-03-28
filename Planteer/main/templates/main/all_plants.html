@@ -1,0 +1,144 @@
+{# djlint:off H023 #}
+{% extends "main/base.html" %}
+{% load tags %}
+{% block title %}
+   All Plants
+{% endblock title %}
+{% block content %}
+   <div class="head">
+      <div class="d-flex justify-content-between align-items-center">
+         <h2>
+            {% if "category" in request.GET %}
+               {{ request.GET.category }}
+            {% else %}
+               All
+            {% endif %}
+            Plants ({{ pages.count }})
+         </h2>
+         <div>
+            <form action="{% url "main:all_plants_view" %}" class="d-flex gap-2">
+               <input name="name"
+                      type="search"
+                      class="form-control"
+                      placeholder="Search for plant name.."
+                      aria-label="Search"
+                      value="{{ request.GET.name }}" />
+               <input type="submit" value="search" class="btn btn-dark" />
+            </form>
+         </div>
+         <div class="d-flex gap-5 align-items-center">
+            <form action="{% url "main:all_plants_view" %}" method="get">
+               <div class="is-edible d-flex gap-3">
+                  <a name="edible"
+                     class="btn z-index-5"
+                     href="{% if request.GET.keys|length > 0 %}?name={{ request.GET.name }}&edible=True&category={{ request.GET.category }}{% else %}?edible=True{% endif %}">
+                     <div class="form-check">
+                        <input class="form-check-input"
+                               type="radio"
+                               name="is_edible"
+                               value="True"
+                               id="edible"
+                               {% if request.GET.edible %}checked{% endif %}>
+                        <label class="form-check-label" for="edible">Edible</label>
+                     </div>
+                  </a>
+                  <a name="edible"
+                     class="btn w-auto"
+                     href="{% if request.GET.keys|length > 0 %}?name={{ request.GET.name }}&edible=False&category={{ request.GET.category }}{% else %}?edible=False{% endif %}">
+                     <div class="form-check">
+                        <input class="form-check-input"
+                               type="radio"
+                               name="is_edible"
+                               value="False"
+                               id="inedible"
+                               {% if request.GET.edible == "False" %}checked{% endif %}>
+                        <label class="form-check-label" for="inedible">Not Edible</label>
+                     </div>
+                  </a>
+               </div>
+            </form>
+            <form action="{% url "main:all_plants_view" %}" method="get">
+               <div class="category">
+                  <!-- dropbox -->
+                  <div class="dropdown">
+                     <button class="btn btn-dark w-100 dropdown-toggle"
+                             type="button"
+                             data-bs-toggle="dropdown"
+                             aria-expanded="false">
+                        {% if active_cat == "All" %}
+                           ALL
+                        {% else %}
+                           {{ active_cat }}
+                        {% endif %}
+                     </button>
+                     <ul class="dropdown-menu">
+                        <li>
+                           <a name="all"
+                              href="{% url 'main:all_plants_view' %}"
+                              class="dropdown-item">ALL</a>
+                        </li>
+                        {% for val, key in categories %}
+                           <li>
+                              <a name="{{ val }}"
+                                 href="{% if request.GET.keys|length > 0 %}?name={{ request.GET.name }}&category={{ val }}{% else %}?category={{ val }}{% endif %}"
+                                 class="dropdown-item text-decoration-none">{{ val }}</a>
+                           </li>
+                        {% endfor %}
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+   <div class="cards">
+      {% if posts.count == 0 %}
+         <h2>No posts Found</h2>
+      {% else %}
+         {% for plant in plants %}
+            <a href="{% url "main:plant_detail_view" plant.id %}">
+               <div class="card card-plant">
+                  <div class="plant-img">
+                     <img src="{{ plant.image.url }}"
+                          class="card-img-top"
+                          height="100%"
+                          width="100%"
+                          alt="{{ plant.image.name }}">
+                  </div>
+                  <div class="card-body">
+                     <div class="plant-info">
+                        <h4>{{ plant.name }}</h4>
+                        <p class="card-text fw-semibold">{{ plant.about }}</p>
+                        <h5>{{ plant.category }}</h5>
+                     </div>
+                  </div>
+               </div>
+            </a>
+         {% endfor %}
+      {% endif %}
+   </div>
+   <nav aria-label="Page navigation">
+      <ul class="pagination d-flex justify-content-center">
+         <li class="page-item">
+            <a class="page-link bg-gray"
+               href="?page={% if request.GET.page > "1" %}{{ request.GET.page|add:"-1" }}{% else %}1{% endif %}{% if 'category' or 'edible' in request.GET %}&cat={{ request.GET.category }}&edible={{ request.GET.edible }}{% endif %}"
+               aria-label="Previous">
+               <span aria-hidden="true">&laquo;</span>
+            </a>
+         </li>
+         {% for page in 1|range:pages.num_pages %}
+            <li class="page-item bg-gray">
+               <a class="page-link bg-gray"
+                  href="?page={{ page }}{% if 'category' or 'edible' in request.GET %}&cat={{ request.GET.category }}&edible={{ request.GET.edible }}{% endif %}">{{ page }}</a>
+            </li>
+         {% endfor %}
+         <li class="page-item ">
+            <a class="page-link bg-gray"
+               href="?page={% if request.GET.page < pages.num_pages %}{{ request.GET.page|add:"1" }}{% else %}{{ pages.num_pages }}{% endif %}{% if 'category' or 'edible' in request.GET %}&cat={{ request.GET.category }}&edible={{ request.GET.edible }}{% endif %}"
+               aria-label="Next">
+               <span aria-hidden="true">&raquo;</span>
+            </a>
+         </li>
+      </ul>
+   </nav>
+{% endblock content %}
