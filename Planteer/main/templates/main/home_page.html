@@ -54,10 +54,14 @@
     <div class="col d-flex flex-column gap-3">
 
         {% for comment in comments %}
-            <div class="d-flex flex-column gap-2 border border-1 p-3 rounded-3">
-                <h4 class="text-success">{{ comment.full_name }}</h4>
-                <hr>
-                <p>{{ comment.content }}</p>
+            <div class="d-flex flex-column gap-2 border border-1 p-3 rounded-3">                
+              <h4 class="text-success text-decoration-none">{{ comment.full_name }}</h4>
+              <a href="{% url 'main:plant_detail' comment.plant.id %}#comment" class="text-warning text-decoration-none m-1"> ➢ {{ comment.plant.name }}</a>
+
+              <hr>
+              <p>{{ comment.content }}</p>
+
+
             </div>
         {% endfor %}
 
