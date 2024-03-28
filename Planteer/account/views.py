@@ -23,9 +23,6 @@ def sign_up_view(request: HttpRequest):
             new_user.save()
             profile = Profile(user=new_user,
                               about=request.POST.get("about"),
-                              instagram_link=request.POST.get(
-                                  "instagram_link"),
-                              linked_link=request.POST.get("linked_link"),
                               avatar=request.FILES.get(
                                   "avatar", Profile.avatar.field.get_default()),
                               nationality=request.POST.get("nationality"))
