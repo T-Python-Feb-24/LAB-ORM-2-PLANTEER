@@ -21,7 +21,9 @@
                 <div class="col"></div>
                 <div style="display: flex; justify-content: space-between;">
                     <h1>PLANTS</h1>
-                    <a class="btn btn-dark" href="{% url 'main:add_plant' %}" style="margin: 5px; padding: 10px; color: aliceblue; background: linear-gradient(#082211, #05160b, #020b04);">Add Plant</a>
+                    {% if request.user.is_staff %}
+                        <a class="btn btn-dark" href="{% url 'main:add_plant' %}" style="margin: 5px; padding: 10px; color: aliceblue; background: linear-gradient(#082211, #05160b, #020b04);">Add Plant</a>
+                    {% endif %}
                 </div>
                 <hr>
             </div>

@@ -49,7 +49,9 @@
 
             <div class="row mt-4 ">
                 <div class="col d-flex justify-content-center">
-                    <a href="{% url 'main:message' %}" class="btn btn-outline-dark">Go to Messages...</a>
+                    {% if request.user.is_superuser %}
+                        <a href="{% url 'main:message' %}" class="btn btn-outline-dark">Go to Messages...</a>
+                    {% endif %}
                 </div>
             </div>        
         </div>

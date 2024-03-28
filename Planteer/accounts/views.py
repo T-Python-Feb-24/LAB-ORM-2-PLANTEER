@@ -1,15 +1,14 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 
-#import User Model
 from django.contrib.auth.models import User
-#import login, logout, authenticate
+
 from django.contrib.auth import authenticate, login, logout
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 
 from main.models import Comment
+from .models import Profile
 
-# Create your views here.
 
 def register_user_view(request:HttpRequest):
     message = None
@@ -21,18 +20,17 @@ def register_user_view(request:HttpRequest):
             #     msg = "Username is already exist. Please choose another one."
             #     return render(request, "accounts/register.html", {"message" :msg})
             
-            #create new user
-            new_user = User.objects.create_user(
-                username=request.POST["username"], 
-                email=request.POST["email"], 
-                first_name=request.POST["first_name"], 
-                last_name=request.POST["last_name"], 
-                password=request.POST["password"]
-                )
-            new_user.save()
+            with transaction.atomic():
+                #create new user
+                new_user = User.objects.create_user(username=request.POST["username"], email=request.POST["email"], first_name=request.POST["first_name"], last_name=request.POST["last_name"], password=request.POST["password"])
+                new_user.save()
 
-            #redirect to login page
-            return redirect("accounts:login")
+                #create profile for user
+                profile = Profile(user=new_user, about=request.POST["about"], instagram_link=request.POST["instagram_link"], linked_link=request.POST["linked_link"], avatar=request.FILES.get("avatar", Profile.avatar.field.get_default()))
+                profile.save()
+
+                #redirect to login page
+                return redirect("accounts:login")
         except IntegrityError as e:
             message = "Username is already exist. Please choose another one."
             print(e)

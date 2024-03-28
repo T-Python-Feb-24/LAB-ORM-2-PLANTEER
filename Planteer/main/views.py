@@ -20,6 +20,10 @@ def home(request:HttpRequest):
     return render(request,'main/home.html', {'plants' : plants, "comments": comments})
 
 def add_plant(request:HttpRequest):
+
+    if not request.user.is_staff:
+        return render(request, "no_permission.html")
+
     if request.method == 'POST':
         try:
             new_plant = Plant(
@@ -72,6 +76,10 @@ def plant_detail(request:HttpRequest, plant_id):
         return render(request, "main/plant_detail.html", {"plant" : plant, "related": related, "comments": comments, "is_favored" : is_favored})
 
 def update_plant(request:HttpRequest, plant_id):
+        
+        if not request.user.is_staff:
+            return render(request, "no_permission.html")
+
         try:
             plant = Plant.objects.get(pk=plant_id)
         except Plant.DoesNotExist:
@@ -95,6 +103,10 @@ def update_plant(request:HttpRequest, plant_id):
         return render(request, 'main/update_plant.html', {"plant" : plant, 'category' : Plant.Categories.choices})
 
 def delete_plant(request:HttpRequest, plant_id):
+
+    if not request.user.is_staff:
+        return render(request, "no_permission.html")
+
     try:
         plant = Plant.objects.get(pk=plant_id)
     except Plant.DoesNotExist:
@@ -141,6 +153,10 @@ def contact(request:HttpRequest):
         return render(request, 'main/contact.html')
 
 def messages(request:HttpRequest):
+
+    if not request.user.is_superuser:
+        return render(request, "no_permission.html")
+
     message = Contact.objects.all()[0:3]
 
     return render(request,'main/messages.html', {'message' : message})

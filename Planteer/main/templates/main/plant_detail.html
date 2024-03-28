@@ -16,15 +16,15 @@
             </div>
 
             <div class="row">
-                <div class="d-flex gap-2 justify-content-center">
-                    <a href="{% url 'favorites:add_remove_favorites_view' plant.id %}" class="text-decoration-none"><i class="bi {% if is_favored %} bi-suit-heart-fill {% else %} bi-suit-heart {% endif %} favorite"></i></a>
-                    <a href="{% url 'main:update_plant' plant.id %}" class="btn btn-primary"><span class="material-symbols-rounded">
-                        edit
-                        </span></a>
-                    <a href="{% url 'main:delete_plant' plant.id %}" class="btn btn-danger"><span class="material-symbols-rounded">
-                        delete
-                        </span></a>
-
+                <div class="d-flex gap-2">
+                    <a href="{% url 'favorites:add_remove_favorites_view' plant.id %}" {% if not request.user.is_authenticated %} data-bs-toggle="modal" data-bs-target="#favoriteModal" {% endif %} class="text-decoration-none"><i class="bi {% if is_favored %} bi-suit-heart-fill {% else %} bi-suit-heart {% endif %} favorite"></i></a>
+                    <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Bottom popover">
+                        Popover on bottom
+                      </button>
+                    {% if request.user.is_staff %}
+                        <a href="{% url 'main:update_plant' plant.id %}" class="btn btn-primary"><span class="material-symbols-rounded">edit</span></a>
+                        <a href="{% url 'main:delete_plant' plant.id %}" class="btn btn-danger"><span class="material-symbols-rounded">delete</span></a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -92,4 +92,24 @@
         </div> <!--Comment Row-->
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="favoriteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add Favorite</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Please <a href="{% url 'accounts:login' %}">Login</a> to add a Favorite
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal">OK</button>
+
+        </div>
+      </div>
+    </div>
+</div>
+
 {% endblock %}
