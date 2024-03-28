@@ -33,6 +33,7 @@ def plant_detail_view(request:HttpRequest, plant_id):
 
     try:
         plant = Plant.objects.get(pk=plant_id)
+        related_plants = Plant.objects.filter(category=plant.category).exclude(pk=plant_id)[:3]
         comments = Comment.objects.filter(plant=plant)
     except Plant.DoesNotExist:
             return render(request,"main/not_found.html")
@@ -40,7 +41,7 @@ def plant_detail_view(request:HttpRequest, plant_id):
         print(e)
 
 
-    return render(request, "main/detail.html", {"plant" : plant, "comments" : comments})
+    return render(request, "main/detail.html", {"plant" : plant, "related_plants" : related_plants ,"comments" : comments})
 
 def update_plant_view(request:HttpRequest, plant_id):
     if not request.user.is_staff:
