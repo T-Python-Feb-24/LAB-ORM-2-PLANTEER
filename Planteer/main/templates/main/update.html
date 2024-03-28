@@ -1,0 +1,43 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="row">
+        <h1>Update plant</h1>
+        <div class="col">
+
+            <form action="{% url 'main:update_plant_view' plant.id %}" method="post" class="d-flex flex-column gap-2">
+                {% csrf_token %}
+
+                <input name="title" type="text" placeholder="Title" class="form-control" required minlength="5" value="{{ plant.title }}" />
+                <textarea name="content" class="form-control" required minlength="20">{{plant.content}}</textarea>
+
+                <div class="form-check form-switch">
+                    <input name="is_edible" value="True" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" {% if plant.is_edible %} checked {% endif %}>
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Is Edible</label>
+                </div>
+
+                <select class="form-select" aria-label="Default select example">
+                    {% for val, cat in category%}
+                    <option value="{{ val }}">{{ cat }}</option>
+                    {% endfor %}
+                  </select>
+
+                <h5>Choose Image:</h5>
+                <input name="poster"  type="file"  accept="image/*" class="form-control" />
+                
+
+                <select name="category" class="form-select" required>
+                    {% for val, cat in categories %}
+                        <option value="{{val}}" {% if plant.category == val %} selected {% endif %}>{{cat}}</option>
+                    {% endfor %}
+                </select>
+
+
+                <input type="submit" class="btn btn-primary" value="Update" />
+            </form>
+
+        </div>
+
+
+    </div>
+{% endblock %}

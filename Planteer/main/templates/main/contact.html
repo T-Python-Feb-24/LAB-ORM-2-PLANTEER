@@ -1,0 +1,32 @@
+{% extends 'main/base.html' %}
+
+{% block content %} 
+<h1>Contact us</h1>
+{% if request.user.is_superuser %}
+<h2><a href="{% url 'main:message_view' %}" class="text-decoration-none">Guests messages</a></h2>
+{% endif %}
+<div class="row align-items-center">
+    <div class="col">
+
+        <form action="{% url 'main:contact_view' %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+            {% csrf_token %}
+            <div class="d-flex">
+                <input name="first_name" type="text" placeholder="First name" class="form-control"/>
+                <input name="last_name" type="text" placeholder="Last name" class="form-control"/>
+            </div>
+            <input name="email" type="text" placeholder="Email" class="form-control"/>
+            <textarea name="message" class="form-control" required></textarea>
+
+
+            <input type="submit" class="btn btn-primary" value="submit" />
+        </form>
+        
+    </div>
+
+    <div class="col">
+        <img src="/static/images/planteer.jpg" class="w-100">
+    </div>
+
+
+</div>
+{% endblock %}

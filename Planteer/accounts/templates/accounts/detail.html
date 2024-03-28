@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+<div class="row">
+        
+    <div class="col">
+        <div class="card-container">
+
+            <div class="upper-container">
+              <div class="image-container">
+                <img src=" {{ user.profile.avatar.url }}" />
+              </div>
+            </div>
+        
+            <div class="lower-container">
+              <div>
+                <h3>{{ user.username }}</h3>
+                <h4>{{user.first_name}} - {{ user.last_name }}</h4>
+              </div>
+              <div>
+                <h6>{{user.email}}</h6>
+                <p>{{ user.profile.about }}</p>
+              </div>
+              <div>
+                 <a href="{% url 'accounts:update_profile_view' %}" class="btn">Edit profile</a>
+              </div>
+            </div>
+        
+          </div>
+    </div>
+
+</div>
+{% endblock %}

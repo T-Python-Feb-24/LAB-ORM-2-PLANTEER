@@ -1,0 +1,76 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="row">
+        
+        <div class="col">
+            <div class="d-flex flex-column gap-2">
+                <h1>{{ plant.title  }}</h1>
+                <img src="{{ plant.poster.url }}"  class="w-50 rounded-4"/>
+                <div class="d-flex justify-content-between">
+                    <h6>{{plant.published_at}}</h6>
+                    {% if request.user.is_staff %}
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'main:update_plant_view' plant.id %}" class="btn btn-primary">Update</a>
+                        <a href="{% url 'main:delete_plant_view' plant.id %}" class="btn btn-danger">Delete</a>
+                    </div>
+                    {% endif %}
+                    
+                </div>
+                <h6>Is Edible: {{plant.is_edible}}</h6>
+                <p>{{ plant.content }}</p>
+            </div>
+
+        </div>
+
+    </div>
+    
+    <hr/>
+
+    <h2>Comments:</h2>
+
+    <div class="row">
+        <div class="col d-flex flex-column gap-2">
+                {% for comment in comments %}
+                    <div class="d-flex flex-column gap-2 border border-1 p-3 rounded-3">
+                        <a href="{% url 'accounts:user_detail_view' comment.user.id %} " class="text-decoration-none"><h4>{{ comment.user.username }}</h4></a>
+                        <p>{{ comment.content }}</p>
+                    </div>
+                {% endfor %}
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col">
+            {% if request.user.is_authenticated %}
+            <form action="{% url 'main:add_comment_view' plant.id %}" method="post" class="d-flex flex-column gap-2">
+                {% csrf_token %}
+                <textarea name="content" class="form-control"></textarea>
+
+                <input type="submit" value="Add Comment" class="btn btn-primary"/>
+            </form>
+            {% else %}
+            <div class="alert alert-warning">You must <a href="{% url 'accounts:login_user_view' %}">Sign in</a> to comment.</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <hr/>
+    <h2>Related Plants</h2>
+<div class="row">
+  {% for related_plant in related_plants %}
+  <div class="col-md-4">
+    <div class="card">
+      <img src="{{ related_plant.poster.url }}" class="card-img-top" alt="{{ related_plant.title }}">
+      <div class="card-body">
+        <h5 class="card-title-all">{{ related_plant.title }}</h5>
+
+        <a href="{% url 'main:plant_detail_view' related_plant.id %}" class="btn btn-primary">View details</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+    </div>
+{% endblock %}

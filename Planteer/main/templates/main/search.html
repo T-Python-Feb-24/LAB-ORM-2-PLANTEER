@@ -1,0 +1,53 @@
+{% extends 'main/base.html' %}
+
+
+{% block content %}
+
+    <div class="row g-4">
+
+        <div class="d-flex flex-column gap-2">
+            
+            <h1>Search</h1>
+            <form action="{% url 'main:plant_search_view' %}"  method="get" class="d-flex gap-2">
+                <input type="search" class="form-control" name="search" value="{{request.GET.search}}"/>
+                <select class="form-control" name="category" value="{{request.GET.category}}">
+                    <option value="">All</option>
+                    <option value="Tree">Tree</option>
+                    <option value="Fruit">Fruit</option>
+                    <option value="Vegetables">Vegetables</option>
+                </select>
+                <select class="form-control" name="Is Edible" value="{{request.GET.is_edible}}">
+                    <option value="">Any</option>
+                    <option value="True">Yes</option>
+                    <option value="False">No</option>
+                </select>
+                <input type="submit" value="search" class="btn btn-primary" />
+            </form> 
+
+            <h2>Search results for {{ request.GET.search }} ({{ plants.count }}) </h2>
+        </div>
+
+    </div>
+
+    <div class="row mt-2 g-5">
+
+        {% if plants.count == 0 %}
+            <h3>No results for your search '{{request.GET.search}}' </h3>
+        {% endif %}
+
+        {% for plant in plants %}
+            <div class="col-4">
+                <div class="d-flex flex-column gap-2 border border-1 shadow p-3 rounded-4 h-100">
+                    <img src="{{ plant.poster.url }}"  class="w-100 rounded-4"/>
+                    <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{plant.category}} ">{{ plant.category }}</h6>
+                    <h6 class="text-muted">{{ plant.published_at }}</h6>
+                    <h2><a href="{% url 'main:plant_detail_view' plant.id  %}" class="text-decoration-none">{{plant.title}}</a></h2>
+                    
+                </div>
+            </div>
+            
+        {% endfor %}
+
+    </div>
+
+{% endblock %}
