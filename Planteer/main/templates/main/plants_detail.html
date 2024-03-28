@@ -1,0 +1,96 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="row">
+        
+        <div class="col md-6">
+        <div class="d-flex flex-column gap-2">
+        <img src="{{ plant.image.url }}"  class="w-100 rounded-4"/>
+        <div class="d-flex justify-left">
+        {% if request.user.is_staff %}
+            <a href="{% url 'main:update_page' plant.id %}" class="btn btn-primary">update</a>
+            <a href="{% url 'main:delete_view' plant.id %}" class="btn btn-danger">Delete</a>
+             {% endif %}
+        </div>
+        </div>
+        </div>
+    
+
+
+
+    <div class="col md-6">
+    <div class="d-flex flex-column gap-2">
+    <h1>{{ plant.name }}</h1>
+    <h5 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{plant.category}}">{{ plant.category }}</h5>
+    <p> {{ plant.about }}</p>
+    <h5> Is edible :{% if plant.is_edible == False %} No {% else %} Yes {% endif %}</h5>
+
+    <h5>Used For:</h5>
+    <p> {{ plant.used_for}}</p>
+    
+     
+    </div>
+    </div>
+</div>
+
+<br>
+<hr>
+<br>
+{% if plants.count != 0%}
+ <h1>Read More</h1>
+{% endif %}
+    <div class="row mt-2 g-5">
+         {% for plant in plants %}
+        <div class="col-4">
+            <div class=" card d-flex flex-column gap-2 border border-1 p-3 mt-3 shadow rounded-4 h-100">
+                <img class="pic" src="{{ plant.image.url }}"  class="w-100  h-80 object-fit-cover rounded-4"/>
+                <h2><a href="{% url 'main:detail_page' plant.id  %}" class="text-decoration-none">{{plant.name}}</a></h2>
+                <p>{{ plant.category }}</p>
+                <p> {{ plant.created_at }}</p>
+            </div> 
+        </div>    
+     
+       {% endfor %}
+       
+
+    </div>
+<br> <br>
+<hr>  
+<h2>Comments: ({{comments.count}}) </h2>
+
+    <div class="row">
+
+     <div class="col d-flex flex-column gap-2">    
+      {% for comment in comments %}
+        <div class=" comment d-flex flex-column gap-2 border border-1 p-3 rounded-3">
+        <a href="{% url 'accounts:user_info_view' comment.user.id %}" class="text-decoration-none"><h4>{{ comment.user.username }}</h4></a>
+        <p>{{ comment.content }}</p>
+        <p>{{ comment.created_at }}</p>
+        </div>
+        {% endfor %}
+
+     </div> 
+     </div>            
+
+
+
+
+<div class="row mt-4">
+<div class="col">
+
+    {% if request.user.is_authenticated %}
+
+ <form action="{% url 'main:comments_view' plant.id %}" method="post" class="d-flex flex-column gap-2">
+    {% csrf_token %}
+    <textarea name="content"  placeholder="text your comment here"  class="form-control" required></textarea>
+
+    <input type="submit" value="Add Comment" class="btn btn-primary"/>
+    </form>
+    {% else %}
+         <div class="alert alert-warning">You must <a href="{% url 'accounts:login_user_view' %}">Sign in</a> to comment.</div>
+    {% endif %}
+        
+    </div>
+    </div>
+            
+{% endblock %}
