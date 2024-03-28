@@ -1,13 +1,20 @@
 from django.shortcuts import render, redirect
-from django.http import HttpRequest, HttpResponse
-#import User Model
+from django.http import HttpRequest, HttpResponse, HttpResponseForbidden
 from django.contrib.auth.models import User
-#import login, logout, authenticate
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
+from django.shortcuts import get_object_or_404
+from .models import Profile
+from django.contrib.auth.decorators import login_required
+
 
 def user_detail(request, username):
-    user = User.objects.get(username=username)
+    try:
+        user = User.objects.get(username=username)
+    except:
+        return render(request, "main/no_access.html")
+
+        
     return render(request, 'user_info/user_detail.html', {'user': user})
 
 def register_user(request: HttpRequest):
@@ -55,3 +62,19 @@ def user_logout(request:HttpRequest):
         logout(request)
     
     return redirect('user_info:user_login')
+
+@login_required
+def profile_update(request):
+    profile = get_object_or_404(Profile, user=request.user)
+
+    if request.method == 'POST':
+        if request.user == profile.user:
+            profile.about = request.POST.get('about', profile.about)
+            if request.FILES.get('avatar'):
+                profile.avatar = request.FILES['avatar']
+            profile.save()
+            return redirect('user_info:user_detail', username=request.user.username)
+        else:
+            return HttpResponseForbidden("You are not authorized to perform this action.")
+
+    return render(request, 'user_info/profile_update.html', {'profile': profile})

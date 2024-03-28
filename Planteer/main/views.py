@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.http import Http404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
+from .models import ContactMessage
 
 def home(request):
     plants = Plant.objects.filter(is_edible=True).order_by('-create_at')
@@ -23,12 +24,15 @@ def home(request):
 
     context = {
         'plants': paginated_plants,
-        'latest_comments': latest_comments, # Include latest comments
+        'latest_comments': latest_comments, 
     }
     return render(request, 'main/home.html', context)
 
 
 def add_plant(request):
+
+    if not request.user.is_staff:
+        return render(request, "main/no_permission.html")
 
     CATEGORY_CHOICES = Plant.CATEGORY_CHOICES  
 
@@ -67,6 +71,9 @@ def plant_detail(request, pk):
     return render(request, 'main/plant_detail.html', {'plant': plant, "comments": comments})
 
 def plant_update(request: HttpRequest, pk):
+
+    if not request.user.is_staff:
+      return render(request, "main/no_permission.html")
     plant = get_object_or_404(Plant, pk=pk)
 
     if request.method == 'POST':
@@ -89,6 +96,11 @@ def plant_update(request: HttpRequest, pk):
     return render(request, 'main/update_plant.html', {'plant': plant})
 
 def plant_delete(request, pk):
+
+    if not request.user.is_staff:
+        return render(request, "main/no_access.html")  
+    
+      
     plant = get_object_or_404(Plant, pk=pk)
     if request.method == 'POST':
         plant.delete()
@@ -133,16 +145,49 @@ def all_plants(request):
     return render(request, 'main/all_plants.html', context)
 
 def contact_us(request):
+    if request.method == "POST":
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        
+        
+        return redirect('contact_us_messages')
 
-    return render( request, 'main/contact_us.html')
+    return render(request, 'main/contact_us.html')
+
+def save_contact_message(request):
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        
+        ContactMessage.objects.create(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            message=message
+        )
+        return redirect('home')
+    else:
+        pass
+
+def contact_us_messages(request):
+
+    if not request.user.is_superuser:
+        return render(request, "main/no_access.html")  
+
+    messages = ContactMessage.objects.all()
+    return render(request, 'main/contact_us_messages.html', {'messages': messages})
 
 def add_comment(request, plant_id):
     if request.method == "POST":
         try:
             plant_object = get_object_or_404(Plant, pk=plant_id)
-            full_name = request.POST.get('full_name')
             content = request.POST.get('content')
-            new_comment = Comment.objects.create(plant=plant_object, full_name=full_name, content=content)
+            user = request.user  
+            new_comment = Comment.objects.create(plant=plant_object, user=user, content=content)
             return redirect('plant_detail', pk=plant_id)
         except KeyError:
             pass

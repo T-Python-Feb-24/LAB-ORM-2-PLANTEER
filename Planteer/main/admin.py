@@ -14,4 +14,12 @@ admin
 username: abdulah
 eamil: A@gmail.com
 password: A123456 
+------------------
+Manger:
+UN: Manger
+pass: Manger
+------------------
+staff:
+UN: Staff
+pass: Staff123
 '''

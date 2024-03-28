@@ -1,0 +1,25 @@
+{% extends 'main/S1.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h1>Update Profile</h1>
+    {% if user.is_authenticated and user == profile.user %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="about" class="form-label">About</label>
+            <textarea class="form-control" id="about" name="about" rows="3">{{ profile.about }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="avatar" class="form-label">Avatar</label>
+            <input class="form-control" type="file" id="avatar" name="avatar">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    {% else %}
+    <p>You are not authorized to update this profile.</p>
+    {% endif %}
+</div>
+{% endblock %}
+

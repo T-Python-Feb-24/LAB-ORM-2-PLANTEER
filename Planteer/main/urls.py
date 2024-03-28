@@ -13,5 +13,7 @@ urlpatterns = [
     path('plant/<int:pk>/delete/', views.plant_delete, name='plant_delete'),
     path('all-plants/', views.all_plants, name='all_plants'),
     path('contact_us/', views.contact_us, name='contact_us'),
+    path('contact_us_messages/', views.contact_us_messages, name='contact_us_messages'),
+    path('save_contact_message/', views.save_contact_message, name='save_contact_message'),
     path("comments/add/<int:plant_id>/", views.add_comment, name="add_comment")
 ]

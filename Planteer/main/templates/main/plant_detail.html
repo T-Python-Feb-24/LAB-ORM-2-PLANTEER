@@ -12,14 +12,32 @@
             </div>
         </div>
     </div>
-
     <div class="container mt-3">
+        {% if request.user.is_staff %}
         <a href="{% url 'plant_update' plant.pk %}" class="btn btn-primary">Update</a>
         <form method="post" action="{% url 'plant_delete' plant.pk %}" class="d-inline">
             {% csrf_token %}
             <input type="submit" value="Delete" class="btn btn-danger">
         </form>
+        {% endif%}
         <a href="{% url 'all_plants' %}" class="btn btn-secondary">Back to Plants</a>
+    </div>
+
+    <div class="container mt-3">
+        {% if request.user.is_authenticated %}
+            <h2>Add Comment</h2>
+            <form action="{% url 'add_comment' plant.pk %}" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="content" class="form-label">Comment</label>
+                    <textarea name="content" id="content" class="form-control" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            
+        {% else %}
+            <p>Please <a href="{% url 'user_info:user_login' %}">log in</a> to leave a comment.</p>
+        {% endif %}
     </div>
 
     <hr>
@@ -31,7 +49,7 @@
                     {% for comment in comments %}
                         <div class="card mb-3">
                             <div class="card-body">
-                                <h5 class="card-title"><b>{{ comment.full_name }}</b></h5>
+                                <h5 class="card-title"><b>{{ comment.user.username }}</b></h5>
                                 <p class="card-text">{{ comment.content }}</p>
                             </div>
                         </div>
@@ -42,25 +60,8 @@
             </div>
         </div>
     </div>
-    
+
     <div class="container mt-3">
-        <div class="row">
-            <div class="col">
-                <h2>Add Comment</h2>
-                <form action="{% url 'add_comment' plant.pk %}" method="post">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="full_name" class="form-label">Full Name</label>
-                        <input type="text" name="full_name" id="full_name" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="content" class="form-label">Comment</label>
-                        <textarea name="content" id="content" class="form-control" rows="3" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
-        </div>
+        <a href="{% url 'all_plants' %}" class="btn btn-secondary">Back to Plants</a>
     </div>
-    
 {% endblock %}
