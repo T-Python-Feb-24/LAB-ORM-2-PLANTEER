@@ -35,7 +35,7 @@
                 <div class="col d-flex flex-column gap-2">
 
                     {% for comment in comments %}
-                        <div class="d-flex flex-column gap-2 border border-1 p-3 rounded-3">
+                        <div class="d-flex flex-column gap-2 border border-1 p-3 rounded-3" id="comments">
                             <a href="{% url 'accounts:profile' comment.user.username %}" class="text-decoration-none"><h4>{{ comment.user.username }}</h4></a>
                             <p>{{ comment.content }}</p>
                         </div>

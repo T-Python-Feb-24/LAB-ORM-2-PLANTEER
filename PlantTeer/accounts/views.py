@@ -81,6 +81,6 @@ def update_profile(request:HttpRequest):
             print(e)
     
 
-    return render(request,"accounts/")
+    return render(request,"main:not_found.html")
 
     

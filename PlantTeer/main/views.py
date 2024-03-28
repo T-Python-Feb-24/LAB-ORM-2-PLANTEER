@@ -51,6 +51,9 @@ def plants_search(requset:HttpRequest):
 
 
 def add_plants(requset:HttpRequest):
+    if not requset.user.is_staff:
+     return render(requset,"main:not_found.html")
+ 
     if requset.method== 'POST':
         try:
             new_plants =Plant(

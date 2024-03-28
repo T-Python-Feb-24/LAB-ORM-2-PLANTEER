@@ -28,12 +28,12 @@
                         </div>
                     </div>
 
-                <h2>{{profile.username}} Comments</h2>
+                <h2>{{user.username}} Comments</h2>
                 <div class="d-flex flex-column gap-4">
-                    {% for comment in profile.comment_set.all %}
+                    {% for comment in user.comment_set.all %}
                         <div class="d-flex flex-column gap-1 p-3 shadow">
                             <h5>{{comment.user.username}}</h5>
-                            <a href="{% url 'main:post_detail_view' comment.post.id %}#commentsDiv"><h6 class="text-muted">{{comment.plant.name}}</h6></a>
+                            <a href="{% url 'main:detail_plants' comment.plant.id %}#comments"><h6 class="text-muted">{{comment.plant.name}}</h6></a>
                             <p>{{comment.content }}</p>
                         </div>
                     {% endfor %}
