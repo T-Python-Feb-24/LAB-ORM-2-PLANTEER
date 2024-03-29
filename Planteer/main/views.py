@@ -1,6 +1,7 @@
 from django.shortcuts import render , redirect
 from django.http import HttpRequest, HttpResponse
 from.models import Plant , Comment
+from django.contrib.auth.models import User
 # Create your views here.
 
 #home page : 
@@ -45,6 +46,9 @@ def search_page(request :HttpRequest):
 # Add new plant page:
 def new_plant(request :HttpRequest):
     
+    if not (request.user.is_staff and request.user.has_perm('main.add_plant')):
+        return render(request,"main/no_permission.html")
+
     if request.method == "POST":
         plant = Plant(
             # request.POST : access form data submitted via POST requests 
@@ -63,6 +67,9 @@ def new_plant(request :HttpRequest):
 
 # Update plant page : 
 def update_plant(request :HttpRequest,plant_id):
+    
+    if not (request.user.is_staff and request.user.has_perm('main.change_plant')):
+        return render(request,"main/no_permission.html")
         
     plant = Plant.objects.get(pk=plant_id)   
     
@@ -84,11 +91,12 @@ def update_plant(request :HttpRequest,plant_id):
 # Delete Plant :
 def delete_plant(request :HttpRequest,plant_id):
     
+    if not (request.user.is_staff and request.user.has_perm('main.delete_plant')):
+        return render(request,"main/no_permission.html")
     plant = Plant.objects.get(pk=plant_id)
     plant.delete()
     
     return redirect("main:home_page")
-
 
 
 def plant_comment(request : HttpRequest , plant_id):
@@ -98,7 +106,7 @@ def plant_comment(request : HttpRequest , plant_id):
         plant = Plant.objects.get(pk=plant_id)
         comment = Comment(
             plant = plant,
-            full_name = request.POST["full_name"],
+            user = request.user,
             content = request.POST["content"]
             )
         comment.save()

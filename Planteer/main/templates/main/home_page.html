@@ -38,7 +38,7 @@
     <div class="col d-flex gap-3 px-3">
         {% for comment in comments %}
         <div class="d-flex flex-column border border-1 w-100 p-2">
-            <h4>{{comment.full_name}}</h4>
+            <a href=" {% url "accounts:user_profile" comment.user.username %}" class="text-decoration-none text-success"><h4>{{comment.user.first_name}}</h4></a>
             <a  href="{% url "main:plant_detail" comment.plant.id %}#c"><h6 >{{comment.plant.name}}</h6></a>
             <p>{{comment.content}}</p>
         </div>  

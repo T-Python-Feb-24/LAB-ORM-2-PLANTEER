@@ -11,6 +11,6 @@ admin.site.register(Plant,PlantAdmin)
 
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display=("full_name", "content" , "plant")
+    list_display=("user", "content" , "plant")
     
 admin.site.register(Comment,CommentAdmin)

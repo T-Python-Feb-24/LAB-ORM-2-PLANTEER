@@ -10,7 +10,7 @@
 <div class="row mt-5 justfy-content-end">
     <div class="col-3 m-4"></div>
 
-        <form action=" {% url "accounts:create_account" %} " method="POST" class="form-control d-flex flex-column gap-2">
+        <form action=" {% url "accounts:create_account" %} " method="POST" enctype="multipart/form-data" class="form-control d-flex flex-column gap-2">
             {% csrf_token %}
             <h2>Create an Account!</h2>
             <input type="text" name="username" placeholder="user name" required>
@@ -18,6 +18,11 @@
             <input type="text" name="last_name" placeholder="last name" required>
             <input type="email" name="email" placeholder="Email" required>
             <input type="password" name="password" placeholder="password"required>
+            <textarea name="about" placeholder="about" cols="30" rows="5    "></textarea>
+            <input type="url" name="twitter" placeholder="Twitter Link" >
+            <input type="url" name="linkedin" placeholder= "linkedIn Link">
+            <h6>Choose Your Avatar:</h6>
+            <input type="file" name="avatar" accept ="images/*">
             <input type="submit" value="Sing Up" class="btn btn-primary">
             {% if msg %}
             <h6 class="alert alert-danger">{{msg}}</h6>
