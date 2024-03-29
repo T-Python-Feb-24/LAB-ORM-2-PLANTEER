@@ -1,0 +1,36 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Register New User{% endblock %}
+
+{% block content %}
+
+    <h1>Register New User</h1>
+
+    {% if msg %}
+        <div class="alert alert-danger">{{msg}}</div>
+    {% endif %}
+    <div class="row">
+        <div class="col">
+            <form action="{% url 'account:register_user_view' %}" method="post" class="d-flex flex-column gap-2" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <input name="username" class="form-control" type="text" minlength="3" required placeholder="Username" />
+                <input name="first_name" class="form-control" type="text" minlength="3" required placeholder="First Name" />
+                <input name="last_name" class="form-control" type="text" minlength="3" required placeholder="Last Name" />
+                <input name="email" class="form-control" type="email" minlength="3" required placeholder="Email" />
+
+                <textarea name="about" class="form-control" placeholder="about yourself"></textarea>
+                <input name="instagram_link" class="form-control" type="text"   placeholder="@instagram link" />
+                <input name="linked_link" class="form-control" type="text"  placeholder="@linkedin link" />
+
+                <h4>Choose Avatar:</h4>
+                <input type="file" class="form-control" name="avatar" />
+
+                <input name="password" class="form-control" type="password" minlength="6" required placeholder="Password" />
+
+                <input type="submit" class="btn btn-primary" value="Sign Up" />
+
+            </form>
+        </div>
+    </div>
+{% endblock %}
