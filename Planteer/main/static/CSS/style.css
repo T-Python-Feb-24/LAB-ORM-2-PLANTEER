@@ -120,6 +120,12 @@ input[type="radio"] {
 
 /* Profile */
 .avatar {
+  height: 300px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.avatar2 {
   height: 200px;
   object-fit: cover;
 }

@@ -17,7 +17,7 @@
 
     .user-profile th,
     .user-profile td {
-          border: 1px solid #9b9b9b9c;
+          border: 1px solid #9b9b9b28;
           padding: 0.6rem;
           text-align: center;
         }
@@ -25,7 +25,7 @@
     .user-profile th {
         width: 150px;
         color: aliceblue;
-        background: linear-gradient(#0d3819, #0a2d0d, #08220b, #051606, #030b02);
+        background: linear-gradient(#134e1a, #0a2c0c, #030b02);
     }
 
     .user-profile td {
@@ -42,7 +42,7 @@
     <h1>{{ user_info.username }}'s Profile: </h1>
 
     <div class="col-3">
-        <img src="{{profile.avatar.url}}" width="200px" height="200px"/><br>
+        <img src="{{user_info.profile.avatar.url}}" class="avatar w-100"/><br>
         <!-- <h5>@{{user_info.username}}</h5> -->
     </div><!--col 1-->
 
@@ -58,7 +58,7 @@
             </tr>
             <tr>
               <th>About:</th>
-              <td>{{ profile.about }}</td>
+              <td>{{ user_info.profile.about }}</td>
             </tr>
             <tr>
               <th>Full Name:</th>
@@ -71,9 +71,9 @@
             <tr>
               <th>Social:</th>
               <td>
-                <div class="d-flex gap-2 justify-content-center">
-                  <a href="{{profile.instagram_link}}" target="_blank"><i class="bi bi-instagram"></i></a>
-                  <a href="{{profile.linked_link}}" target="_blank"><i class="bi bi-linkedin"></i></a>
+                <div class="d-flex gap-3 justify-content-center">
+                  <a href="{{user_info.profile.instagram_link}}" target="_blank"><i class="bi bi-instagram" style="color: #030b02; font-size: 20px;"></i></a>
+                  <a href="{{user_info.profile.linked_link}}" target="_blank"><i class="bi bi-linkedin" style="color: #030b02; font-size: 20px;"></i></a>
                 </div>
               </td>
             </tr>
@@ -85,7 +85,7 @@
 
   <div class="row">
     <div class="col d-flex justify-content-center">
-      <a class="btn btn-outline-success" style="width: 200px; padding: 10px;" href="#">Update Info<span class="material-symbols-rounded">edit</span></a>
+      <a class="btn btn-outline-success" style="width: 200px; padding: 10px;" href="{% url 'accounts:update_user' user_info.username %}">Update Info<span class="material-symbols-rounded">edit</span></a>
 
     </div>
   </div>

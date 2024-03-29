@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError, transaction
 
-from main.models import Comment
+# from main.models import Comment
 from .models import Profile
 
 
@@ -36,7 +36,7 @@ def register_user_view(request:HttpRequest):
             print(e)
 
         except Exception as e:
-            msg = "Something went wrong. Please try again."
+            message = "Something went wrong. Please try again."
             print(e)
 
     return render(request, "accounts/register.html", {"message": message})
@@ -84,3 +84,46 @@ def profile_view(request:HttpRequest, user_name):
         return render(request, "404.html")
     
     return render(request, "accounts/profile.html", {"user_info": user_info})
+
+def update_user(request: HttpRequest, user_name):
+    message = None
+
+    if not request.user.is_authenticated:
+        return redirect("accounts:login")
+    
+    try:
+        user_info = User.objects.get(username = user_name)
+    except:
+        return render(request, "404.html")
+    
+    if request.method == "POST":
+        
+        try:
+            with transaction.atomic():
+                user:User = request.user
+
+                user.first_name = request.POST["first_name"]
+                user.last_name = request.POST["last_name"]
+                user.email = request.POST["email"]
+
+                user.save()
+                
+                try:
+                    profile:Profile = user.profile
+                except Exception as e:
+                    profile = Profile(user=user)
+
+                profile.about = request.POST["about"]
+                profile.instagram_link = request.POST["instagram_link"]
+                profile.linked_link = request.POST["linked_link"]
+                profile.avatar = request.FILES.get("avatar", profile.avatar)
+
+                profile.save()
+
+                return redirect("accounts:profile", user_name=user.username)
+
+        except Exception as e:
+            message = f"Something went wrong {e}"
+            print(e)
+
+    return render(request, "accounts/update_profile.html", {"user_info": user_info ,"message" : message})
