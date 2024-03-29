@@ -12,7 +12,17 @@
 - Add search by `category`, and `is_edible` in the Plant Search Page **(Bonus)**
 
 
+## Using your previous LAB LAB-ORM-2-PLANTEER, do the following to :
 
+- Add the ability to post comments on plants (to achieve that, create a new model Comment)
+- Display the comments under each plant.
+- In your home page, add a section to show the latest comments generally on all plants (order them by - creation descending  limit to the latest 5 comments)
+
+## LAB for Django ORM One To One, simple permissions: Using your previous LAB LAB-ORM-2-PLANTEER, do the following to :
+- Add profile to the user (create a new model with fields of your choosing (like about, avatar, birth_date, etc.))
+- Add ability to update user info (including the ones in profile) (note: only the owner can update his/her info/profile)
+- Restrict access to adding a new plant / updating / deleting to only Staff users (both from frontend & backend).
+- Restrict Access to contact messages page to superuser .
 
 ## wireframe for the main pages
 <img width="1771" style="width:100%" alt="Screenshot 2024-03-19 at 2 27 18 PM" src="https://github.com/T-Python-Feb-24/LAB-ORM-2-PLANTEER/assets/91186666/2fc4bc56-d080-4ca7-946b-6168d0c39968">
@@ -23,3 +33,5 @@
 
 ## UML for the models `Plant` & (note: the `Contact` Model is a Bonus)
 <img width="618" style="width:100%; height:auto;" alt="Screenshot 2024-03-19 at 3 16 01 PM" src="https://github.com/T-Python-Feb-24/LAB-ORM-2-PLANTEER/assets/91186666/dc891468-cd65-443b-bf29-462b3c727701">
+
+

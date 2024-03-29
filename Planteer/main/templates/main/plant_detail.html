@@ -1,0 +1,58 @@
+{% extends "main/base.html" %}
+
+{% block title %}Plant Detail{% endblock  %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-6 d-flex flex-column gap-0">
+        <img src="{{plant.image.url}}" class="w-100 h-100 mt-2 " >
+    </div>
+   <div class="col mt-1">
+        <a href="" class="text-dark text-uppercase text-decoration-none"><h2>{{plant.name}}</h2></a>
+        <h6 class="text-blue">{{plant.category}}</h6>
+        <p>about : {{plant.about}}</p>
+        <p>is Edible:{% if plant.is_edible == 'True' %}Yes{%else%} No{%endif%} </p>
+        <p>used for: </p>
+        <p>{{plant.used_for}}</p>
+        <p >{{plant.created_at}}</p>
+    </div>
+    {% if request.user.is_staff %}
+    <div class="col mt-4">
+        <a href="{% url "main:update_plant" plant.id %} " class="btn btn-primary">Update</a>
+        <a href="{% url "main:delete_plant" plant.id %}" class="btn btn-danger "> Delete</a>
+    </div>
+    {% endif %}
+
+    <div class="row mt-4">
+        <h2>comments:</h2>
+        <div class="col-8 d-flex flex-column gap-1"> 
+            {% for comment in comments %} 
+            <div class="border border-1 p-4 " >
+                <a href=" {% url "accounts:user_profile" comment.user.id %}" class="text-decoration-none text-success"><h4>{{comment.user.first_name}}</h4><a/>
+                <p>{{comment.content}}</p>
+            </div>
+           {% endfor %}
+        </div>
+    </div>
+
+
+    <div class="row mt-4">
+        <h2>Add comment:</h2>
+        <div class="col-8"> 
+            {% if request.user.is_authenticated %}
+           <form id="c" action= {% url "main:plant_comment" plant.id %}  method="POST" class="d-flex flex-column form-control gap-2">
+            {% csrf_token %}
+            <textarea name="content" placeholder="Write your comment.."></textarea>
+            <input type="submit" value="Send" class="btn btn-primary" >
+            </form>
+            {% else %}
+            <h6 class="alert alert-danger">you must sing in</h6>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock  %}

@@ -1,0 +1,48 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}Planteer{% endblock  %}
+
+{% block content %}
+
+<div class="row pb-3 m-4 id=bg1">
+    <div class="col-3 m-4"></div>
+
+    <div class="col-4 d-flex mt-3 ">
+        <input class="form-control me-2" type="text" placeholder="Search" name="search">
+        <a href="{% url "main:search_page" %} "><button class="btn btn-outline-success" type="submit" >Search</button></a>
+    </div>
+    
+    <div class="col-3 m-4"></div>
+</div>
+
+
+<h3>Plants</h3>
+<hr>
+
+<div class="row my-5 gap-3">
+    {%for plant in plants%}
+    <div class="col d-flex flex-column border gap-0">
+       <img src="{{plant.image.url}}" class="w-100 mt-2 " >
+       <a href="{% url "main:plant_detail" plant.id %}" class="text-dark text-uppercase text-decoration-none"><h2>{{plant.name}}</h2></a>
+       <p>{{plant.about}}</p>
+       <h6>{{plant.category}}</h6>
+    </div>
+    {% endfor %}
+</div>
+
+<h3>latest comments: </h3>
+<hr>
+
+<div class="row mt-5 ">
+    <div class="col d-flex gap-3 px-3">
+        {% for comment in comments %}
+        <div class="d-flex flex-column border border-1 w-100 p-2">
+            <a href=" {% url "accounts:user_profile" comment.user.username %}" class="text-decoration-none text-success"><h4>{{comment.user.first_name}}</h4></a>
+            <a  href="{% url "main:plant_detail" comment.plant.id %}#c"><h6 >{{comment.plant.name}}</h6></a>
+            <p>{{comment.content}}</p>
+        </div>  
+        {% endfor %}
+    </div>
+</div>
+{% endblock  %}

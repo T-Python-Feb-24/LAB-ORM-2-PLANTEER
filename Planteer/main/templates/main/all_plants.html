@@ -1,0 +1,18 @@
+{% extends "main/base.html" %}
+
+{% block title %}All Plants {% endblock  %}
+
+{% block content %}
+
+<div class="row mt-4 gap-3">
+    {%for plant in plants%}
+    <div class="col-3 d-flex flex-column border gap-0">
+       <img src="{{plant.image.url}}" class="w-100 mt-2 " >
+       <a href="{% url "main:plant_detail" plant.id %}" class="text-dark text-uppercase text-decoration-none"><h2>{{plant.name}}</h2></a>
+       <p>{{plant.about}}</p>
+       <h6>{{plant.category}}</h6>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock  %}
