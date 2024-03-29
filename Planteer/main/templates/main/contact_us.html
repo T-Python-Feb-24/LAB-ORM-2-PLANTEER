@@ -1,0 +1,36 @@
+{% extends "main/base.html" %}
+
+{% block title %}Countact Us{% endblock  %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-6">
+        <form action=" {% url "main:contact_page" %}" method = "POST">
+            {% csrf_token %}
+            <h1>Contact Us : </h1>
+        <div class="d-flex flex-column gap-2 mt-3 form-control">
+            <h6 class="m-0">First Name:</h6>
+            <input type="text" name="first_name" placeholder ="First Name" required>
+            <h6 class="m-0">Last Name:</h6>
+            <input type="text" name="last_name" placeholder ="Last Name" required>
+            <h6 class="m-0">Email:</h6>
+            <input type="email" name="email" placeholder ="Email" required>
+            <h6 class="m-0">Write Your message:</h6>
+            <textarea name="message"  cols="30" rows="5" value="Message" required ></textarea>
+            <input type="submit" class="btn btn-primary" value="Send Message">
+            {% if msg %}
+            <h6 class = "alert alert-success">{{msg}}</h6>    
+            {% endif %}
+        </form>
+        {% if request.user.is_superuser %}
+        <a href=" {% url "main:contact_messages" %}"> see all messages </a>
+        {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock  %}

@@ -1,0 +1,19 @@
+{% extends "main/base.html" %}
+
+{% block title %}Messages{% endblock  %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col d-flex gap-3 mt-4">
+        {% for message in messages  %}
+        <div class="d-flex flex-column border border-2 p-4 w-100">
+            <h5>{{message.first_name}} {{message.last_name}}</h5>
+            <h6 class="text-blue">{{message.email}}</h6>
+            <p>{{message.message}}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock  %}

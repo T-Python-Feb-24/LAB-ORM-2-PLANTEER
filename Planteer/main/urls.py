@@ -14,8 +14,8 @@ urlpatterns = [
     path("plants/<plant_id>/delete/",views.delete_plant,name="delete_plant"),
     path("comments/add/<plant_id>/",views.plant_comment,name="plant_comment"),
     # #Bonus pages :
-    # path("contact/"),
-    # path("contact/messages/"),
+    path("contact/us/",views.contact_page,name="contact_page"),
+    path("contact/messages/",views.contact_messages,name="contact_messages"),
 
 ]
 

@@ -1,6 +1,6 @@
 from django.shortcuts import render , redirect
 from django.http import HttpRequest, HttpResponse
-from.models import Plant , Comment
+from.models import Plant , Comment , Contact
 from django.contrib.auth.models import User
 # Create your views here.
 
@@ -118,11 +118,28 @@ def plant_comment(request : HttpRequest , plant_id):
 # # #  Bonus pages :
 
 # Contact Us page :
-def contact_page():
-    return
+def contact_page(request : HttpRequest):
+    msg =""
+    if request.method =="POST":
+        contact = Contact(
+            first_name = request.POST["first_name"],
+            last_name = request.POST["last_name"],
+            email = request.POST["email"],
+            message = request.POST["message"],      
+        )
+        contact.save()
+        msg = "Your message has been successfully sent!"
+    
+    return render(request,"main/contact_us.html" ,{"msg":msg})
 
 # Contact Us Messages page :
-def contact_messages():
-    return
+def contact_messages(request : HttpRequest):
+    
+    if not (request.user.is_superuser and request.user.has_perm('main.view_contact')):
+        return render(request,"main/no_permission.html")
+   
+    messages = Contact.objects.all()
+    
+    return render(request,"main/contact_messages.html",{"messages":messages})
 
 
