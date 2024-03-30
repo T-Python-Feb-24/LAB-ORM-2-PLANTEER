@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-3">
 
-            <img src="/images/avatar.webp" class="avatar w-100" />
+            <img src="{{user_info.profile.avatar.url}}" class="avatar w-100" />
             <h5>@{{user_info.username}}</h5>
 
         </div>
@@ -30,7 +30,7 @@
             <hr/>
             <h2>{{user_object.username}} Comments</h2>
             <div class="d-flex flex-column gap-4">
-                {% for comment in user_object.comment_set.all %}
+                {% for comment in comments %}
                     <div class="d-flex flex-column gap-1 p-3 shadow">
                         <h5>{{comment.user.username}}</h5>
                         <a href="{% url 'App:post_detail_view' comment.post.id %}#commentsDiv"><h6 class="text-muted">{{comment.post.title}}</h6></a>

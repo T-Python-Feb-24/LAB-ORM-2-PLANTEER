@@ -23,8 +23,6 @@ def register_user_view(request:HttpRequest):
                  new_user = User.objects.create_user(username=request.POST["username"], email=request.POST["email"], first_name=request.POST["first_name"],
                  last_name=request.POST["last_name"], password=request.POST["password"])
                  new_user.save()
-
-
                  profile = Profile(user=new_user, about=request.POST["about"], instagram_link=request.POST["instagram_link"], linked_link=request.POST["linked_link"], avatar=request.FILES.get("avatar", Profile.avatar.field.get_default(), birth_date = redirect.POST["birth_date"]))
                  profile.save()
                                                
@@ -80,7 +78,47 @@ def user_profile_view(request:HttpRequest, user_name):
     except:
         return render(request, "App/not_found.html")
 
-    return render(request, "user_name/profile.html", {"user_info":user_info})
+    return render(request, "user_name/profile.html", {"user_info":user_info,'comments':user_comments})
 
 
+
+
+def update_profile_view(request:HttpRequest):
+    msg = None
+
+    if not request.user.is_authenticated:
+        return redirect("user_name:login_user_view")
+    
+    if request.method == "POST":
+        
+        try:
+
+            with transaction.atomic():
+                user:User = request.user
+
+                user.first_name = request.POST["first_name"]
+                user.last_name = request.POST["last_name"]
+                user.email = request.POST["email"]
+
+                user.save()
+                
+                try:
+                    profile:Profile = user.profile
+                except Exception as e:
+                    profile = Profile(user=user)
+
+                profile.about = request.POST["about"]
+                profile.instagram_link = request.POST["instagram_link"]
+                profile.linked_link = request.POST["linked_link"]
+                profile.avatar = request.FILES.get("avatar", profile.avatar)
+
+                profile.save()
+
+                return redirect("user_name:user_profile_view", user_name=user.username)
+
+        except Exception as e:
+            msg = f"Something went wrong {e}"
+            print(e)
+
+    return render(request, "user_name/update.html", {"msg" : msg})
 

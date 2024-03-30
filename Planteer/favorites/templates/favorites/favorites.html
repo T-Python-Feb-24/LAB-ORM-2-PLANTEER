@@ -14,7 +14,7 @@
                 <img src="{{ favorite.post.poster.url }}"  class="w-100 rounded-4 card-poster "/>
                 <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{favorite.post.category}} ">{{ favorite.post.category }}</h6>
                 <h6 class="text-muted">{{ favorite.post.published_at }}</h6>
-                <h2><a href="{% url 'App:post_detail_view' favorite.post.id  %}" class="text-decoration-none">{{favorite.post.title}}</a></h2>   
+                <h2><a href="{% url 'App:post_detail_view' favorite.post.id  %}" class="text-decoration-none">{{favorite.post.Name}}</a></h2>   
             </div>
         </div>
         

@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Post(models.Model):
@@ -27,6 +28,7 @@ class ContactMessage(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey('Post', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=100)
     content = models.TextField()
 

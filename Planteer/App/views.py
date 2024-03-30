@@ -5,6 +5,8 @@ from datetime import date,timedelta
 import math
 from .models import Post, Comment
 from django.contrib.auth.models import User
+from favorites.models import Favorite
+
 
 def home_page(request: HttpRequest):
 
@@ -35,20 +37,15 @@ def add_post_view(request:HttpRequest):
     return render(request,'App/add_post.html',{"categories" : Post.categories.choices})
 
 
-
-
-
-
-
-
 def post_detail_view(request:HttpRequest, post_id):
-    comments=[]
+    # comments=[]
     related_posts=[]
     try:
         post = Post.objects.get(pk=post_id)
         comments = Comment.objects.filter(post=post)
-        print(comments)
+        # print(comments)
         related_posts = Post.objects.filter(category=post.category).exclude(id=post.id)
+        is_favored = request.user.is_authenticated and  Favorite.objects.filter(user=request.user, post=post).exists()
     except Post.DoesNotExist:
         return render(request, "App/not_found.html")
     except Exception as e:
@@ -56,9 +53,6 @@ def post_detail_view(request:HttpRequest, post_id):
 
 
     return render(request, "App/post_detail.html", {"post" : post ,"comments": comments, "related_posts": related_posts})
-
-
-
 
 
 
@@ -140,7 +134,7 @@ def add_comment_view(request:HttpRequest, post_id):
 
     if request.method == "POST":
         post_object = Post.objects.get(pk=post_id)
-        new_comment = Comment(post=post_object,full_name=request.POST["full_name"], content=request.POST["content"])
+        new_comment = Comment(post=post_object,user=request.user, content=request.POST["content"], full_name=request.user.username)
         new_comment.save()
 
     

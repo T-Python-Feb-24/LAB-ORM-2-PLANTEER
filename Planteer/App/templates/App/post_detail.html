@@ -11,6 +11,8 @@
 
                 <img src="{{ post.image.url }}"  class="w-100 rounded-4"/>
                 <div class="d-flex justify-content-between">
+                <a href="{% url 'favorites:add_remove_favorites_view' post.id %}" {% if not request.user.is_authenticated %} data-bs-toggle="modal" data-bs-target="#favoriteModal" {% endif %} class="text-decoration-none"><i class="bi {% if is_favored %} bi-heart-fill {% else %} bi-heart {% endif %} favorite"></i></a>
+
                     <h6>{{post.creatad}}</h6>
                     <div class="d-flex gap-2">
                         <a href="{% url 'App:update_post_view' post.id %}" class="btn btn-primary">update</a>
@@ -26,14 +28,13 @@
     </div>
     <h2>Comments:</h2>
 
-    {% endblock %}
 
 
             {% for comment in comments %}
             <div class="d-flex flex-column gap-2 shadow p-3">
-                <a href="{% url 'user_name:user_profile_view' comment.user.username %}"
+                <a href="{% url 'user_name:user_profile_view' comment.user.username %}"><h4>{{ comment.full_name }}</h4></a>
             
-                    <h4>{{ comment.full_name }}</h4>
+                    
                     <p>{{ comment.content }}</p>
                     </div>
             {% endfor %}
@@ -45,17 +46,16 @@
             <form action="{% url 'App:add_comment_view' post.id %}" method="post" class="d-flex flex-column gap-2">
                 {% csrf_token %}
                 <h3> to send comments:</h3>
-                <input type="text" name="full_name" class="form-control" placeholder="comments"/>
-                <textarea name="message" class=""form-control></textarea>
+                <textarea name="content" class=""form-control></textarea>
                 <input type="submit" value="add comment" class="btn btn-dark"/>
 
             </form>
 
-{% else %}
+                {% else %}
         <div class="alert alert-warning">You must <a href="{% url 'user_name:login_user_view' %}">Sign in</a> to comment.</div>
-        {% endif %}
+                  {% endif %}
         </div>
     </div>
-
+{% endblock %}
 
     
