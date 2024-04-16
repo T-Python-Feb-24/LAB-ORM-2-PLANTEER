@@ -1,0 +1,46 @@
+{% extends 'main/base.html' %}
+
+{% block title %} PLANTEER | UPDATE PLANTS {% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <div class="row" style="margin-top: 100px;">
+        <h1>Update Plant</h1>
+        <div class="col">
+
+            <form action="{% url 'main:update_plant' plant.id %}" enctype="multipart/form-data" method="post" class="d-flex flex-column gap-2">
+                {% csrf_token %}
+
+                <input name="name" type="text" placeholder="Title" class="form-control" required minlength="5" value="{{ plant.name }}" />
+                <textarea name="about" class="form-control" >{{plant.about}}</textarea>
+                <textarea name="used_for" placeholder="Used For" class="form-control">{{plant.used_for}}</textarea>
+
+                <div class="m-0">
+                    <h5>Is Edible:</h5>
+                    <input type="radio" name="is_edible" id="Yes" value="True" {% if plant.is_edible %} checked {% endif %}>
+                    <label for="Yes" class="form-check-label">Yes</label>
+                    <input type="radio" name="is_edible" id="No" value="False">
+                    <label for="No" class="form-check-label">No</label>
+                </div>
+
+                <h5>Category:</h5>
+                <select name="category" class="form-select" aria-label="Default select example">
+                    {% for val, cat in category %}
+                        <option value={{val}} {% if plant.category == val %} selected {% endif %}>{{cat}}</option>
+                    {% endfor %}
+                </select>
+
+
+                <h5>Choose Image:</h5>
+                <img src="{{ plant.image.url }}" class="thumb" />
+                <input name="image"  type="file" accept="image/*" class="form-control"/>
+
+                <input type="submit" class="btn btn-dark" value="Update" style="background: linear-gradient(#082211, #05160b, #020b04);"/>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}

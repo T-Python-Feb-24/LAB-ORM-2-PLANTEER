@@ -1,0 +1,36 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %} PLANTEER {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row" style="margin-top: 100px;">
+        <div class="col">
+            <h1>Messages from Users</h1>
+            <div class="row mt-4">
+                {% for plant in message %}
+                <div class="col-4 ">
+                    <div class="d-flex flex-column gap-1 border border-1 shadow p-3 rounded-4 h-100">
+                        <div class="d-flex flex-row gap-2">
+                            <span class="material-symbols-rounded ">account_circle</span>
+                            <h5>{{plant.first_name}} {{plant.last_name}}</h5>
+                        </div>
+
+                        <h6><a href="mailto:{{ plant.email }} " target='_blank' rel=noopener noreferrer>{{ plant.email }}</a></h6>
+                        <h6>{{ plant.message }}</h6>
+                        <h6 class="text-muted">{{ plant.created_at }}</h6>
+                    </div>
+                </div>
+                {% endfor %}
+            </div> <!--row 2-->
+
+            <div class="row mt-4 ">
+                <div class="col d-flex justify-content-center">
+                    <a href="{% url 'main:contact' %}" class="btn btn-outline-dark">Back to Contact Page...</a>
+                </div>
+            </div>
+        </div>
+    </div> <!--row 1-->
+</div>
+{% endblock %}

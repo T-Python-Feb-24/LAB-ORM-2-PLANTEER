@@ -1,0 +1,97 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Register New User{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    
+    <div class="row" style="margin-top: 100px;">
+        <h1>Register New User</h1>
+        {% if message %}
+            <div class="alert alert-warning">{{message}}</div>
+        {% endif %}
+        
+        <div class="col" style="display: flex;  justify-content: center; margin-top: 30px;">
+            <div class="d-flex flex-column gap-1 border border-1 shadow p-3 rounded-4 h-100 justify-content-center" style="width: 800px;">
+                
+                <form action="{% url 'accounts:register' %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col">
+                            <div class="d-flex">
+                                <label for="username" style="width: 100px;">Username:</label>
+                                <input type="text" name="username" class="form-control" required id="username" minlength="3" placeholder="Username.."/>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="d-flex">
+                                <label for="password" style="width: 100px;">Password:</label>
+                                <input type="password" name="password" class="form-control" required id="password" minlength="6" placeholder="Password.."/>
+                            </div>
+                        </div>
+                    </div> <!-- Username & Password-->
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="d-flex">
+                                <label for="first_name" style="width: 100px;">First Name:</label>
+                                <input type="text" name="first_name" class="form-control" required id="first_name" placeholder="First Name.."/>
+                            </div>
+                            
+                         </div>       
+                         <div class="col">
+                            <div class="d-flex">
+                                <label for="last_name" style="width: 100px;">Last Name:</label>
+                                <input type="text" name="last_name" class="form-control" required id="last_name" placeholder="Last Name.."/>
+                            </div>
+                        </div>
+                        
+                    </div> <!--First Name & Last Name-->
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="d-flex">
+                                <label for="email" style="width: 90px;">Email:</label>
+                                <input type="email" name="email" class="form-control" required id="email" placeholder="example@gmail.com"/>
+                            </div>
+                        </div>
+                    </div> <!--Email-->
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="d-flex">
+                                <label for="about" style="width: 90px;">About:</label>
+                                <textarea name="about" class="form-control" id="about" placeholder="Write about yourself..."></textarea>
+                            </div>
+                        </div>
+                    </div> <!--About-->
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="d-flex gap-3">
+                                <label style="width: 150px;"></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-instagram"></i></span>
+                                    <input name="instagram_link" class="form-control" type="text" placeholder="@instagram link" />
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-linkedin"></i></span>
+                                    <input name="linked_link" class="form-control" type="text" placeholder="@linkedin link" />
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!--Social Links-->
+      
+                    <h5>Choose Avatar:</h5>
+                    <input type="file" class="form-control" name="avatar" />
+
+                    <input type="submit" class="btn btn-dark rounded-4" value="Sign Up" style="background: linear-gradient(#080822, #050516, #02020b);"/>
+                </form>
+                <p class="link">Already have an account? <a href="{% url 'accounts:login' %}">Login</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

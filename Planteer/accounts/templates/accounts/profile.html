@@ -1,0 +1,111 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{user_info.username}} Profile{% endblock %}
+
+{% block style %}
+<style>
+
+    .user-profile {
+          margin-bottom: 1rem;
+        }
+
+    .user-profile table {
+        margin-top: 50px;
+        border-collapse: collapse;
+        width: 1000px;
+    }
+
+    .user-profile th,
+    .user-profile td {
+          border: 1px solid #9b9b9b28;
+          padding: 0.6rem;
+          text-align: center;
+        }
+
+    .user-profile th {
+        width: 150px;
+        color: aliceblue;
+        background: linear-gradient(#134e1a, #0a2c0c, #030b02);
+    }
+
+    .user-profile td {
+        width: 250px;
+    }
+    
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <div class="row" style="margin-top: 100px;">
+    <h1>{{ user_info.username }}'s Profile: </h1>
+
+    <div class="col-3">
+        <img src="{{user_info.profile.avatar.url}}" class="avatar w-100"/><br>
+        <!-- <h5>@{{user_info.username}}</h5> -->
+    </div><!--col 1-->
+
+    <div class="col-6 mt-3">
+      <div class="d-flex flex-column justify-content-center mt-3">
+        <!-- <h3>{{user_info.first_name}} {{ user_info.last_name}}</h3>
+        <a href="mailto:{{user_info.email}}">{{ user_info.email }}</a> -->
+        <table class="user-profile">
+          <tbody>
+            <tr>
+              <th>Username:</th>
+              <td>@{{ user_info.username }}</td>
+            </tr>
+            <tr>
+              <th>About:</th>
+              <td>{{ user_info.profile.about }}</td>
+            </tr>
+            <tr>
+              <th>Full Name:</th>
+              <td>{{ user_info.first_name }} {{ user_info.last_name }}</td>
+            </tr>
+            <tr>
+              <th>Email:</th>
+              <td><a href="mailto:{{user_info.email}}">{{ user_info.email }}</a></td>
+            </tr>
+            <tr>
+              <th>Social:</th>
+              <td>
+                <div class="d-flex gap-3 justify-content-center">
+                  <a href="{{user_info.profile.instagram_link}}" target="_blank"><i class="bi bi-instagram" style="color: #030b02; font-size: 20px;"></i></a>
+                  <a href="{{user_info.profile.linked_link}}" target="_blank"><i class="bi bi-linkedin" style="color: #030b02; font-size: 20px;"></i></a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div><!--col 2-->
+  </div><!--END Row-->
+
+  <div class="row">
+    <div class="col d-flex justify-content-center">
+      <a class="btn btn-outline-success" style="width: 200px; padding: 10px;" href="{% url 'accounts:update_user' user_info.username %}">Update Info<span class="material-symbols-rounded">edit</span></a>
+
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row mt-5">
+      <h2>{{user_info.username}}'s Comments</h2>
+        <hr>
+        {% for comment in user_info.comment_set.all %}
+        <div class="col mt-2">
+            <div class="d-flex flex-column border border-1 shadow p-3 rounded-4 h-100" style="width: 300px;">
+
+                <a href="{% url 'main:plant_detail' comment.plant.id %}#comments" style="color: darkgreen; text-decoration: none;">Plant: <strong>{{comment.plant.name}}</strong></a>
+                <p class="mt-3">{{ comment.content }}</p>
+                <h6 class="text-muted">{{ comment.created_at }}</h6>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+</div>
+{% endblock %}
