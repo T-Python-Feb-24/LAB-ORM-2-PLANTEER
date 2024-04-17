@@ -1,0 +1,14 @@
+{% extends 'App/base.html' %}
+
+{% block title %} Contact Us Messages {% endblock %}
+
+{% block content %}
+    <h1>Contact Us Messages</h1>
+    <ul>
+        {% for message in messages %}
+            <li>{{ message.name }} - {{ message.email }}: {{ message.message }}</li>
+        {% empty %}
+            <li>No messages yet.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

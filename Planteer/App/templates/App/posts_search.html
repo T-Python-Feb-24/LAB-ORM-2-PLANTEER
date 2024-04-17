@@ -1,0 +1,47 @@
+{% extends 'App/base.html' %}
+
+{% block title %} planteer {% endblock %}
+
+
+{% block content %}
+
+    <div class="row g-4">
+
+        <div class="d-flex flex-column gap-2">
+            
+            <h1>Search</h1>
+            <form action="{% url 'App:posts_search_view' %}"  method="get" class="d-flex gap-2">
+                <input type="search" class="form-control" name="search" value="{{request.GET.search}}"/>
+                <input type="delete" class="form-control" name="delete" value="{{request.GET.delete}}"/>
+                <input type="submit" value="search" class="btn btn-primary" />
+            </form> 
+
+            <h2>Search results for {{ request.GET.search }} ({{ posts.count }}) </h2> 
+        </div>
+
+    </div>
+
+    <div class="row mt-2 g-5">
+
+        {% if posts.count == 0 %}
+            <h3>No results for your search '{{request.GET.search}}' </h3>
+        {% endif %}
+
+        {% for post in posts %}
+            <div class="col-4">
+                <div class="d-flex flex-column gap-2 border border-1 shadow p-3 rounded-4 h-100">
+                    <img src="{{ post.image.url }}"  class="w-100 rounded-4"/>
+                    <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{post.category}} ">{{ post.category }}</h6>
+                    <h6 class="text-muted">{{ post.created }}</h6>
+                    <h2><a href="{% url 'App:post_detail_view' post.id  %}" class="text-decoration-none">{{post.Name}}</a></h2>
+                    
+                </div>
+            </div>
+            
+        {% endfor %}
+
+    </div>
+
+{% endblock %}     
+
+

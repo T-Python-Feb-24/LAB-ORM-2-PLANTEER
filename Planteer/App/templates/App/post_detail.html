@@ -1,0 +1,61 @@
+{% extends 'App/base.html' %}
+
+{% block content %}  
+    <div class="row">
+        
+        <div class="col">
+            <div class="d-flex flex-column gap-2">
+                <h1>{{ post.Name}}</h1>
+                <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{post.category}}">{{ post.category }} </h6>
+                <h6 class="cat pt-1 pb-1 ps-3 pe-3 rounded-pill {{post.created_at}}">{{ post.created_at }}</h6>
+
+                <img src="{{ post.image.url }}"  class="w-100 rounded-4"/>
+                <div class="d-flex justify-content-between">
+                <a href="{% url 'favorites:add_remove_favorites_view' post.id %}" {% if not request.user.is_authenticated %} data-bs-toggle="modal" data-bs-target="#favoriteModal" {% endif %} class="text-decoration-none"><i class="bi {% if is_favored %} bi-heart-fill {% else %} bi-heart {% endif %} favorite"></i></a>
+
+                    <h6>{{post.creatad}}</h6>
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'App:update_post_view' post.id %}" class="btn btn-primary">update</a>
+                        <a href="{% url 'App:delete_post_view' post.id %}" class="btn btn-danger">Delete</a>
+                    </div>
+                    
+                </div>
+                
+                <p>{{ post.about }}</p>
+            </div>
+        </div>
+
+    </div>
+    <h2>Comments:</h2>
+
+
+
+            {% for comment in comments %}
+            <div class="d-flex flex-column gap-2 shadow p-3">
+                <a href="{% url 'user_name:user_profile_view' comment.user.username %}"><h4>{{ comment.full_name }}</h4></a>
+            
+                    
+                    <p>{{ comment.content }}</p>
+                    </div>
+            {% endfor %}
+
+
+    <div class="row mt-4">
+        <div class="col">
+            {% if request.user.is_authenticated %}
+            <form action="{% url 'App:add_comment_view' post.id %}" method="post" class="d-flex flex-column gap-2">
+                {% csrf_token %}
+                <h3> to send comments:</h3>
+                <textarea name="content" class=""form-control></textarea>
+                <input type="submit" value="add comment" class="btn btn-dark"/>
+
+            </form>
+
+                {% else %}
+        <div class="alert alert-warning">You must <a href="{% url 'user_name:login_user_view' %}">Sign in</a> to comment.</div>
+                  {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+    
