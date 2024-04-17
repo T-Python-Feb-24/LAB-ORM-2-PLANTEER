@@ -149,3 +149,10 @@ def contact_us_view(request):
     else:
         return render(request, 'App/contact.html')
     
+
+def contact_messages_view(request):
+    # Assuming 'p' is used in the view function
+    p = "Hello, this is a test message."
+
+    # Render a template with the context containing the 'p' variable
+    return render(request, 'App/contact_messages.html', {'p': p})

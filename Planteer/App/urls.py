@@ -14,6 +14,10 @@ urlpatterns=[
     path("post/all/", views.all_posts_view, name="all_posts_view"),
     path("comments/add/<post_id>/", views.add_comment_view, name="add_comment_view"),
     path('contact/', views.contact_us_view, name='contact_us_view'),
+    path('contact/messages/', views.contact_messages_view, name='contact_messages_view'),
+
+
+
 
 
 
